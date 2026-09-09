@@ -50,4 +50,3 @@ Device evidence keeps physical capability, manufacturer API access, and OpenLens
 ## Contributing
 
 Evidence corrections and adapter work are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a change. Hardware supplied for development must be disclosed and never changes benchmark methodology or conclusions.
-

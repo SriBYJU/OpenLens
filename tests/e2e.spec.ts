@@ -21,6 +21,8 @@ test('Lens Lab changes state and exposes a failed trace',async({page})=>{
   await page.getByRole('button',{name:/Degraded commute/}).click();
   await page.getByRole('button',{name:/Run this scenario/i}).click();
   await expect(page.getByRole('heading',{name:'The experience completed.'})).toBeVisible();
+  await page.getByRole('button',{name:'Next stage'}).click();
+  await expect(page.getByLabel('Trace position')).not.toHaveValue('0');
 });
 
 test('compiled text becomes the active simulated experience',async({page})=>{

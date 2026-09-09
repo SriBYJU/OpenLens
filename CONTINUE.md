@@ -35,4 +35,3 @@ Only `openlens-twin` has an executable adapter. All manufacturer devices remain 
 4. Expand research coverage and record revisions when source claims change.
 
 No credential or authorization blocker is active. Real-hardware integration remains blocked by SDK and device access, and must stay labeled unavailable until verified.
-
