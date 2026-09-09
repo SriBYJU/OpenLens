@@ -1,62 +1,23 @@
-import type { CompiledPlan, DeviceAdapter, DeviceProfile, RunResult, SimulationConfig, TraceEvent } from './types';
-
-export const defaultSimulationConfig: SimulationConfig = { seed:42, startTime:'2026-09-08T12:00:00.000Z', inputMs:90, processMs:240, outputMs:40, bridgeMs:80, jitter:0.15, failureRate:0, failureMode:'none' };
-export function validateSimulationConfig(value: unknown): SimulationConfig {
-  if (!value || typeof value !== 'object') throw new Error('Simulation configuration must be an object.');
-  const c = value as Record<string, unknown>;
-  if (!Number.isSafeInteger(c.seed) || Number(c.seed)<0 || Number(c.seed)>4294967295) throw new Error('Seed must be an unsigned 32-bit integer.');
-  if (typeof c.startTime !== 'string' || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(c.startTime) || !Number.isFinite(Date.parse(c.startTime))) throw new Error('Start time must be an ISO UTC timestamp.');
-  for (const key of ['inputMs','processMs','outputMs','bridgeMs']) if (typeof c[key] !== 'number' || !Number.isFinite(c[key]) || c[key]<0 || c[key]>60000) throw new Error(`${key} must be between 0 and 60,000 ms.`);
-  for (const key of ['jitter','failureRate']) if (typeof c[key] !== 'number' || !Number.isFinite(c[key]) || c[key]<0 || c[key]>1) throw new Error(`${key} must be between 0 and 1.`);
-  if (!['none','permission','disconnect','timeout'].includes(String(c.failureMode))) throw new Error('Unknown failure mode.');
-  return { seed:c.seed as number, startTime:c.startTime, inputMs:c.inputMs as number, processMs:c.processMs as number, outputMs:c.outputMs as number, bridgeMs:c.bridgeMs as number, jitter:c.jitter as number, failureRate:c.failureRate as number, failureMode:c.failureMode as SimulationConfig['failureMode'] };
+import {getAdapter} from '../adapters/registry'; import {getDevice} from '../data/devices';
+import type {CompiledPlan,DeviceAdapter,DeviceProfile,RunResult,SimulationConfig,TraceEvent} from './types'; import {ARTIFACT_SCHEMA_VERSION,CATALOG_VERSION,ENGINE_VERSION,METHODOLOGY_VERSION,RELEASE_VERSION} from './types';
+export const defaultSimulationConfig:SimulationConfig={seed:42,startTime:'2026-09-08T12:00:00.000Z',inputMs:90,processMs:240,outputMs:40,bridgeMs:80,jitter:.15,failureRate:0,failureMode:'none',battery:84,network:'online',permission:'granted',fixture:'street-sign'};
+export const versions={release:RELEASE_VERSION,engine:ENGINE_VERSION,catalog:CATALOG_VERSION,methodology:METHODOLOGY_VERSION,schema:ARTIFACT_SCHEMA_VERSION};
+export function validateSimulationConfig(value:unknown):SimulationConfig{if(!value||typeof value!=='object')throw new Error('Simulation configuration must be an object.');const c=value as SimulationConfig;if(!Number.isSafeInteger(c.seed)||c.seed<0||c.seed>4294967295)throw new Error('Seed must be an unsigned 32-bit integer.');if(typeof c.startTime!=='string'||!Number.isFinite(Date.parse(c.startTime)))throw new Error('Start time must be a valid timestamp.');for(const key of ['inputMs','processMs','outputMs','bridgeMs'] as const)if(!Number.isFinite(c[key])||c[key]<0||c[key]>60000)throw new Error(`${key} must be between 0 and 60,000 ms.`);if(!Number.isFinite(c.jitter)||c.jitter<0||c.jitter>1||!Number.isFinite(c.failureRate)||c.failureRate<0||c.failureRate>1)throw new Error('Jitter and failure rate must be between 0 and 1.');if(!Number.isFinite(c.battery)||c.battery<0||c.battery>100)throw new Error('Battery must be between 0 and 100.');if(!['none','permission','disconnect','timeout','low-battery','network-loss','model-unavailable'].includes(c.failureMode)||!['online','offline','degraded'].includes(c.network)||!['granted','denied'].includes(c.permission)||!['street-sign','conversation','museum-label'].includes(c.fixture))throw new Error('Unknown simulation option.');return{...c}}
+export function seededRandom(seed:number){let state=seed>>>0;return()=>{state+=0x6d2b79f5;let t=state;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return((t^(t>>>14))>>>0)/4294967296}}
+const fixtureOutput=(plan:CompiledPlan,config:SimulationConfig)=>plan.experience.task==='translate'?(config.fixture==='street-sign'?'Salida → Exit':'Translation fixture ready.'):plan.experience.task==='caption'?'“The next turn is on your left.”':plan.experience.task==='describe'?'A framed label is centered in view.':'Reminder: return to the workbench.';
+export function simulate(plan:CompiledPlan,input:SimulationConfig):RunResult{const config=validateSimulationConfig(input);const device=getDevice(plan.deviceId);const adapter=getAdapter(device.id);const random=seededRandom(config.seed);let elapsed=0;const trace:TraceEvent[]=[];const at=(ms:number)=>new Date(Date.parse(config.startTime)+ms).toISOString();const add=(stage:TraceEvent['stage'],status:TraceEvent['status'],message:string,durationMs:number,route:TraceEvent['route'],metadata:TraceEvent['metadata']={})=>{const event={id:`span-${trace.length+1}`,parentId:stage==='session'?null:'span-1',timestamp:at(elapsed),elapsedMs:elapsed,stage,status,message,durationMs,route,metadata};trace.push(event);elapsed+=durationMs};
+ add('session','info','Digital Twin session created',0,'system',{seed:config.seed,adapter:adapter?.id??'none',catalog:CATALOG_VERSION});
+ if(plan.compatibility==='blocked'||!adapter){add('system','failure','No executable OpenLens adapter. Open the Optical Twin to simulate this experience.',0,'blocked',{device:device.id});return finish('blocked',null)}
+ const jitter=(base:number)=>Math.round(base*(1+(random()*2-1)*config.jitter));
+ if(config.failureMode==='low-battery'||config.battery<=5){add('system','failure','Twin halted: battery threshold reached.',4,'system',{battery:config.battery});return finish('failed',null)}
+ if(config.network==='offline'&&plan.experience.privacy==='provider-allowed'){add('system','failure','Provider route unavailable while offline.',2,'system',{network:config.network});return finish('failed',null)}
+ if(plan.experience.input!=='manual'&&(config.failureMode==='permission'||config.permission==='denied')){add('input','failure',`${plan.experience.input} permission denied.`,5,'twin',{permission:config.permission});return finish('failed',null)}
+ add('input','success',plan.experience.input==='manual'?'Manual trigger received.':`${plan.experience.input} fixture acquired.`,jitter(config.inputMs),'twin',{fixture:config.fixture});
+ if(config.failureRate>0&&random()<config.failureRate){add('process','failure','Seeded stochastic failure triggered.',0,'companion',{failureRate:config.failureRate});return finish('failed',null)}
+ if(config.failureMode==='timeout'||config.failureMode==='model-unavailable'){add('process','failure',config.failureMode==='timeout'?'Processing deadline exceeded.':'Local model unavailable.',jitter(config.processMs),'companion',{failureMode:config.failureMode});return finish('failed',null)}
+ add('process','success',`${plan.experience.task} fixture resolved locally.`,jitter(config.processMs),'companion',{privacy:plan.experience.privacy});
+ if(config.failureMode==='disconnect'){add('output','failure','Twin output bridge disconnected.',jitter(config.bridgeMs),'twin',{failureMode:'disconnect'});return finish('failed',null)}
+ add('output','success',`Rendered ${plan.steps.at(-1)?.capability??'output'} response.`,jitter(config.outputMs),'twin',{output:plan.steps.at(-1)?.capability??null});return finish('success',fixtureOutput(plan,config));
+ function finish(status:RunResult['status'],output:string|null):RunResult{return{version:2,versions,id:`run-${plan.fingerprint}-${config.seed}`,createdAt:config.startTime,mode:'simulation',deviceSnapshot:{id:device.id,revision:device.revision,name:device.name,manufacturer:device.manufacturer,integrationStatus:device.integrationStatus,optics:device.optics},adapterSnapshot:adapter,seed:config.seed,status,totalMs:elapsed,output,trace,config,plan}}
 }
-
-/** Mulberry32: seeded deterministic draws, intentionally unrelated to real device speed. */
-export function seededRandom(seed: number): () => number {
-  let state = seed >>> 0;
-  return () => { state = (state + 0x6d2b79f5) >>> 0; let t = Math.imul(state ^ state >>> 15, 1 | state); t = (t + Math.imul(t ^ t >>> 7, 61 | t)) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
-}
-function fixtureOutput(plan: CompiledPlan): string {
-  const { task,language } = plan.experience;
-  if (task === 'translate') return language === 'Spanish' ? 'Fixture · “Salida a la izquierda” — Exit to the left.' : `Fixture · Translation placeholder (${language}): Exit to the left. No translation model was called.`;
-  if (task === 'describe') return 'Fixture · A sunlit street with a café on the left. No camera image was analyzed.';
-  if (task === 'caption') return 'Fixture · “Let’s meet at the café at three.” No microphone was recorded.';
-  return 'Fixture · Your reminder is ready. No external reminder was scheduled.';
-}
-export function simulate(plan: CompiledPlan, configuration: SimulationConfig = defaultSimulationConfig): RunResult {
-  const config = validateSimulationConfig(configuration);
-  const random = seededRandom(config.seed);
-  const trace: TraceEvent[] = [];
-  let elapsed = 0;
-  const append = (stage: TraceEvent['stage'],status: TraceEvent['status'],message: string,durationMs = 0) => { elapsed += durationMs; trace.push({ id:`event-${trace.length+1}`, timestamp:new Date(Date.parse(config.startTime)+elapsed).toISOString(), elapsedMs:elapsed, stage,status,message,durationMs }); };
-  const finish = (status: RunResult['status']): RunResult => ({version:1,id:`sim-${plan.deviceId}-${config.seed}-${config.startTime}`,mode:'simulation',deviceId:plan.deviceId,seed:config.seed,status,totalMs:elapsed,output:status==='success'?fixtureOutput(plan):null,trace,config:{...config},plan:structuredClone(plan)});
-  append('session','info',`Digital twin initialized with seed ${config.seed}. All durations are illustrative, not measured hardware latency.`);
-  if (plan.compatibility === 'blocked' || plan.steps.some(s=>s.route==='blocked')) { append('session','failure','Plan blocked by capability constraints.'); return finish('blocked'); }
-  for (const step of plan.steps) {
-    const base = step.stage === 'input' ? config.inputMs : step.stage === 'process' ? config.processMs : config.outputMs;
-    const overhead = step.route === 'bridge' || step.route === 'companion' && step.stage !== 'process' ? config.bridgeMs : 0;
-    const duration = Math.round((base+overhead)*(1+(random()*2-1)*config.jitter));
-    const sampledFailure = random() < config.failureRate;
-    const injectedFailure = (config.failureMode==='permission' && step.stage==='input') || (config.failureMode==='disconnect' && step.stage==='output') || (config.failureMode==='timeout' && step.stage==='process');
-    if (injectedFailure || sampledFailure) { append(step.stage,'failure',`${step.label}: ${injectedFailure ? config.failureMode : 'seeded transient failure'}. Run stopped; subsequent stages were not executed.`,duration); return finish('failed'); }
-    append(step.stage,'success',`${step.label} · ${step.route} (simulated)`,duration);
-  }
-  append('session','success','Simulation complete. Fixture output produced.');
-  return finish('success');
-}
-
-export class DigitalTwinAdapter implements DeviceAdapter {
-  readonly mode = 'simulation' as const;
-  readonly id: string;
-  private connected = false;
-  constructor(private readonly device: DeviceProfile) { this.id = `twin:${device.id}`; }
-  async connect(): Promise<void> { this.connected = true; }
-  async disconnect(): Promise<void> { this.connected = false; }
-  getCapabilities() { return structuredClone(this.device.capabilities); }
-  async execute(plan: CompiledPlan, config: SimulationConfig): Promise<RunResult> {
-    if (!this.connected) throw new Error('Digital twin is not connected.');
-    if (plan.deviceId !== this.device.id) throw new Error('Plan device does not match adapter.');
-    return simulate(plan, config);
-  }
-}
+export class DigitalTwinAdapter implements DeviceAdapter{readonly manifest;private connected=false;constructor(readonly profile:DeviceProfile){const manifest=getAdapter(profile.id);if(!manifest)throw new Error('Only a registered Digital Twin can be executed.');this.manifest=manifest}async connect(){this.connected=true}async disconnect(){this.connected=false}async execute(plan:CompiledPlan,config:SimulationConfig){if(!this.connected)throw new Error('Adapter is not connected.');if(plan.deviceId!==this.profile.id)throw new Error('Plan device does not match adapter.');return simulate(plan,config)}}

@@ -1,0 +1,2 @@
+import type {ReactNode} from 'react';
+export default function Page({index,eyebrow,title,lead,actions,children}:{index:string;eyebrow:string;title:ReactNode;lead:string;actions?:ReactNode;children:ReactNode}){return <main id="main" tabIndex={-1} className="page"><header className="page-hero"><div className="page-index">{index}</div><div><p className="eyebrow">{eyebrow}</p><h1>{title}</h1><p className="page-lead">{lead}</p></div>{actions&&<div className="page-actions">{actions}</div>}</header>{children}</main>}

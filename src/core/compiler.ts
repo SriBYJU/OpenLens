@@ -1,17 +1,21 @@
-import type { Capability, CompiledPlan, DeviceProfile, ExperienceDefinition, PlanStep } from './types';
-import { validateExperience } from './experience';
-
-export function compileExperience(definition: ExperienceDefinition, device: DeviceProfile): CompiledPlan {
-  const experience = validateExperience(definition);
-  const warnings: string[] = ['Execution uses a digital twin. No hardware connection or live AI inference is performed.'];
-  const route = (capability: Capability, stage: 'input' | 'output'): PlanStep => {
-    const info = device.capabilities[capability];
-    const supported = info.physical === 'present' && (info.access === 'native' || info.access === 'bridge');
-    const chosen = supported ? info.access as 'native' | 'bridge' : experience.allowFallback ? 'companion' : 'blocked';
-    const reason = supported ? `${capability}: ${info.note}` : `${capability} ${info.physical === 'absent' ? 'is physically absent' : info.access === 'unknown' || info.physical === 'unknown' ? 'has unverified access' : 'is not developer-accessible'}. ${chosen === 'companion' ? 'Use the simulated companion instead.' : 'Fallback disabled; execution blocked.'}`;
-    if (chosen !== 'native') warnings.push(reason);
-    return { id: stage, stage, capability, label: stage === 'input' ? `Acquire ${capability} input` : `Present via ${capability}`, route: chosen, reason };
-  };
-  const steps: PlanStep[] = [experience.input === 'manual' ? { id:'input', stage:'input', capability:null, label:'Receive manual trigger', route:'native', reason:'Local button trigger; no device sensor required.' } : route(experience.input, 'input'), { id:'process', stage:'process', capability:null, label:`${experience.task[0].toUpperCase()}${experience.task.slice(1)} · ${experience.language}`, route:'companion', reason:'Deterministic fixture response; model inference is not integrated.' }, route(experience.output, 'output')];
-  return { version:1, deviceId:device.id, deviceName:device.name, experience, mode:'simulation', steps, warnings, compatibility:steps.some(s=>s.route==='blocked') ? 'blocked' : steps.some(s=>s.stage!=='process' && (s.route==='companion'||s.route==='bridge')) ? 'adapted' : 'compatible' };
+import {getAdapter} from '../adapters/registry';
+import type {Capability,CompiledPlan,DeviceProfile,ExperienceDefinition,OutputMode,PlanStep} from './types';
+import {validateExperience} from './experience';
+const hash=(value:string)=>{let h=2166136261;for(let i=0;i<value.length;i++){h^=value.charCodeAt(i);h=Math.imul(h,16777619)}return (h>>>0).toString(16).padStart(8,'0')};
+export function compileExperience(definition:ExperienceDefinition,device:DeviceProfile):CompiledPlan{
+ const experience=validateExperience(definition); const adapter=getAdapter(device.id); const warnings:string[]=[];
+ const route=(capability:Capability,stage:'input'|'output',fallback=false):PlanStep=>{
+  const adapterCan=Boolean(adapter?.capabilities.includes(capability));
+  const chosen=adapterCan?(adapter!.mode==='simulation'?'twin':'adapter'):experience.allowCompanionFallback?'companion':'blocked';
+  const reason=adapterCan?`${adapter!.name} exposes ${capability} in ${adapter!.mode} mode.`:`${device.name} is research-only in OpenLens; its manufacturer access claim does not create an implemented adapter.${chosen==='companion'?' Route through the explicit companion fallback.':''}`;
+  return{id:`${stage}-${capability}`,stage,capability,label:stage==='input'?`Acquire ${capability}`:`Present via ${capability}`,route:chosen,reason,fallback};
+ };
+ const input=experience.input==='manual'?{id:'input-manual',stage:'input' as const,capability:null,label:'Receive manual trigger',route:(adapter?'twin':'companion') as 'twin'|'companion',reason:'A local manual trigger requires no device sensor.'}:route(experience.input,'input');
+ let output:PlanStep|undefined; for(const [index,mode] of experience.preferredOutputs.entries()){const candidate=route(mode as OutputMode,'output',index>0);if(candidate.route!=='blocked'&&!(candidate.route==='companion'&&index+1<experience.preferredOutputs.length)){output=candidate;break}output=candidate}
+ const process:PlanStep={id:'process',stage:'process',capability:null,label:`${experience.task} · ${experience.language}`,route:'companion',reason:experience.privacy==='local-only'?'Deterministic local fixture. Optional OCR runs on-device in the browser.':'Provider route allowed but no provider is configured.'};
+ const steps=[input,process,output!]; const blocked=steps.some(s=>s.route==='blocked'); const twin=steps.some(s=>s.route==='twin'); const adapted=steps.some(s=>s.route==='companion');
+ if(device.kind==='research')warnings.push('Research profile only. No physical connection or verified OpenLens hardware adapter exists.');
+ if(adapter)warnings.push(adapter.disclosure);
+ const compatibility:CompiledPlan['compatibility']=blocked?'blocked':adapter?.mode==='simulation'?'simulation-only':device.kind==='research'?'simulation-only':adapted?'adapted':twin?'simulation-only':'native';
+ const base={version:2 as const,deviceId:device.id,deviceRevision:device.revision,deviceName:device.name,adapterId:adapter?.id??null,experience,compatibility,steps,warnings,mode:'simulation' as const}; return{...base,fingerprint:hash(JSON.stringify(base))};
 }

@@ -1,16 +1,36 @@
 import {useRef} from 'react';
-import {motion,useScroll,useTransform,useReducedMotion} from 'motion/react';
-import Glasses from './Glasses';
-import {useMobile} from '../mobile';
-export default function Home(){const ref=useRef<HTMLElement>(null);const reduce=useReducedMotion();const mobile=useMobile();const {scrollYProgress}=useScroll({target:ref,offset:['start start','end start']});const scale=useTransform(scrollYProgress,[0,.65,1],[1,mobile?1.2:2.8,mobile?1.3:4]);const opacity=useTransform(scrollYProgress,[0,.5,.95],[1,1,0]);const y=useTransform(scrollYProgress,[0,1],[0,mobile?30:150]);return <>
- <section className="hero" ref={ref}>
- <div className="hero-grid" aria-hidden="true"/><div className="optical-orbit orbit-one" aria-hidden="true"/><div className="optical-orbit orbit-two" aria-hidden="true"/>
- <div className="hero-copy"><p className="eyebrow"><span className="live-dot"/> THE OPEN SMART-GLASSES PLATFORM</p><h1>See what’s<br/><em>possible.</em></h1><p className="hero-desc">One open environment to explore hardware,<br className="desktop-break"/> build experiences, and see how they run.</p><div className="button-row"><a className="button primary" href="#/lab">Enter Lens Lab <span>↗</span></a><a className="text-link" href="#/devices">Explore devices <span>→</span></a></div></div>
- <motion.div className="hero-object" style={reduce?{}:{scale,opacity,y}}><Glasses/><div className="object-label label-camera"><span className="crosshair">+</span><div><span>01 / SENSE</span><strong>A new point of view.</strong></div></div><div className="object-label label-display"><span className="crosshair">+</span><div><span>02 / PERCEIVE</span><strong>Ideas, in your field of view.</strong></div></div></motion.div>
- <div className="hero-bottom"><span>INDEPENDENT. OPEN. BUILT TO EXPERIMENT.</span><a href="#platform" onClick={e=>{e.preventDefault();document.getElementById('platform')?.scrollIntoView({behavior:reduce?'instant':'smooth'});}}>SCROLL THROUGH THE LENS <span>↓</span></a><span>NO HARDWARE REQUIRED</span></div>
- </section>
- <section id="platform" className="platform section-wrap"><div className="section-intro"><p className="eyebrow">FROM HARDWARE TO POSSIBILITY</p><h2>Different glasses.<br/><em>A shared language.</em></h2><p>Smart glasses are fragmented across sensors, displays, and developer APIs. OpenLens lets you explore those differences and test the same idea across them.</p></div><div className="signal-line"><div><span>01</span><h3>Sense</h3><p>Camera · microphone · sensors</p></div><i>→</i><div><span>02</span><h3>Understand</h3><p>Local OCR · simulated pipelines</p></div><i>→</i><div><span>03</span><h3>Respond</h3><p>Display · audio · companion</p></div></div></section>
- <section className="lab-teaser section-wrap"><div className="section-intro"><p className="eyebrow">YOUR NEXT IDEA STARTS HERE</p><h2>A workbench for<br/><em>wearable computing.</em></h2><p>Choose a Digital Twin. Run an experience. Follow every stage from input to output. Then change the hardware and watch the plan adapt.</p><a href="#/lab" className="button primary">Open the workbench ↗</a></div><a href="#/lab" className="teaser-console" aria-label="Open Lens Lab interactive workbench"><div className="console-top"><span><span className="live-dot"/> LENS LAB</span><span>SIMULATED</span></div><div className="fov-teaser"><div className="scan-grid"/><span className="view-caption">DIGITAL TWIN / OPTICAL VIEW</span><div className="hud"><span>TRANSLATION PREVIEW</span><strong>Hello, world.</strong><small>Simulated output · English</small></div><div className="fov-cross">+</div></div><div className="teaser-trace"><span>INPUT</span><b/><span>PROCESS</span><b/><span>OUTPUT</span></div><div className="console-bottom">Trace every decision. Inspect every assumption. <span>↗</span></div></a></section>
- <section className="system-index section-wrap"><p className="eyebrow">GO DEEPER</p>{[['01','Explore the device universe','Capabilities, developer access, and primary-source evidence.','devices'],['02','Compile an experience','One idea. Explicit requirements. Honest fallback paths.','compiler'],['03','Measure what matters','Seeded runs, raw samples, transparent statistics.','benchmarks'],['04','Build with OpenLens','Typed adapters, reproducible examples, and open source.','developers']].map(([n,title,desc,url])=><a className="index-row" href={`#/${url}`} key={n}><span>{n}</span><h3>{title}</h3><p>{desc}</p><b>↗</b></a>)}</section>
- <section className="closing section-wrap"><p className="eyebrow">THE VIEW IS ONLY THE BEGINNING.</p><h2>What will you<br/><em>build through it?</em></h2><a className="button primary" href="#/lab">Start an experiment ↗</a><span className="closing-mark" aria-hidden="true">◎</span></section>
- </>}
+import {motion,useReducedMotion,useScroll,useTransform} from 'motion/react';
+
+const chapters=[
+ ['01','SENSE','See every input.','Camera, microphone, motion and manual triggers enter one explicit capability model.','lab'],
+ ['02','UNDERSTAND','Compile the intent.','Turn constrained language into a reviewable graph with routes, fallbacks and privacy boundaries.','compiler'],
+ ['03','RESPOND','Adapt across hardware.','Compare what a device claims with what an OpenLens adapter can actually execute.','devices'],
+ ['04','MEASURE','Keep the whole trace.','Replay seeded runs, inspect failure spans and export the artifact behind every number.','benchmarks'],
+ ['05','BUILD','Make the layer open.','Typed contracts, local-first tools and research methods that stay readable end to end.','developers']
+];
+export default function Home(){
+ const ref=useRef<HTMLElement>(null); const reduce=useReducedMotion(); const {scrollYProgress}=useScroll({target:ref,offset:['start start','end end']});
+ const scale=useTransform(scrollYProgress,[0,.12,.34,.56,.76],[.72,.92,1.45,3.8,7]);
+ const x=useTransform(scrollYProgress,[0,.2,.45,.72],['6%','0%','-9%','-39%']);
+ const rotate=useTransform(scrollYProgress,[0,.2,.5],[5,0,-2]);
+ const copyOpacity=useTransform(scrollYProgress,[0,.13,.28],[1,.85,0]);
+ const hudOpacity=useTransform(scrollYProgress,[.42,.58,.78],[0,1,0]);
+ const worldOpacity=useTransform(scrollYProgress,[.67,.8,1],[0,1,1]);
+ return <main id="main">
+  <section ref={ref} className="cinematic">
+   <div className="cinematic-sticky">
+    <div className="ambient ambient-a"/><div className="ambient ambient-b"/><div className="grain"/>
+    <motion.div className="hero-type" style={reduce?{}:{opacity:copyOpacity}}><p className="eyebrow">OPEN DEVELOPMENT / SIMULATION / RESEARCH</p><h1>See the<br/><em>system.</em></h1><p>Build for smart glasses without hiding the differences.</p><div className="button-row"><a className="button primary" href="#/lab">Enter Lens Lab</a><a className="text-link" href="#/devices">Explore the field</a></div></motion.div>
+    <motion.div className="glasses-stage" style={reduce?{}:{scale,x,rotate}}><img src={`${import.meta.env.BASE_URL}assets/openlens-glasses-hero-v2.png`} alt="Detailed graphite OpenLens smart glasses with smoked optical lenses" draggable={false}/><div className="glass-caustic" aria-hidden="true"/></motion.div>
+    <div className="optic-callout callout-camera"><i/>01 / CAMERA ARRAY</div><div className="optic-callout callout-display"><i/>02 / WAVEGUIDE</div><div className="optic-callout callout-hinge"><i/>03 / COMPUTE HINGE</div>
+    <motion.div className="lens-hud" style={reduce?{}:{opacity:hudOpacity}}><span>OPTICAL TWIN / ACTIVE</span><strong>ENTERING<br/>PERCEPTION LAYER</strong><div className="hud-reticle"/><small>SIMULATION VIEWPORT · NOT A DEVICE MEASUREMENT</small></motion.div>
+    <motion.div className="perception-world" style={reduce?{}:{opacity:worldOpacity}}><div className="world-grid"/><p className="eyebrow">YOU ARE THROUGH THE LENS</p><h2>Every signal becomes<br/><em>inspectable.</em></h2><a href="#/lab" className="button primary">Start a live simulation</a></motion.div>
+    <div className="cinematic-progress"><span>APPROACH</span><i/><span>ENTER</span><i/><span>PERCEIVE</span></div>
+   </div>
+  </section>
+  <section className="manifesto"><p className="eyebrow">THE OPEN OPTICAL LAYER</p><div><h2>Glasses are becoming computers.<br/><em>Their differences should be visible.</em></h2><p>OpenLens turns a fragmented hardware landscape into an environment you can inspect, simulate, compile, trace, and benchmark. Every boundary stays attached to the work.</p></div></section>
+  <section className="chapter-field">{chapters.map(([n,label,title,body,route],index)=><a href={`#/${route}`} className={`chapter chapter-${index+1}`} key={n}><div className="chapter-number">{n}</div><div className="chapter-copy"><p className="eyebrow">{label}</p><h3>{title}</h3><p>{body}</p><span>OPEN SYSTEM <b>↗</b></span></div><div className="chapter-lens" aria-hidden="true"><i/><i/></div></a>)}</section>
+  <section className="proof-strip"><span>NO ACCOUNT</span><span>LOCAL-FIRST</span><span>ZERO-COST CORE</span><span>VERSIONED ARTIFACTS</span><span>SOURCED CLAIMS</span></section>
+  <section className="home-closing"><p className="eyebrow">OPENLENS / 0.2</p><h2>Don’t just imagine<br/>the next interface.<br/><em>Run it.</em></h2><a className="button primary" href="#/lab">Open the workbench</a><img src={`${import.meta.env.BASE_URL}assets/openlens-glasses-hero-v2.png`} alt="" aria-hidden="true"/></section>
+ </main>
+}
