@@ -134,7 +134,7 @@ export default function LocalAI() {
       };
       worker.onerror = () => failed('The local OCR worker could not run. Retry in a current browser with WebAssembly enabled.');
       timeoutRef.current = setTimeout(() => failed('Reading timed out after 90 seconds. Try a smaller, sharper image and check your connection for the first model load.'), OCR_TIMEOUT_MS);
-      worker.postMessage({ image, assetBase: new URL('ocr', new URL(import.meta.env.BASE_URL, location.href)).href.replace(/\/$/, '') });
+      worker.postMessage({ image });
     } catch {
       stopWorker();
       setBusy(false);

@@ -1,0 +1,3 @@
+import type {ReactNode} from 'react';
+export interface GuideStep {number:string;title:string;body:string;action?:ReactNode}
+export default function FeatureGuide({title,intro,steps}:{title:string;intro:string;steps:GuideStep[]}){const id=`guide-${title.replaceAll(' ','-').toLowerCase()}`;return <section className="feature-guide" aria-labelledby={id}><header><div><p className="eyebrow">HOW THIS TOOL WORKS</p><h2 id={id}>{title}</h2></div><p>{intro}</p></header><div className="guide-steps">{steps.map(step=><article key={step.number}><span>{step.number}</span><h3>{step.title}</h3><p>{step.body}</p>{step.action&&<div className="guide-action">{step.action}</div>}</article>)}</div></section>}

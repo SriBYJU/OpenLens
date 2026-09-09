@@ -13,7 +13,7 @@ export type Confidence = 'high'|'medium'|'low';
 export interface EvidenceSource { id:string; title:string; url:string; publisher:string; accessed:string; confidence:Confidence; note:string }
 export interface Claim<T> { value:T|null; status:ClaimStatus; sourceIds:string[]; confidence:Confidence; note?:string }
 export interface CapabilityInfo { physical:'present'|'absent'|'unknown'; manufacturerAccess:ManufacturerAccess; note:string; sourceIds:string[] }
-export interface OpticalProfile { horizontalFovDegrees:Claim<number>|null }
+export interface OpticalProfile { horizontalFovDegrees:Claim<number>|null; fovAxis?:'horizontal'|'diagonal'|'unknown' }
 export interface DeviceProfile { id:string; revision:number; name:string; manufacturer:string; kind:'digital-twin'|'research'; summary:string; integrationStatus:IntegrationStatus; capabilities:Record<Capability,CapabilityInfo>; optics:OpticalProfile; sources:EvidenceSource[] }
 export interface AdapterManifest { id:string; deviceId:string; name:string; status:IntegrationStatus; mode:'simulation'|'hardware'; capabilities:Capability[]; disclosure:string }
 export type InputMode = 'camera'|'microphone'|'manual';

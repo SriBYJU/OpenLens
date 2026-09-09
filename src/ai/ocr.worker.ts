@@ -5,9 +5,15 @@ import type { OcrMessage, OcrRequest } from './types';
 // its descendants, including while createWorker is still initializing.
 const report = (message: OcrMessage) => self.postMessage(message);
 self.onmessage = async (event: MessageEvent<OcrRequest>) => {
-  const { image, assetBase } = event.data;
+  const { image } = event.data;
   let engine: Awaited<ReturnType<typeof createWorker>> | undefined;
   try {
+    if (!(image instanceof Blob) || image.size === 0 || image.size > 20 * 1024 * 1024 || !image.type.startsWith('image/')) {
+      throw new Error('Invalid OCR image');
+    }
+    // Resolve engine assets inside this deployment. The page cannot instruct the
+    // worker to load executable code or model files from another origin.
+    const assetBase = new URL('../ocr/', self.location.href).href.replace(/\/$/, '');
     engine = await createWorker('eng', OEM.LSTM_ONLY, {
       workerPath: `${assetBase}/worker.min.js`,
       corePath: `${assetBase}/core`,
