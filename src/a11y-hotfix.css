@@ -1,0 +1,9 @@
+/* Accessibility corrections discovered by the production browser gate.
+   Keep the cinematic contrast intentional without using low-contrast text as decoration. */
+.chapter-field .chapter-1 .chapter-number,
+.chapter-field .chapter-3 .chapter-number,
+.chapter-field .chapter-5 .chapter-number{color:#818d8f}
+.chapter-field .chapter-2 .chapter-number,
+.chapter-field .chapter-4 .chapter-number,
+.chapter-field .chapter-2 .eyebrow,
+.chapter-field .chapter-4 .eyebrow{color:#4f5a5d}
