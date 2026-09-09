@@ -22,6 +22,16 @@ describe('device fit engine',()=>{
   expect(result.blockers.some(item=>item.includes('Camera'))).toBe(true);
  });
 
+ it('keeps preferred capabilities non-blocking even under strict developer-access policy',()=>{
+  const strictWithOptionalAudio:FitRequirements={
+   capabilities:{camera:'required',microphone:'off',display:'off',audio:'preferred',imu:'off'},
+   developerAccess:'required',allowCompanion:false,execution:'research-ok',
+  };
+  const result=evaluateDeviceFit(getDevice('ray-ban-meta'),strictWithOptionalAudio);
+  expect(result.blockers.some(item=>item.startsWith('Audio:'))).toBe(false);
+  expect(result.caveats.some(item=>item.startsWith('Audio:'))).toBe(true);
+ });
+
  it('requires an executable adapter when requested',()=>{
   const runnable:FitRequirements={...defaultFitRequirements,execution:'openlens-runnable'};
   const ranked=fitDevices(devices,runnable);
