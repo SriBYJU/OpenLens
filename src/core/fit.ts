@@ -57,7 +57,7 @@ function assessCapability(device:DeviceProfile,capability:Capability,priority:Ca
  }
  const accessMessage=info.manufacturerAccess==='companion-only'&&requirements.allowCompanion?`${title} is available only through a companion path, not a direct device API.`:`${title}: ${accessLabel[info.manufacturerAccess]}.`;
  if(priority==='required'&&requirements.developerAccess==='required'&&!(info.manufacturerAccess==='companion-only'&&requirements.allowCompanion))result.blockers.push(accessMessage);
- else if(requirements.developerAccess!=='ignore')result.caveats.push(accessMessage);
+ else result.caveats.push(accessMessage);
 }
 
 export function evaluateDeviceFit(device:DeviceProfile,requirements:FitRequirements):DeviceFitResult{
