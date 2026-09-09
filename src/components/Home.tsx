@@ -1,5 +1,6 @@
 import {useRef} from 'react';
 import {motion,useReducedMotion,useScroll,useTransform} from 'motion/react';
+import HomeSignalDemo from './HomeSignalDemo';
 
 const chapters=[
  ['01','SENSE','See every input.','Camera, microphone, motion and manual triggers enter one explicit capability model.','lab'],
@@ -16,21 +17,26 @@ export default function Home(){
  const copyOpacity=useTransform(scrollYProgress,[0,.13,.28],[1,.85,0]);
  const hudOpacity=useTransform(scrollYProgress,[.42,.58,.78],[0,1,0]);
  const worldOpacity=useTransform(scrollYProgress,[.67,.8,1],[0,1,1]);
- return <main id="main">
+ const ringScale=useTransform(scrollYProgress,[0,.42,.72],[.72,1.1,2.8]);
+ const ringOpacity=useTransform(scrollYProgress,[0,.25,.65],[.25,.6,0]);
+ return <main id="main" tabIndex={-1}>
   <section ref={ref} className="cinematic">
    <div className="cinematic-sticky">
     <div className="ambient ambient-a"/><div className="ambient ambient-b"/><div className="grain"/>
     <motion.div className="hero-type" style={reduce?{}:{opacity:copyOpacity}}><p className="eyebrow">OPEN DEVELOPMENT / SIMULATION / RESEARCH</p><h1>See the<br/><em>system.</em></h1><p>Build for smart glasses without hiding the differences.</p><div className="button-row"><a className="button primary" href="#/lab">Enter Lens Lab</a><a className="text-link" href="#/devices">Explore the field</a></div></motion.div>
-    <motion.div className="glasses-stage" style={reduce?{}:{scale,x,rotate}}><img src={`${import.meta.env.BASE_URL}assets/openlens-glasses-hero-v2.png`} alt="Detailed graphite OpenLens smart glasses with smoked optical lenses" draggable={false}/><div className="glass-caustic" aria-hidden="true"/></motion.div>
+    <motion.div className="hero-depth-rings" aria-hidden="true" style={reduce?{}:{scale:ringScale,opacity:ringOpacity}}><i/><i/><i/><span/></motion.div>
+    <motion.div className="glasses-stage" style={reduce?{}:{scale,x,rotate}}><img src={`${import.meta.env.BASE_URL}assets/openlens-glasses-hero-v2.png`} alt="Detailed graphite OpenLens smart glasses with smoked optical lenses" draggable={false}/><div className="glass-caustic" aria-hidden="true"/><div className="lens-energy-line" aria-hidden="true"/></motion.div>
     <div className="optic-callout callout-camera"><i/>01 / CAMERA ARRAY</div><div className="optic-callout callout-display"><i/>02 / WAVEGUIDE</div><div className="optic-callout callout-hinge"><i/>03 / COMPUTE HINGE</div>
+    <motion.div className="hero-readout" style={reduce?{}:{opacity:copyOpacity}}><span>OPENLENS / PUBLIC PREVIEW</span><div><b>LOCAL-FIRST</b><b>SOURCED CLAIMS</b><b>REPLAYABLE RUNS</b></div><small>SCROLL TO ENTER THE RIGHT LENS ↓</small></motion.div>
     <motion.div className="lens-hud" style={reduce?{}:{opacity:hudOpacity}}><span>OPTICAL TWIN / ACTIVE</span><strong>ENTERING<br/>PERCEPTION LAYER</strong><div className="hud-reticle"/><small>SIMULATION VIEWPORT · NOT A DEVICE MEASUREMENT</small></motion.div>
-    <motion.div className="perception-world" style={reduce?{}:{opacity:worldOpacity}}><div className="world-grid"/><p className="eyebrow">YOU ARE THROUGH THE LENS</p><h2>Every signal becomes<br/><em>inspectable.</em></h2><a href="#/lab" className="button primary">Start a live simulation</a></motion.div>
+    <motion.div className="perception-world" style={reduce?{}:{opacity:worldOpacity}}><div className="world-grid"/><div className="perception-orbit" aria-hidden="true"><span/><span/><span/><i/><i/></div><p className="eyebrow">YOU ARE THROUGH THE LENS</p><h2>Every signal becomes<br/><em>inspectable.</em></h2><div className="perception-actions"><a href="#/lab" className="button primary">Start a live simulation</a><a href="#home-live-proof" className="text-link">See it run below</a></div><div className="perception-telemetry"><span>INPUT</span><i/> <span>ROUTE</span><i/> <span>OUTPUT</span><i/> <span>EVIDENCE</span></div></motion.div>
     <div className="cinematic-progress"><span>APPROACH</span><i/><span>ENTER</span><i/><span>PERCEIVE</span></div>
    </div>
   </section>
   <section className="manifesto"><p className="eyebrow">THE OPEN OPTICAL LAYER</p><div><h2>Glasses are becoming computers.<br/><em>Their differences should be visible.</em></h2><p>OpenLens turns a fragmented hardware landscape into an environment you can inspect, simulate, compile, trace, and benchmark. Every boundary stays attached to the work.</p></div></section>
-  <section className="chapter-field">{chapters.map(([n,label,title,body,route],index)=><a href={`#/${route}`} className={`chapter chapter-${index+1}`} key={n}><div className="chapter-number">{n}</div><div className="chapter-copy"><p className="eyebrow">{label}</p><h3>{title}</h3><p>{body}</p><span>OPEN SYSTEM <b>↗</b></span></div><div className="chapter-lens" aria-hidden="true"><i/><i/></div></a>)}</section>
+  <div id="home-live-proof"><HomeSignalDemo/></div>
+  <section className="chapter-field">{chapters.map(([n,label,title,body,route],index)=><a href={`#/${route}`} className={`chapter chapter-${index+1}`} key={n}><div className="chapter-number">{n}</div><div className="chapter-copy"><p className="eyebrow">{label}</p><h3>{title}</h3><p>{body}</p><span>OPEN SYSTEM <b>↗</b></span></div><div className="chapter-lens" aria-hidden="true"><i/><i/><span>{label}</span></div></a>)}</section>
   <section className="proof-strip"><span>NO ACCOUNT</span><span>LOCAL-FIRST</span><span>ZERO-COST CORE</span><span>VERSIONED ARTIFACTS</span><span>SOURCED CLAIMS</span></section>
-  <section className="home-closing"><p className="eyebrow">OPENLENS / 0.2</p><h2>Don’t just imagine<br/>the next interface.<br/><em>Run it.</em></h2><a className="button primary" href="#/lab">Open the workbench</a><img src={`${import.meta.env.BASE_URL}assets/openlens-glasses-hero-v2.png`} alt="" aria-hidden="true"/></section>
+  <section className="home-closing"><p className="eyebrow">OPENLENS / PUBLIC PREVIEW</p><h2>Don’t just imagine<br/>the next interface.<br/><em>Run it.</em></h2><div className="button-row"><a className="button primary" href="#/lab">Open the workbench</a><a className="text-link" href="#/compiler">Compile an idea</a></div><img src={`${import.meta.env.BASE_URL}assets/openlens-glasses-hero-v2.png`} alt="" aria-hidden="true"/></section>
  </main>
 }
