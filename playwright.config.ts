@@ -2,7 +2,7 @@ import {defineConfig,devices} from '@playwright/test';
 
 export default defineConfig({
   testDir:'./tests',
-  testMatch:'e2e.spec.ts',
+  testMatch:['e2e.spec.ts','resilience.e2e.ts'],
   fullyParallel:true,
   retries:1,
   reporter:'line',
