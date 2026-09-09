@@ -24,6 +24,14 @@ jobs:
       - run: npm run lint
       - run: npm test
       - run: npm run test:e2e
+      - name: Retain visual QA screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-qa-${{ github.run_id }}
+          path: test-results/**/*.png
+          if-no-files-found: ignore
+          retention-days: 7
       - run: npm run build
       - name: Stamp release identity
         run: printf '{"commit":"%s"}\n' "$GITHUB_SHA" > dist/release.json
