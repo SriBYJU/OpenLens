@@ -104,6 +104,25 @@ test('core workbench pages have no serious automated accessibility violations',a
   }
 });
 
+test('flagship layout survives tablet, ultrawide, and reduced-motion states',async({page},testInfo)=>{
+  test.skip(testInfo.project.name!=='desktop','One targeted responsive sweep is sufficient.');
+  const states=[
+    {name:'tablet',width:820,height:1180,reduced:false},
+    {name:'ultrawide',width:1920,height:900,reduced:false},
+    {name:'reduced-motion',width:1440,height:900,reduced:true},
+  ];
+  for(const state of states){
+    await page.setViewportSize({width:state.width,height:state.height});
+    await page.emulateMedia({reducedMotion:state.reduced?'reduce':'no-preference'});
+    await page.goto('/#/');
+    await expect(page.getByRole('heading',{name:/See the system/})).toBeVisible();
+    expect(await page.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth+1),`${state.name} overflow`).toBe(true);
+    await page.locator('#home-live-proof').scrollIntoViewIfNeeded();
+    expect(await page.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth+1),`${state.name} live-proof overflow`).toBe(true);
+    await page.screenshot({path:testInfo.outputPath(`openlens-${state.name}.png`),fullPage:false});
+  }
+});
+
 test('local OCR recognizes the supplied image in a browser worker',async({page})=>{
  test.setTimeout(120000);
  await page.goto('/#/lab');
