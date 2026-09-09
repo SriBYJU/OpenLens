@@ -7,4 +7,5 @@ import './dark-overrides.css';
 import './readability.css';
 import './flagship.css';
 import './a11y-hotfix.css';
+import './resilience.css';
 createRoot(document.getElementById('root')!).render(<React.StrictMode><App /></React.StrictMode>);
