@@ -1,0 +1,13 @@
+{
+  "name": "openlens",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Open development, simulation, AI, research and benchmarking layer for smart glasses.",
+  "scripts": {
+    "serve": "python3 -m http.server 4173",
+    "check": "node --check src/main.js"
+  },
+  "dependencies": {
+    "motion": "13.2.0"
+  }
+}
