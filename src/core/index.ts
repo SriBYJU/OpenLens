@@ -5,4 +5,6 @@ export * from './simulation';
 export * from './benchmark';
 export * from './exchange';
 export * from './fit';
+export * from './resilience';
+export * from './scenario';
 export * from '../data/devices';
