@@ -18,19 +18,32 @@ The first implementation establishes the visual and interaction language:
 
 ## Run locally
 
-The current foundation is static and works without a build step:
+Use Node.js 24 and install the locked dependencies:
 
 ```bash
-python3 -m http.server 4173
+npm ci
+npm run dev -- --port 4173
 ```
 
 Then open `http://localhost:4173`.
 
-For the Motion dependency used by the future bundled build:
+Build and verify the production application:
 
 ```bash
-npm install
+npm run lint
+npm test
+npm run build
 ```
 
 ## Status
-Early production foundation. The cinematic shell is real; device data, Lens Lab execution, Digital Twins and benchmark systems are the next functional layers.
+Public preview: the Optical Twin, experience compiler, device comparison, trace inspection, simulation benchmarks and local OCR are implemented. Physical hardware adapters remain unavailable and research profiles cannot execute.
+
+## Deployment
+
+The public site is https://sribyju.github.io/OpenLens/.
+
+`main` is the production source. Every push to `main` runs `.github/workflows/pages.yml`: install locked dependencies, lint, test, build, and publish `dist` to GitHub Pages. Pages must use **GitHub Actions** as its source. Do not publish the repository root: it contains TypeScript source rather than a browser-ready build.
+
+`feat/openlens-platform` is a development checkpoint branch. `sol/cinematic-glasses-foundation` preserves the earlier foundation. Neither branch controls the live site. A feature-branch push saves work but does not deploy it until the work reaches `main`.
+
+The deployed `release.json` identifies the exact source commit.
