@@ -55,16 +55,9 @@ function assessCapability(device:DeviceProfile,capability:Capability,priority:Ca
   result.strengths.push(`${title} has a documented developer API.`);
   return;
  }
- if(requirements.developerAccess==='required'){
-  if(info.manufacturerAccess==='companion-only'&&requirements.allowCompanion){
-   result.caveats.push(`${title} is available only through a companion path, not a direct device API.`);
-  }else{
-   result.blockers.push(`${title}: ${accessLabel[info.manufacturerAccess]}.`);
-  }
- }else if(requirements.developerAccess==='preferred'){
-  if(info.manufacturerAccess==='companion-only'&&requirements.allowCompanion)result.caveats.push(`${title} would require a companion path.`);
-  else result.caveats.push(`${title}: ${accessLabel[info.manufacturerAccess]}.`);
- }
+ const accessMessage=info.manufacturerAccess==='companion-only'&&requirements.allowCompanion?`${title} is available only through a companion path, not a direct device API.`:`${title}: ${accessLabel[info.manufacturerAccess]}.`;
+ if(priority==='required'&&requirements.developerAccess==='required'&&!(info.manufacturerAccess==='companion-only'&&requirements.allowCompanion))result.blockers.push(accessMessage);
+ else if(requirements.developerAccess!=='ignore')result.caveats.push(accessMessage);
 }
 
 export function evaluateDeviceFit(device:DeviceProfile,requirements:FitRequirements):DeviceFitResult{
