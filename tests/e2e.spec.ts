@@ -80,9 +80,10 @@ test('device research, benchmark, and adapter generator are interactive',async({
   await page.goto('/#/devices');
   await expect(page.getByText('8 OF 8 PROFILES')).toBeVisible();
   await page.locator('.catalog-tools .search-input').fill('Rokid');
-  await expect(page.getByRole('heading',{name:'Rokid Glasses'})).toBeVisible();
+  const record=page.locator('.device-catalog .device-record').filter({hasText:'Rokid Glasses'});
+  await expect(record.getByRole('heading',{name:'Rokid Glasses'})).toBeVisible();
   await expect(page.getByText('1 OF 8 PROFILES')).toBeVisible();
-  await page.getByRole('link',{name:/Inspect evidence/i}).last().click();
+  await record.getByRole('link',{name:/Inspect evidence/i}).click();
   await expect(page.locator('.evidence-ledger article.open').getByText('Rokid Glasses',{exact:true})).toBeVisible();
   await page.goto('/#/benchmarks');
   await page.getByLabel('Benchmark trial count').fill('12');
@@ -123,13 +124,15 @@ test('flagship layout survives tablet, ultrawide, and reduced-motion states',asy
   }
 });
 
-test('local OCR recognizes the supplied image in a browser worker',async({page})=>{
- test.setTimeout(120000);
+test('local OCR recognizes the supplied image in a browser worker',async({page},testInfo)=>{
+ test.skip(testInfo.project.name!=='desktop','Run one real OCR worker to avoid duplicate model downloads competing in CI.');
+ test.setTimeout(150000);
  await page.goto('/#/lab');
  await page.getByRole('button',{name:/Try real local OCR/}).click();
  await page.getByRole('button',{name:'Try demo image'}).click();
+ await expect(page.getByRole('button',{name:'Read text locally'})).toBeEnabled();
  await page.getByRole('button',{name:'Read text locally'}).click();
- await expect(page.locator('.ocr-result, .local-ai [role="alert"]')).toBeVisible({timeout:100000});
+ await expect(page.locator('.ocr-result, .local-ai [role="alert"]')).toBeVisible({timeout:120000});
  await expect(page.locator('.local-ai [role="alert"]')).toHaveCount(0);
  await expect(page.locator('.ocr-text')).toContainText(/RIVERSIDE LIBRARY/i);
 });
