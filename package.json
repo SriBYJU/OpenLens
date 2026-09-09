@@ -1,6 +1,37 @@
 {
-  "name": "openlens", "version": "0.2.0", "private": true, "type": "module",
-  "scripts": {"prepare:ocr":"node scripts/prepare-ocr.mjs", "predev":"npm run prepare:ocr", "prebuild":"npm run prepare:ocr", "dev":"vite --host 127.0.0.1", "build":"tsc --noEmit && vite build", "typecheck":"tsc --noEmit", "test":"vitest run", "lint":"eslint src tests", "preview":"vite preview --host 127.0.0.1", "test:e2e":"playwright test"},
-  "dependencies": {"react":"19.2.8","react-dom":"19.2.8","motion":"13.2.0","tesseract.js":"7.0.0"},
-  "devDependencies": {"@types/react":"latest","@types/react-dom":"latest","@vitejs/plugin-react":"latest","vite":"8.2.2","typescript":"latest","vitest":"latest","eslint":"latest","@eslint/js":"latest","typescript-eslint":"latest","@playwright/test":"latest","@axe-core/playwright":"latest"}
+  "name": "openlens",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prepare:ocr": "node scripts/prepare-ocr.mjs",
+    "predev": "npm run prepare:ocr",
+    "prebuild": "npm run prepare:ocr",
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc --noEmit && vite build",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --exclude tests/e2e.spec.ts",
+    "lint": "eslint src tests",
+    "preview": "vite preview --host 127.0.0.1",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "motion": "13.2.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "tesseract.js": "7.0.0"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "latest",
+    "@eslint/js": "latest",
+    "@playwright/test": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "@vitejs/plugin-react": "latest",
+    "eslint": "latest",
+    "typescript": "latest",
+    "typescript-eslint": "latest",
+    "vite": "8.2.2",
+    "vitest": "latest"
+  }
 }

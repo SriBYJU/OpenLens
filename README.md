@@ -1,49 +1,53 @@
 # OpenLens
 
-**The open development, simulation, AI, research and benchmarking layer for smart glasses.**
+**The open development, simulation, AI, research, and benchmarking layer for smart glasses.**
 
-OpenLens is being built to make a fragmented smart-glasses ecosystem easier to understand, simulate, compare, benchmark and build across.
+[Open the live workbench](https://sribyju.github.io/OpenLens/) · [Read the architecture](ARCHITECTURE.md) · [Build an adapter](DEVICE-ADAPTERS.md) · [Review methodology](BENCHMARK-METHODOLOGY.md)
 
-## Current foundation
+OpenLens lets a visitor describe an experience, compile it into an explicit capability plan, run it against a deterministic Optical Twin, inspect every trace boundary, benchmark repeated trials, and compare the plan with sourced hardware profiles. The public baseline needs no account, device, API key, paid AI, or backend.
 
-The first implementation establishes the visual and interaction language:
+## What works
 
-- procedural dark smart-glasses hero
-- scroll-driven “enter the lens” transition
-- optical atmosphere and field-of-view geometry
-- responsive/mobile-specific behavior
-- reduced-motion fallback
-- Motion 13.2.0 progressive enhancement
-- first Lens Lab / Digital Twin / Trace / Benchmark narrative
+- **Lens Lab:** normal, denied-permission, degraded-network, critical-battery, network-loss, timeout, disconnect, and model-unavailable scenarios produce different results and traces.
+- **Experience Compiler:** supported plain language updates a structured input/process/output contract live and persists it into Lens Lab.
+- **Device Universe:** eight sourced profiles—OpenLens Twin, Brilliant Frame, XREAL Air 2, Ray-Ban Meta, Snap Spectacles, Even Realities G1, Rokid Glasses, and Vuzix Z100—with search and three-device comparison.
+- **Benchmark Lab:** deterministic trial suites, visible failures, sample statistics, raw-run selection, JSON/CSV export, and replay verification.
+- **Local AI:** real English OCR runs in a same-origin Web Worker without uploading the image.
+- **Build With Us:** configure and download a typed adapter-manifest starter.
+
+Only the Optical Twin executes today. Manufacturer profiles are research records until OpenLens adapter code and physical verification exist.
 
 ## Run locally
 
-Use Node.js 24 and install the locked dependencies:
+Use Node.js 24:
 
 ```bash
 npm ci
 npm run dev -- --port 4173
 ```
 
-Then open `http://localhost:4173`.
-
-Build and verify the production application:
+The complete release gate is:
 
 ```bash
 npm run lint
 npm test
+npm run test:e2e
 npm run build
 ```
 
-## Status
-Public preview: the Optical Twin, experience compiler, device comparison, trace inspection, simulation benchmarks and local OCR are implemented. Physical hardware adapters remain unavailable and research profiles cannot execute.
+Playwright browser binaries are required for the end-to-end suite. CI installs Chromium before running it.
+
+## Architecture and trust
+
+The app is a static React/TypeScript deployment. Core contracts, compiler, simulator, benchmark engine, and artifact exchange are framework-independent. Browser local storage keeps the current experience and target. There is no application database, account, analytics service, or hidden cloud AI route.
+
+Device evidence keeps physical capability, manufacturer API access, and OpenLens integration as separate claims. Simulation values are labeled simulated; missing hardware facts remain unknown. See [Research Methodology](RESEARCH-METHODOLOGY.md), [Privacy](PRIVACY.md), [Security](SECURITY.md), and [Zero-Cost Architecture](ZERO-COST-ARCHITECTURE.md).
 
 ## Deployment
 
-The public site is https://sribyju.github.io/OpenLens/.
+`main` is production. Every push runs `.github/workflows/pages.yml`, stamps `dist/release.json` with the exact commit, and publishes the compiled build to GitHub Pages. `feat/openlens-platform` and `sol/cinematic-glasses-foundation` are historical checkpoints and do not control the live site.
 
-`main` is the production source. Every push to `main` runs `.github/workflows/pages.yml`: install locked dependencies, lint, test, build, and publish `dist` to GitHub Pages. Pages must use **GitHub Actions** as its source. Do not publish the repository root: it contains TypeScript source rather than a browser-ready build.
+## Contributing
 
-`feat/openlens-platform` is a development checkpoint branch. `sol/cinematic-glasses-foundation` preserves the earlier foundation. Neither branch controls the live site. A feature-branch push saves work but does not deploy it until the work reaches `main`.
+Evidence corrections and adapter work are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a change. Hardware supplied for development must be disclosed and never changes benchmark methodology or conclusions.
 
-The deployed `release.json` identifies the exact source commit.

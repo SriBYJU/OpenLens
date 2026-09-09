@@ -18,8 +18,10 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      - run: npx playwright install --with-deps chromium
       - run: npm run lint
       - run: npm test
+      - run: npm run test:e2e
       - run: npm run build
       - name: Stamp release identity
         run: printf '{"commit":"%s"}\n' "$GITHUB_SHA" > dist/release.json

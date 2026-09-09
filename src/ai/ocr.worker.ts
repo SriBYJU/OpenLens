@@ -13,7 +13,7 @@ self.onmessage = async (event: MessageEvent<OcrRequest>) => {
     }
     // Resolve engine assets inside this deployment. The page cannot instruct the
     // worker to load executable code or model files from another origin.
-    const assetBase = new URL('../ocr/', self.location.href).href.replace(/\/$/, '');
+    const assetBase = new URL(import.meta.env.DEV ? '/ocr/' : '../ocr/', self.location.href).href.replace(/\/$/, '');
     engine = await createWorker('eng', OEM.LSTM_ONLY, {
       workerPath: `${assetBase}/worker.min.js`,
       corePath: `${assetBase}/core`,

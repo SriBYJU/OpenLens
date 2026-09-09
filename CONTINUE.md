@@ -1,39 +1,38 @@
-# OpenLens — Continue
+# OpenLens — continuation state
 
-## Current branch target
-`sol/cinematic-glasses-foundation` is the first real UI implementation created from an almost-empty repository.
+## Production
 
-## What exists now
-- Cinematic dark smart-glasses hero built as editable SVG.
-- Ambient reflection/highlight system.
-- Pointer parallax on desktop.
-- Scroll-driven camera move into the **right lens**.
-- Optical transition atmosphere and reticle.
-- First perception-layer narrative after entering the lens.
-- Systems rail for Lens Lab, Digital Twins, Trace Viewer and Benchmarks.
-- Visual Lens Lab preview.
-- Dedicated mobile CSS.
-- Reduced-motion fallback.
-- Motion 13.2.0 progressive enhancement for in-view reveals.
+- Branch: `main`
+- Live URL: https://sribyju.github.io/OpenLens/
+- Latest deployed checkpoint at this update: `35b97e5`
+- Delivery: pushes to `main` run lint, unit tests, browser tests, build, and GitHub Pages deployment.
 
-## Important design decision
-Do **not** replace the glasses with a generic PNG. The procedural lens/frame layers are the bridge to future WebGL/3D. If moving to Three.js/R3F, preserve the current composition, right-lens camera target and scroll narrative.
+## Working systems
 
-## Immediate next tasks for Astra
-1. Run visual QA at desktop, phone and tablet sizes.
-2. Replace CDN Motion import with the installed/bundled Motion package when the final build tool is established.
-3. Convert the SVG glasses into a higher-fidelity WebGL/R3F model only if the result is materially better and stays performant.
-4. Add real route/page architecture without breaking the cinematic home sequence.
-5. Build the real Device Universe data model.
-6. Build the first functional Lens Lab Digital Twin flow.
-7. Add performance instrumentation and a lightweight fallback for low-power devices.
-8. Keep `design-system.md` and this file current.
+- Photoreal graphite glasses opening with scroll approach, lens entry, optical atmosphere, reduced-motion mode, and phone adaptations.
+- Eight sourced device profiles with search, three-way comparison, evidence notes, claim confidence, and direct source links.
+- Deterministic Optical Twin with configurable fixtures, seed, timing, battery, permission, network, and seven failure modes.
+- Lens Lab scenario cards, visible plan, optical output, human-readable outcome, canonical trace, run history, and local OCR.
+- Live rules-based Experience Compiler with editable contract, cross-device routing matrix, persistence into Lens Lab, and invalid-input states.
+- Reproducible benchmark suite with raw trials, success rate, sample statistics, selectable traces, JSON/CSV export, and replay-verified import.
+- Interactive adapter manifest generator with live TypeScript, copy, download, and verification boundary.
+- Global search, route-specific plain-language guides, methodology, research ledger, About page with the original Capital Mastery portrait, and durable technical documentation.
 
-## Visual direction
-Dark graphite hardware on a near-black optical environment. Highlights should look like reflected light on physical materials, not neon cyberpunk. The opening should feel enormous and cinematic: scroll physically approaches the glasses and passes through a lens.
+## Evidence and honesty
 
-## Non-negotiables
-- Honest labels: SIMULATED / UNTESTED / MANUFACTURER CLAIM / OPENLENS MEASURED.
-- No fake device connection or benchmark data.
-- No generic SaaS card-wall redesign.
-- Preserve accessibility and reduced-motion behavior.
+Only `openlens-twin` has an executable adapter. All manufacturer devices remain research-only and unavailable for OpenLens execution. All latency shown by the twin is simulated. OCR is real local browser inference and excluded from simulator timing.
+
+## Verification
+
+- 33 unit tests cover routing, parser constraints, adapter lifecycle, deterministic output/failures, statistics, and artifact replay.
+- 8 browser tests cover desktop and small-phone homepage, Lab failure flow, Compiler-to-Lab flow, devices/evidence, benchmark, adapter generation, and page overflow.
+
+## Next priorities
+
+1. Extend visual QA across tablet, ultrawide, reduced motion, and slow-device states.
+2. Add more real local AI modes only when they can run without a paid dependency.
+3. Add a physical adapter only when SDK access and hardware verification exist.
+4. Expand research coverage and record revisions when source claims change.
+
+No credential or authorization blocker is active. Real-hardware integration remains blocked by SDK and device access, and must stay labeled unavailable until verified.
+
