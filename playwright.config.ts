@@ -4,6 +4,7 @@ export default defineConfig({
   testDir:'./tests',
   testMatch:['e2e.spec.ts','resilience.e2e.ts'],
   fullyParallel:true,
+  workers:process.env.CI?1:undefined,
   retries:1,
   reporter:'line',
   use:{baseURL:'http://127.0.0.1:4174',trace:'retain-on-failure'},
