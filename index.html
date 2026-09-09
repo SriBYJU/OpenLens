@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#060708" />
+    <meta name="description" content="OpenLens — an open development, simulation, AI, research and benchmarking layer for smart glasses." />
+    <title>OpenLens — Enter the Lens</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./src/styles.css" />
+    <link rel="stylesheet" href="./src/mobile.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip cinematic intro</a>
+    <header class="site-header" data-header>
+      <a class="brand" href="#top" aria-label="OpenLens home"><span class="brand-mark" aria-hidden="true"></span><span>OpenLens</span></a>
+      <nav aria-label="Primary navigation"><a href="#inside">Explore</a><a href="#systems">Systems</a><a href="#lab">Lens Lab</a><a href="#research">Research</a></nav>
+      <a class="header-cta" href="https://github.com/SriBYJU/OpenLens">GitHub</a>
+    </header>
+    <main id="main">
+      <section id="top" class="cinematic" aria-labelledby="hero-title" data-cinematic>
+        <div class="cinematic-sticky">
+          <div class="ambient ambient-a" aria-hidden="true"></div><div class="ambient ambient-b" aria-hidden="true"></div><div class="grain" aria-hidden="true"></div><div class="grid-plane" aria-hidden="true"></div>
+          <div class="hero-copy" data-hero-copy>
+            <p class="eyebrow">OPEN DEVELOPMENT LAYER / SMART GLASSES</p>
+            <h1 id="hero-title">See the hardware.<br /><span>Enter the system.</span></h1>
+            <p class="hero-deck">Research, simulate, benchmark and build across fragmented smart-glasses ecosystems.</p>
+          </div>
+          <div class="glasses-stage" data-glasses-stage aria-hidden="true">
+            <div class="glasses-tilt" data-glasses-tilt>
+              <svg class="smart-glasses" viewBox="0 0 1600 760" role="img" aria-label="A detailed pair of dark smart glasses">
+                <defs>
+                  <linearGradient id="frameMetal" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#080a0d" /><stop offset="0.24" stop-color="#343a42" /><stop offset="0.42" stop-color="#0b0e12" /><stop offset="0.72" stop-color="#161a20" /><stop offset="1" stop-color="#050608" /></linearGradient>
+                  <linearGradient id="frameEdge" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6e7a87" stop-opacity="0.1" /><stop offset="0.5" stop-color="#c9d7e6" stop-opacity="0.7" /><stop offset="1" stop-color="#6e7a87" stop-opacity="0.06" /></linearGradient>
+                  <radialGradient id="lensTint" cx="42%" cy="36%" r="78%"><stop offset="0" stop-color="#263b49" stop-opacity="0.58" /><stop offset="0.38" stop-color="#0e1920" stop-opacity="0.92" /><stop offset="1" stop-color="#020406" stop-opacity="0.98" /></radialGradient>
+                  <linearGradient id="lensSheen" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d9f3ff" stop-opacity="0.5" /><stop offset="0.15" stop-color="#7db9d1" stop-opacity="0.08" /><stop offset="0.55" stop-color="#78a9bf" stop-opacity="0" /><stop offset="1" stop-color="#bfefff" stop-opacity="0.16" /></linearGradient>
+                  <radialGradient id="sensorGlow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#b9ecff" stop-opacity="0.95" /><stop offset="0.2" stop-color="#74c6e8" stop-opacity="0.8" /><stop offset="0.52" stop-color="#1c6889" stop-opacity="0.28" /><stop offset="1" stop-color="#1c6889" stop-opacity="0" /></radialGradient>
+                  <filter id="softGlow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="22" /></filter>
+                  <filter id="frameShadow" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="24" stdDeviation="25" flood-color="#000000" flood-opacity="0.72" /></filter>
+                  <clipPath id="leftLensClip"><path d="M204 277 C213 208 269 170 347 162 L651 141 C717 136 754 170 748 232 L720 449 C711 521 665 564 591 570 L354 574 C270 576 226 538 215 468 Z" /></clipPath>
+                  <clipPath id="rightLensClip"><path d="M852 232 C846 170 883 136 949 141 L1253 162 C1331 170 1387 208 1396 277 L1385 468 C1374 538 1330 576 1246 574 L1009 570 C935 564 889 521 880 449 Z" /></clipPath>
+                </defs>
+                <ellipse cx="800" cy="621" rx="610" ry="48" fill="#000" opacity="0.58" filter="url(#softGlow)" />
+                <g class="temple temple-left" opacity="0.95"><path d="M240 236 L58 190 Q25 185 12 207 L5 235 Q28 264 86 270 L253 296 Z" fill="url(#frameMetal)" /><path d="M18 210 Q78 226 241 252" stroke="url(#frameEdge)" stroke-width="5" fill="none" opacity="0.55" /></g>
+                <g class="temple temple-right" opacity="0.95"><path d="M1360 236 L1542 190 Q1575 185 1588 207 L1595 235 Q1572 264 1514 270 L1347 296 Z" fill="url(#frameMetal)" /><path d="M1582 210 Q1522 226 1359 252" stroke="url(#frameEdge)" stroke-width="5" fill="none" opacity="0.55" /></g>
+                <g filter="url(#frameShadow)">
+                  <path d="M187 266 C196 181 259 126 342 118 L656 96 C735 90 775 130 773 209 L766 247 C787 229 813 229 834 247 L827 209 C825 130 865 90 944 96 L1258 118 C1341 126 1404 181 1413 266 L1404 472 C1393 563 1333 618 1242 621 L1008 616 C918 613 858 556 849 469 L827 300 C811 285 789 285 773 300 L751 469 C742 556 682 613 592 616 L358 621 C267 618 207 563 196 472 Z" fill="url(#frameMetal)" />
+                  <path d="M204 277 C213 208 269 170 347 162 L651 141 C717 136 754 170 748 232 L720 449 C711 521 665 564 591 570 L354 574 C270 576 226 538 215 468 Z" fill="url(#lensTint)" />
+                  <path id="portal-lens" d="M852 232 C846 170 883 136 949 141 L1253 162 C1331 170 1387 208 1396 277 L1385 468 C1374 538 1330 576 1246 574 L1009 570 C935 564 889 521 880 449 Z" fill="url(#lensTint)" />
+                  <path d="M205 275 C219 201 271 170 349 162 L648 142" fill="none" stroke="url(#frameEdge)" stroke-width="7" stroke-linecap="round" opacity="0.75" />
+                  <path d="M853 231 C857 173 893 142 950 142 L1250 162 C1324 168 1379 207 1395 275" fill="none" stroke="url(#frameEdge)" stroke-width="7" stroke-linecap="round" opacity="0.75" />
+                  <g clip-path="url(#leftLensClip)" opacity="0.72"><path d="M160 397 L688 72" stroke="url(#lensSheen)" stroke-width="72" opacity="0.17" /><path d="M330 620 L750 225" stroke="#bdefff" stroke-width="2" opacity="0.22" /></g>
+                  <g clip-path="url(#rightLensClip)" opacity="0.9"><path d="M815 421 L1325 98" stroke="url(#lensSheen)" stroke-width="84" opacity="0.22" /><path d="M912 598 L1427 220" stroke="#c6efff" stroke-width="2" opacity="0.3" /><circle cx="1117" cy="350" r="118" fill="url(#sensorGlow)" opacity="0.08" /><circle cx="1117" cy="350" r="72" fill="none" stroke="#9edcf5" stroke-width="2" opacity="0.14" /><circle cx="1117" cy="350" r="34" fill="none" stroke="#c3efff" stroke-width="1.5" opacity="0.24" /></g>
+                  <path d="M748 230 Q800 203 852 230" fill="none" stroke="#20252b" stroke-width="36" stroke-linecap="round" /><path d="M756 224 Q800 205 844 224" fill="none" stroke="#80909e" stroke-opacity="0.25" stroke-width="3" />
+                  <g class="hardware-details"><circle cx="1317" cy="222" r="12" fill="#020304" stroke="#53606b" stroke-width="4" /><circle cx="1317" cy="222" r="4" fill="#9bdfff" opacity="0.7" /><circle cx="1282" cy="218" r="7" fill="#11161b" stroke="#4b555e" stroke-width="2" /><rect x="260" y="174" width="57" height="12" rx="6" fill="#11151a" stroke="#58636d" stroke-opacity="0.5" /></g>
+                </g>
+              </svg>
+              <div class="lens-hud" data-lens-hud><span>OPTICAL CHANNEL</span><span class="hud-line"></span><span>01</span></div>
+            </div>
+          </div>
+          <div class="scroll-cue" data-scroll-cue aria-hidden="true"><span>Scroll to enter</span><i></i></div>
+          <div class="portal-atmosphere" data-portal aria-hidden="true"><span class="orb orb-a"></span><span class="orb orb-b"></span><span class="orb orb-c"></span><span class="scan scan-a"></span><span class="scan scan-b"></span><div class="portal-reticle"><span></span><span></span><span></span><span></span></div></div>
+        </div>
+      </section>
+      <section id="inside" class="inside-lens section-shell" data-inside>
+        <div class="section-kicker">YOU ARE INSIDE THE LENS</div>
+        <div class="inside-grid">
+          <div class="inside-copy"><p class="eyebrow">PERCEPTION LAYER</p><h2>One view of a fragmented hardware world.</h2><p>OpenLens turns device capabilities, AI stages, latency, field of view and developer access into a system you can inspect instead of guess at.</p></div>
+          <div class="perception-stack" aria-label="OpenLens perception pipeline"><div class="pipeline-row"><span>01</span><strong>Sense</strong><em>Camera / Microphone / Sensors</em></div><div class="pipeline-row"><span>02</span><strong>Understand</strong><em>OCR / Vision / Context</em></div><div class="pipeline-row"><span>03</span><strong>Route</strong><em>Local / Device / Provider</em></div><div class="pipeline-row"><span>04</span><strong>Output</strong><em>Display / Audio / Companion</em></div></div>
+        </div>
+      </section>
+      <section id="systems" class="systems section-shell">
+        <div class="section-heading"><p class="eyebrow">OPENLENS SYSTEMS</p><h2>Not a product gallery.<br />A development layer.</h2></div>
+        <div class="system-rail"><article><span>01</span><h3>Lens Lab</h3><p>Run simulated or connected experiences and expose the full signal path.</p></article><article><span>02</span><h3>Digital Twins</h3><p>Model capabilities, constraints and failure states without pretending simulation is physical testing.</p></article><article><span>03</span><h3>Trace Viewer</h3><p>See exactly where time goes—from input capture to AI reasoning to device output.</p></article><article><span>04</span><h3>Benchmarks</h3><p>Keep raw measurements, transparent methodology and reproducible comparisons visible.</p></article></div>
+      </section>
+      <section id="lab" class="lab-preview section-shell"><div class="lab-frame"><div class="lab-topbar"><span>OPENLENS / LENS LAB</span><span class="live-dot">SIMULATED</span></div><div class="lab-grid"><div class="lab-viewport"><div class="fov-box"><span>SIMULATED FOV</span><b>48°</b></div><div class="target-reticle"></div></div><div class="lab-telemetry"><p>TRACE</p><div><span>Camera capture</span><b>38 ms</b></div><div><span>OCR</span><b>54 ms</b></div><div><span>Reasoning</span><b>210 ms</b></div><div><span>Output</span><b>32 ms</b></div></div></div></div></section>
+      <section id="research" class="research section-shell"><p class="eyebrow">BUILT FOR INSPECTION</p><h2>Measured. Sourced. Simulated.<br />Never blurred together.</h2><p class="research-copy">OpenLens is being built around transparent evidence and explicit states: manufacturer specification, independent research, simulation and OpenLens measurement.</p></section>
+    </main>
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>
