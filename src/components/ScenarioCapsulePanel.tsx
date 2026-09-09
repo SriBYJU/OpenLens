@@ -1,6 +1,6 @@
 import {useEffect,useRef,useState} from 'react';
 import {useWorkbench} from '../app/workbench';
-import {createScenarioCapsule,decodeScenarioCapsule,encodeScenarioCapsule,exportScenarioCapsule,importScenarioCapsule,type ScenarioCapsule} from '../core';
+import {createScenarioCapsule,decodeScenarioCapsule,encodeScenarioCapsule,exportScenarioCapsule,importScenarioCapsule,type ImportedScenarioCapsule,type ScenarioCapsule} from '../core';
 
 const download=(name:string,text:string)=>{const url=URL.createObjectURL(new Blob([text],{type:'application/json'}));const link=document.createElement('a');link.href=url;link.download=name;link.click();URL.revokeObjectURL(url)};
 const scenarioToken=()=>{try{const raw=location.hash.replace(/^#\/?/,'');const query=raw.includes('?')?raw.slice(raw.indexOf('?')+1):'';return new URLSearchParams(query).get('scenario')}catch{return null}};
@@ -12,8 +12,9 @@ export default function ScenarioCapsulePanel(){
  const [capsule,setCapsule]=useState<ScenarioCapsule|null>(null);
  const [message,setMessage]=useState('');
  const [error,setError]=useState('');
- const apply=(text:string)=>{try{const imported=importScenarioCapsule(text);work.setDeviceId(imported.capsule.deviceId);work.setExperience(imported.capsule.experience);work.setConfig(imported.capsule.config);setTitle(imported.capsule.title);setCapsule(imported.capsule);setMessage(`Loaded verified capsule ${imported.capsule.fingerprint}.`);setError('')}catch(reason){setError(reason instanceof Error?reason.message:'Scenario capsule could not be loaded.');setMessage('')}};
- useEffect(()=>{const token=scenarioToken();if(!token)return;try{const imported=decodeScenarioCapsule(token);work.setDeviceId(imported.capsule.deviceId);work.setExperience(imported.capsule.experience);work.setConfig(imported.capsule.config);setTitle(imported.capsule.title);setCapsule(imported.capsule);setMessage(`Shared scenario verified · ${imported.capsule.fingerprint}`)}catch(reason){setError(reason instanceof Error?reason.message:'Shared scenario could not be verified.')}},[]);
+ const applyImported=(imported:ImportedScenarioCapsule,source:'file'|'link')=>{work.setDeviceId(imported.capsule.deviceId);work.setExperience(imported.capsule.experience);work.setConfig(imported.capsule.config);setTitle(imported.capsule.title);setCapsule(imported.capsule);setMessage(`${source==='link'?'Shared scenario verified':'Loaded verified capsule'} · ${imported.capsule.fingerprint}`);setError('')};
+ const apply=(text:string)=>{try{applyImported(importScenarioCapsule(text),'file')}catch(reason){setError(reason instanceof Error?reason.message:'Scenario capsule could not be loaded.');setMessage('')}};
+ useEffect(()=>{const fromHash=()=>{const token=scenarioToken();if(!token)return;try{applyImported(decodeScenarioCapsule(token),'link')}catch(reason){setError(reason instanceof Error?reason.message:'Shared scenario could not be verified.');setMessage('')}};fromHash();addEventListener('hashchange',fromHash);return()=>removeEventListener('hashchange',fromHash)},[]);
  const build=()=>{const next=createScenarioCapsule(title,work.plan,work.config);setCapsule(next);setTitle(next.title);setMessage(`Snapshot sealed · ${next.fingerprint}`);setError('')};
  const shareHref=capsule?(()=>{const url=new URL(location.href);url.hash=`/lab?scenario=${encodeScenarioCapsule(capsule)}`;return url.toString()})():'';
  const copy=async()=>{if(!shareHref)return;try{await navigator.clipboard.writeText(shareHref);setMessage(`Share link copied · ${capsule?.fingerprint}`);setError('')}catch{setError('Clipboard access was unavailable. Use “Open verified link” and copy the address from the browser.')}};
