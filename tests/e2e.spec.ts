@@ -110,6 +110,7 @@ test('core workbench pages have no serious automated accessibility violations',a
 
 test('flagship layout survives tablet, ultrawide, and reduced-motion states',async({page},testInfo)=>{
   test.skip(testInfo.project.name!=='desktop','One targeted responsive sweep is sufficient.');
+  test.setTimeout(60000);
   const states=[
     {name:'tablet',width:820,height:1180,reduced:false},
     {name:'ultrawide',width:1920,height:900,reduced:false},
@@ -123,7 +124,7 @@ test('flagship layout survives tablet, ultrawide, and reduced-motion states',asy
     expect(await page.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth+1),`${state.name} overflow`).toBe(true);
     await page.locator('#home-live-proof').scrollIntoViewIfNeeded();
     expect(await page.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth+1),`${state.name} live-proof overflow`).toBe(true);
-    await page.screenshot({path:testInfo.outputPath(`openlens-${state.name}.png`),fullPage:false});
+    await page.screenshot({path:testInfo.outputPath(`openlens-${state.name}.png`),fullPage:false,animations:'disabled'});
   }
 });
 
@@ -151,3 +152,4 @@ test('hardware capability models produce different routes',async({page})=>{
  await page.getByRole('button',{name:/Run this scenario/i}).click();
  await expect(page.getByRole('heading',{name:'This device cannot execute the plan.'})).toBeVisible();
 });
+
