@@ -56,6 +56,9 @@ test('device research, benchmark, and adapter generator are interactive',async({
   await page.getByRole('checkbox',{name:'Audio'}).check();
   await expect(page.locator('.code-stage pre')).toContainText('name: "Aurora One adapter"');
   await expect(page.locator('.code-stage pre')).toContainText("'audio'");
+  await page.getByRole('button',{name:'Run readiness checks'}).click();
+  await expect(page.locator('.doctor-check')).toHaveCount(8);
+  await expect(page.locator('.doctor-check').filter({hasText:'ocr/lang/eng.traineddata.gz'})).toContainText('pass');
 });
 
 test('core workbench pages have no serious automated accessibility violations',async({page})=>{
@@ -75,4 +78,16 @@ test('local OCR recognizes the supplied image in a browser worker',async({page})
  await expect(page.locator('.ocr-result, .local-ai [role="alert"]')).toBeVisible({timeout:100000});
  await expect(page.locator('.local-ai [role="alert"]')).toHaveCount(0);
  await expect(page.locator('.ocr-text')).toContainText(/RIVERSIDE LIBRARY/i);
+});
+
+test('hardware capability models produce different routes',async({page})=>{
+ await page.goto('/#/lab');
+ await page.locator('.workbench-rail select').first().selectOption('model-ray-ban-meta');
+ await page.getByRole('button',{name:/Run this scenario/i}).click();
+ await expect(page.getByRole('button',{name:/Rendered audio response/})).toBeVisible();
+ await page.locator('.workbench-rail select').first().selectOption('model-vuzix-z100');
+ await page.getByText('Advanced simulation conditions',{exact:true}).click();
+ await page.getByLabel('Missing capability policy').selectOption('block');
+ await page.getByRole('button',{name:/Run this scenario/i}).click();
+ await expect(page.getByRole('heading',{name:'This device cannot execute the plan.'})).toBeVisible();
 });

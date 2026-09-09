@@ -20,12 +20,12 @@
 
 ## Evidence and honesty
 
-Only `openlens-twin` has an executable adapter. All manufacturer devices remain research-only and unavailable for OpenLens execution. All latency shown by the twin is simulated. OCR is real local browser inference and excluded from simulator timing.
+The reference twin and seven explicitly labeled capability models execute locally. Manufacturer hardware records remain research-only; model execution is not physical-device integration. All latency shown by the twin is simulated. OCR is real local browser inference and excluded from simulator timing.
 
 ## Verification
 
-- 33 unit tests cover routing, parser constraints, adapter lifecycle, deterministic output/failures, statistics, and artifact replay.
-- 8 browser tests cover desktop and small-phone homepage, Lab failure flow, Compiler-to-Lab flow, devices/evidence, benchmark, adapter generation, and page overflow.
+- 43 unit tests cover routing, parser constraints, adapter lifecycle, deterministic output/failures, statistics, and artifact replay.
+- 14 browser tests cover desktop and small-phone homepage, Lab failure flow, Compiler-to-Lab flow, devices/evidence, benchmark, adapter generation, and page overflow.
 
 ## Next priorities
 

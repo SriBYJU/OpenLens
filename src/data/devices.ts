@@ -23,5 +23,7 @@ export const devices:DeviceProfile[]=[
  {id:'vuzix-z100',revision:1,name:'Z100',manufacturer:'Vuzix',kind:'research',summary:'A lightweight monochrome waveguide display designed as a Bluetooth companion screen for mobile apps.',integrationStatus:'unavailable',capabilities:{camera:cap('absent','unsupported','No camera is described for this display-first profile.',['vuzix-report']),microphone:cap('absent','unsupported','No onboard microphone is described in the cited profile.',['vuzix-report']),display:cap('present','documented-api','A mobile presentation layer can send selected information to the display.',['vuzix-z100']),audio:cap('absent','unsupported','No integrated audio output is recorded in these sources.',['vuzix-report']),imu:cap('unknown','unknown','No sourced OpenLens claim is recorded.')},optics:{horizontalFovDegrees:null,fovAxis:'unknown'},sources:vuzix},
 ];
 
-export function getDevice(id:string){return devices.find(device=>device.id===id)??devices[0]}
-export function validateDeviceId(id:string|null){return id&&devices.some(device=>device.id===id)?id:'openlens-twin'}
+export const modeledDevices:DeviceProfile[]=devices.filter(device=>device.kind==='research').map(device=>({...device,id:`model-${device.id}`,name:`${device.name} · capability model`,kind:'digital-twin',integrationStatus:'simulated',summary:`Simulation of documented capabilities only. ${device.summary} Timing and outputs are configured fixtures; this is not hardware emulation.`}));
+export const simulationDevices=[devices[0],...modeledDevices];
+export function getDevice(id:string){return [...devices,...modeledDevices].find(device=>device.id===id)??devices[0]}
+export function validateDeviceId(id:string|null){return id&&[...devices,...modeledDevices].some(device=>device.id===id)?id:'openlens-twin'}

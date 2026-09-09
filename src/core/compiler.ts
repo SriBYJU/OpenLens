@@ -7,7 +7,7 @@ export function compileExperience(definition:ExperienceDefinition,device:DeviceP
  const route=(capability:Capability,stage:'input'|'output',fallback=false):PlanStep=>{
   const adapterCan=Boolean(adapter?.capabilities.includes(capability));
   const chosen=adapterCan?(adapter!.mode==='simulation'?'twin':'adapter'):experience.allowCompanionFallback?'companion':'blocked';
-  const reason=adapterCan?`${adapter!.name} exposes ${capability} in ${adapter!.mode} mode.`:`${device.name} is research-only in OpenLens; its manufacturer access claim does not create an implemented adapter.${chosen==='companion'?' Route through the explicit companion fallback.':''}`;
+  const reason=adapterCan?`${adapter!.name} exposes ${capability} in ${adapter!.mode} mode.`:`${device.name} has no executable ${capability} capability.${chosen==='companion'?' Route through the explicit companion fallback.':' This experience is blocked.'}`;
   return{id:`${stage}-${capability}`,stage,capability,label:stage==='input'?`Acquire ${capability}`:`Present via ${capability}`,route:chosen,reason,fallback};
  };
  const input=experience.input==='manual'?{id:'input-manual',stage:'input' as const,capability:null,label:'Receive manual trigger',route:(adapter?'twin':'companion') as 'twin'|'companion',reason:'A local manual trigger requires no device sensor.'}:route(experience.input,'input');

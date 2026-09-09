@@ -15,7 +15,7 @@ OpenLens lets a visitor describe an experience, compile it into an explicit capa
 - **Local AI:** real English OCR runs in a same-origin Web Worker without uploading the image.
 - **Build With Us:** configure and download a typed adapter-manifest starter.
 
-Only the Optical Twin executes today. Manufacturer profiles are research records until OpenLens adapter code and physical verification exist.
+The reference Optical Twin and seven capability models execute locally. A model tests documented capability boundaries and explicit companion fallback; it is not a physical-device connection or hardware performance measurement. Manufacturer hardware profiles remain research records.
 
 ## Run locally
 

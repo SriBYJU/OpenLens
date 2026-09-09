@@ -18,11 +18,11 @@ Updated 2026-09-09. A passing build does not mean the entire directive is comple
 
 ## Partial: requires further implementation or verification
 
-- Hardware-specific digital twins: one reference twin exists; researched devices are not yet executable simulated profiles.
+- Hardware-specific digital twins: seven executable capability models now reflect documented sensor/output presence and explicit companion fallback. Full optical, sensor and vendor SDK emulation remains incomplete.
 - Simulation fidelity: authored inputs and outputs test routing and failure handling. There is no optical physics, environmental sensor model, continuous live scene model or hardware timing calibration.
 - Experience Compiler: four supported tasks with rule-based intent parsing; it does not generate arbitrary runnable applications.
 - Local AI: OCR and speech output exist. General translation, scene understanding, speech recognition, provider adapters and model management remain incomplete.
-- Developer platform: manifest generation exists; Device Doctor, complete adapter scaffolding, a published SDK package and hardware example applications remain incomplete.
+- Developer platform: manifest generation and browser-readiness Device Doctor exist; complete adapter scaffolding, a published SDK package and hardware example applications remain incomplete.
 - Research: evidence is versioned in Git; structured conflicting claims, detailed optical/power/weight specifications, firmware history and measurement ingestion need expansion.
 - Visual QA: desktop and small-phone core flows are automated; broader tablet/ultrawide, slow-device, cinematic frame pacing and manual screen-reader verification remain open.
 - Accessibility: automated serious/critical checks cover the four core routes; full WCAG conformance and dialog keyboard auditing are not yet established.

@@ -6,7 +6,7 @@ OpenLens 0.2 is a static, local-first React application. GitHub Pages serves the
 
 1. The Experience Compiler converts supported plain language into a versioned `ExperienceDefinition`.
 2. The capability compiler combines that definition with a sourced `DeviceProfile` and creates a `CompiledPlan`.
-3. Only a registered `DeviceAdapter` may execute a plan. OpenLens currently ships one executable adapter: the deterministic Optical Twin.
+3. Only a registered `DeviceAdapter` may execute a plan. OpenLens ships the deterministic reference Optical Twin and seven capability-model adapters. These model documented capability presence and companion fallback, not vendor SDK behavior or physical-device performance.
 4. Each simulation produces a `RunResult` with device and adapter snapshots, seed, configuration, output, and canonical trace spans.
 5. Benchmark Lab repeats the same plan with sequential 32-bit seeds and computes statistics from successful trials while retaining failures.
 
