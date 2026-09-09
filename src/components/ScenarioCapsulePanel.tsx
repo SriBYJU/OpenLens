@@ -18,7 +18,8 @@ export default function ScenarioCapsulePanel(){
  const build=()=>{const next=createScenarioCapsule(title,work.plan,work.config);setCapsule(next);setTitle(next.title);setMessage(`Snapshot sealed · ${next.fingerprint}`);setError('')};
  const shareHref=capsule?(()=>{const url=new URL(location.href);url.hash=`/lab?scenario=${encodeScenarioCapsule(capsule)}`;return url.toString()})():'';
  const copy=async()=>{if(!shareHref)return;try{await navigator.clipboard.writeText(shareHref);setMessage(`Share link copied · ${capsule?.fingerprint}`);setError('')}catch{setError('Clipboard access was unavailable. Use “Open verified link” and copy the address from the browser.')}};
- const load=async(file:File)=>apply(await file.text());
+ const load=async(file:File)=>{try{if(file.size>65536)throw new Error('Scenario capsule exceeds the 64 KB limit.');apply(await file.text())}catch(reason){setError(reason instanceof Error?reason.message:'File could not be read.');setMessage('')}finally{if(fileInput.current)fileInput.current.value=''}};
+ const stale=capsule&&(capsule.planFingerprint!==work.plan.fingerprint||JSON.stringify(capsule.config)!==JSON.stringify(work.config));
  return <section className="scenario-capsule" aria-labelledby="capsule-title">
   <header><div><p className="eyebrow">SCENARIO CAPSULE / PORTABLE REPRODUCTION</p><h2 id="capsule-title">Seal the exact test.<br/><em>Open it somewhere else.</em></h2></div><p>A capsule snapshots the current device, experience, seed, timing, network, permissions and failure injection. OpenLens verifies its fingerprint and current device revision before applying it.</p></header>
   <div className="capsule-workspace">
@@ -26,6 +27,8 @@ export default function ScenarioCapsulePanel(){
    <div className="capsule-actions"><button className="button primary" onClick={build}>Seal current scenario</button><input ref={fileInput} type="file" accept="application/json,.json" hidden onChange={event=>event.target.files?.[0]&&void load(event.target.files[0])}/><button className="button" onClick={()=>fileInput.current?.click()}>Import capsule JSON</button></div>
    {capsule&&<div className="capsule-sealed"><div><span>FINGERPRINT</span><strong>{capsule.fingerprint}</strong></div><div><span>PLAN</span><strong>{capsule.planFingerprint}</strong></div><div><span>DEVICE REV</span><strong>{capsule.deviceRevision}</strong></div><div><span>SEED</span><strong>{capsule.config.seed}</strong></div><div className="capsule-share"><a className="button" href={shareHref}>Open verified link</a><button className="button" onClick={copy}>Copy share link</button><button className="button" onClick={()=>download(`${capsule.fingerprint}-scenario.json`,exportScenarioCapsule(capsule))}>Download JSON</button></div></div>}
   </div>
+  {stale&&<p className="capsule-status" role="status">Settings changed since this snapshot. Its link still opens the saved settings; seal again to share your current test.</p>}
+  <p>The link contains your experience text and settings. Anyone with the link can read them. The fingerprint detects accidental edits; it is not a signature or proof of authorship.</p>
   {message&&<p className="capsule-status" role="status">{message}</p>}{error&&<p className="capsule-error" role="alert">{error}</p>}
  </section>
 }

@@ -1,0 +1,16 @@
+/* Readable evidence at everyday laptop widths, without compressing navigation. */
+.resilience-summary span,.capsule-sealed span{font-size:11px;color:#aebec2}
+.resilience-summary strong,.capsule-sealed strong{font-size:16px}
+.resilience-card>div>span{font-size:12px;line-height:1.5}
+.resilience-card b,.resilience-card>strong small,.resilience-card>i{font-size:11px}
+.resilience-card p,.trace-diff-row small,.trace-diff-row em{font:14px/1.6 var(--sans, sans-serif);color:#b6c2c5}
+.trace-diff-meta span,.trace-diff-row>span,.trace-diff-row b,.trace-diff-row i{font-size:12px;line-height:1.5;letter-spacing:0}
+.resilience-method,.capsule-status,.capsule-error{font-size:13px;line-height:1.7;letter-spacing:0}
+.scenario-capsule>p:not(.capsule-status):not(.capsule-error){margin:0 clamp(24px,4vw,48px) 28px;font-size:14px;line-height:1.6;color:#b1bec1}
+.resilience-head>div:last-child>p,.scenario-capsule>header>p{font-family:var(--sans,sans-serif);font-size:17px}
+.resilience-card>div{flex-wrap:wrap}
+@media(max-width:1180px){
+ .desktop-nav{display:none}.menu-toggle{display:block}.header-actions{margin-left:auto}
+ .site-header{gap:16px}.header-actions button,.header-cta{white-space:nowrap}
+}
+@media(max-width:620px){.resilience-summary strong,.capsule-sealed strong{font-size:14px}.trace-diff-row{grid-template-columns:44px minmax(260px,1fr) 70px minmax(260px,1fr)}}

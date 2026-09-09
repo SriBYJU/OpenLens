@@ -9,4 +9,5 @@ import './flagship.css';
 import './a11y-hotfix.css';
 import './resilience.css';
 import './scenario-capsule.css';
+import './workbench-polish.css';
 createRoot(document.getElementById('root')!).render(<React.StrictMode><App /></React.StrictMode>);

@@ -11,6 +11,9 @@ Updated 2026-09-09. A passing build does not mean the entire directive is comple
 - Live constrained-language compiler, structured corrections, persisted experience and cross-device route plans.
 - Trace inspection, JSON run export, full artifact replay validation and pipeline playback.
 - Benchmark suites, successful-sample statistics, failed-run retention and JSON/CSV export.
+- Eight-condition resilience matrix with event-level trace comparison and export.
+- Scenario capsules preserve the exact device, experience and conditions in a validated JSON file or replayable URL; these are checksummed snapshots, not signed evidence.
+- Device-fit ranking with explainable requirements, sourced device diagnosis, and a keyboard-operated command palette.
 - Real local English OCR from sample, upload or camera capture; local voice readout where a browser voice exists.
 - Adapter manifest generator, repository-relative TypeScript imports and safe string escaping.
 - About page with the existing founder portrait; architecture, privacy, security, research and benchmark documentation.
@@ -24,7 +27,7 @@ Updated 2026-09-09. A passing build does not mean the entire directive is comple
 - Local AI: OCR and speech output exist. General translation, scene understanding, speech recognition, provider adapters and model management remain incomplete.
 - Developer platform: manifest generation and browser-readiness Device Doctor exist; complete adapter scaffolding, a published SDK package and hardware example applications remain incomplete.
 - Research: evidence is versioned in Git; structured conflicting claims, detailed optical/power/weight specifications, firmware history and measurement ingestion need expansion.
-- Visual QA: desktop and small-phone core flows are automated; broader tablet/ultrawide, slow-device, cinematic frame pacing and manual screen-reader verification remain open.
+- Visual QA: desktop, small-phone, tablet, ultrawide and reduced-motion checks are automated; slow-device, cinematic frame pacing and manual screen-reader verification remain open.
 - Accessibility: automated serious/critical checks cover the four core routes; full WCAG conformance and dialog keyboard auditing are not yet established.
 - Security/performance: import and upload boundaries have tests; full security review, CSP/header policy and quantified performance budgets remain open.
 
@@ -37,3 +40,5 @@ Updated 2026-09-09. A passing build does not mean the entire directive is comple
 Real hardware verification depends on access to the relevant device and SDK. Cloud features require an actual selected and authorized backend; a static UI cannot supply server-side authorization.
 
 Continue against this list and the original master directive. Do not mark a partial item complete merely because it has a page or label.
+
+Latest integrated checkpoint: 58 unit tests, 24 browser checks passed locally; two redundant mobile checks intentionally skipped. TypeScript, lint and production build also checked. Physical hardware and optional cloud services remain outside these results.

@@ -42,6 +42,7 @@ export function validateScenarioCapsule(value:unknown):ImportedScenarioCapsule{
  const experience=validateExperience(raw.experience);
  const config=validateSimulationConfig(raw.config);
  const device=getDevice(raw.deviceId);
+ if(device.id!==raw.deviceId)throw new Error('Scenario device is not in the current catalog.');
  if(device.revision!==raw.deviceRevision)throw new Error(`Device profile revision changed from ${raw.deviceRevision} to ${device.revision}. Re-open the evidence before replaying this capsule.`);
  const plan=compileExperience(experience,device);
  if(plan.fingerprint!==raw.planFingerprint)throw new Error('Scenario plan fingerprint no longer matches the current compiler output.');
@@ -51,6 +52,6 @@ export function validateScenarioCapsule(value:unknown):ImportedScenarioCapsule{
 }
 
 export function exportScenarioCapsule(capsule:ScenarioCapsule){return JSON.stringify(capsule,null,2)}
-export function importScenarioCapsule(text:string){let parsed:unknown;try{parsed=JSON.parse(text)}catch{throw new Error('Scenario capsule is not valid JSON.')}return validateScenarioCapsule(parsed)}
+export function importScenarioCapsule(text:string){if(text.length>65536)throw new Error('Scenario capsule exceeds the 64 KB limit.');let parsed:unknown;try{parsed=JSON.parse(text)}catch{throw new Error('Scenario capsule is not valid JSON.')}return validateScenarioCapsule(parsed)}
 export function encodeScenarioCapsule(capsule:ScenarioCapsule){return encodeBytes(new TextEncoder().encode(JSON.stringify(capsule)))}
 export function decodeScenarioCapsule(token:string){let text:string;try{text=new TextDecoder('utf-8',{fatal:true}).decode(decodeBytes(token))}catch{throw new Error('Scenario link could not be decoded.')}return importScenarioCapsule(text)}

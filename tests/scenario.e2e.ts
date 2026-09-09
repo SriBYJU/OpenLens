@@ -8,7 +8,7 @@ test('scenario capsule seals and reopens the exact verified workbench state',asy
  await page.getByLabel('Repeatable seed').fill('777');
  await page.getByLabel('Battery %').fill('61');
  await page.locator('.simulation-controls summary').click();
- await page.getByLabel('Network').selectOption('degraded');
+ await page.locator('.simulation-controls').getByLabel('Network').selectOption('degraded');
  await page.getByLabel('Snapshot name').fill('Commute regression · exact replay');
  await page.getByRole('button',{name:'Seal current scenario'}).click();
  const capsule=page.locator('.scenario-capsule');
@@ -21,7 +21,7 @@ test('scenario capsule seals and reopens the exact verified workbench state',asy
  await expect(page.getByLabel('Repeatable seed')).toHaveValue('777');
  await expect(page.getByLabel('Battery %')).toHaveValue('61');
  if(!(await page.locator('.simulation-controls').getAttribute('open')))await page.locator('.simulation-controls summary').click();
- await expect(page.getByLabel('Network')).toHaveValue('degraded');
+ await expect(page.locator('.simulation-controls').getByLabel('Network')).toHaveValue('degraded');
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth+1)).toBe(true);
  const results=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).include('.scenario-capsule').analyze();
  expect(results.violations.filter(item=>item.impact==='critical'||item.impact==='serious'),results.violations.map(item=>item.id).join(', ')).toEqual([]);

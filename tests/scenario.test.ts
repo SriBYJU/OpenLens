@@ -36,4 +36,9 @@ describe('scenario capsules',()=>{
   expect(()=>decodeScenarioCapsule('%%%')).toThrow('decoded');
   expect(()=>decodeScenarioCapsule('A'.repeat(16001))).toThrow('decoded');
  });
+ it('rejects oversized files and unknown device identities',()=>{
+  expect(()=>importScenarioCapsule(' '.repeat(65537))).toThrow('64 KB');
+  const capsule=createScenarioCapsule('Unknown device',plan,defaultSimulationConfig);
+  expect(()=>importScenarioCapsule(JSON.stringify({...capsule,deviceId:'missing-device'}))).toThrow('catalog');
+ });
 });
