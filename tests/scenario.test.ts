@@ -33,7 +33,7 @@ describe('scenario capsules',()=>{
  });
 
  it('rejects malformed and oversized URL tokens',()=>{
-  expect(()=>decodeScenarioCapsule('%%%')).toThrow();
-  expect(()=>decodeScenarioCapsule('A'.repeat(16001))).toThrow('malformed');
+  expect(()=>decodeScenarioCapsule('%%%')).toThrow('decoded');
+  expect(()=>decodeScenarioCapsule('A'.repeat(16001))).toThrow('decoded');
  });
 });
