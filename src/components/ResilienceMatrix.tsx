@@ -26,13 +26,13 @@ export default function ResilienceMatrix(){
    <section className="trace-diff" aria-labelledby="trace-diff-title">
     <header><div><p className="eyebrow">TRACE DIFF / EVENT BY EVENT</p><h3 id="trace-diff-title">Compare two conditions.</h3></div><div className="trace-diff-selects"><label>A<select value={leftId} onChange={event=>setLeftId(event.target.value)}>{matrix.scenarios.map(item=><option value={item.id} key={item.id}>{item.label}</option>)}</select></label><span>↔</span><label>B<select value={rightId} onChange={event=>setRightId(event.target.value)}>{matrix.scenarios.map(item=><option value={item.id} key={item.id}>{item.label}</option>)}</select></label></div></header>
     <div className="trace-diff-meta"><span>A <b>{left?.run.status}</b> · {left?.run.totalMs} ms</span><span>B <b>{right?.run.status}</b> · {right?.run.totalMs} ms</span><span>{diff.filter(row=>row.changed).length} CHANGED EVENTS</span></div>
-    <div className="trace-diff-table" role="table" aria-label="Trace differences">
-     <div className="trace-diff-row heading" role="row"><span>#</span><span>RUN A</span><span>Δ</span><span>RUN B</span></div>
+    <div className="trace-diff-table" role="table" aria-label="Trace differences" tabIndex={0}>
+     <div className="trace-diff-row heading" role="row"><span role="columnheader">#</span><span role="columnheader">RUN A</span><span role="columnheader">Δ</span><span role="columnheader">RUN B</span></div>
      {diff.map(row=><div className={`trace-diff-row ${row.changed?'changed':'same'}`} role="row" key={row.index}>
-      <span>{String(row.index+1).padStart(2,'0')}</span>
-      <div>{row.left?<><b>{row.left.stage} · {row.left.status}</b><small>{row.left.message}</small><i>{row.left.durationMs} ms</i></>:<em>no event</em>}</div>
-      <span>{row.durationDeltaMs===null?'—':`${row.durationDeltaMs>=0?'+':''}${row.durationDeltaMs}`}</span>
-      <div>{row.right?<><b>{row.right.stage} · {row.right.status}</b><small>{row.right.message}</small><i>{row.right.durationMs} ms</i></>:<em>no event</em>}</div>
+      <span role="rowheader">{String(row.index+1).padStart(2,'0')}</span>
+      <div role="cell">{row.left?<><b>{row.left.stage} · {row.left.status}</b><small>{row.left.message}</small><i>{row.left.durationMs} ms</i></>:<em>no event</em>}</div>
+      <span role="cell">{row.durationDeltaMs===null?'—':`${row.durationDeltaMs>=0?'+':''}${row.durationDeltaMs}`}</span>
+      <div role="cell">{row.right?<><b>{row.right.stage} · {row.right.status}</b><small>{row.right.message}</small><i>{row.right.durationMs} ms</i></>:<em>no event</em>}</div>
      </div>)}
     </div>
    </section>
