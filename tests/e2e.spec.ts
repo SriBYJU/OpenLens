@@ -17,7 +17,13 @@ test('homepage renders the optical opening without page overflow',async({page})=
   const pathfinder=page.getByRole('region',{name:/Choose a way into OpenLens/i});
   await pathfinder.getByRole('button',{name:/I want to build/i}).click();
   await expect(pathfinder.getByRole('link',{name:/Open the Experience Compiler/i})).toHaveAttribute('href','#/compiler');
+  const field=page.getByRole('region',{name:/Seven pairs.*Seven different realities/i});
+  await field.getByRole('button',{name:/Meta.*Ray-Ban Meta/i}).click();
+  await expect(field.getByText('NO VISUAL DISPLAY',{exact:true})).toBeVisible();
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth+1)).toBe(true);
+  await field.getByRole('button',{name:/Try its capability model/i}).click();
+  await expect(page).toHaveURL(/#\/lab\?device=model-ray-ban-meta/);
+  await expect(page.locator('.workbench-rail select').first()).toHaveValue('model-ray-ban-meta');
 });
 
 test('homepage live proof runs the same deterministic workbench',async({page})=>{
