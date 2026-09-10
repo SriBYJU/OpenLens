@@ -1,5 +1,5 @@
-import {useRef} from 'react';
-import {motion,useReducedMotion,useScroll,useTransform} from 'motion/react';
+import {useRef,useState} from 'react';
+import {motion,useMotionValueEvent,useReducedMotion,useScroll,useTransform} from 'motion/react';
 import HomeSignalDemo from './HomeSignalDemo';
 
 const chapters=[
@@ -11,26 +11,28 @@ const chapters=[
 ];
 export default function Home(){
  const ref=useRef<HTMLElement>(null); const reduce=useReducedMotion(); const {scrollYProgress}=useScroll({target:ref,offset:['start start','end end']});
- const scale=useTransform(scrollYProgress,[0,.12,.34,.56,.76],[.72,.92,1.45,3.8,7]);
- const x=useTransform(scrollYProgress,[0,.2,.45,.72],['6%','0%','-9%','-39%']);
- const rotate=useTransform(scrollYProgress,[0,.2,.5],[5,0,-2]);
- const copyOpacity=useTransform(scrollYProgress,[0,.13,.28],[1,.85,0]);
- const hudOpacity=useTransform(scrollYProgress,[.42,.58,.78],[0,1,0]);
- const worldOpacity=useTransform(scrollYProgress,[.67,.8,1],[0,1,1]);
+ const [phase,setPhase]=useState(0);
+ useMotionValueEvent(scrollYProgress,'change',value=>{const next=value<.22?0:value<.7?1:2;setPhase(current=>current===next?current:next)});
+ const scale=useTransform(scrollYProgress,[0,.16,.4,.65,.82],[.88,1,2.1,5.5,7]);
+ const y=useTransform(scrollYProgress,[0,.24,.5],['18vh','8vh','0vh']);
+ const glassOpacity=useTransform(scrollYProgress,[0,.58,.76],[1,1,0]);
+ const copyOpacity=useTransform(scrollYProgress,[0,.08,.22],[1,1,0]);
+ const hudOpacity=useTransform(scrollYProgress,[.3,.43,.58],[0,1,0]);
+ const worldOpacity=useTransform(scrollYProgress,[.57,.76,1],[0,1,1]);
  const ringScale=useTransform(scrollYProgress,[0,.42,.72],[.72,1.1,2.8]);
  const ringOpacity=useTransform(scrollYProgress,[0,.25,.65],[.25,.6,0]);
  return <main id="main" tabIndex={-1}>
-  <section ref={ref} className="cinematic">
+  <section ref={ref} className="cinematic" data-phase={reduce?0:phase}>
    <div className="cinematic-sticky">
     <div className="ambient ambient-a"/><div className="ambient ambient-b"/><div className="grain"/>
-    <motion.div className="hero-type" style={reduce?{}:{opacity:copyOpacity}}><p className="eyebrow">OPEN DEVELOPMENT / SIMULATION / RESEARCH</p><h1>See the<br/><em>system.</em></h1><p>Build for smart glasses without hiding the differences.</p><div className="button-row"><a className="button primary" href="#/lab">Enter Lens Lab</a><a className="text-link" href="#/devices">Explore the field</a></div></motion.div>
+    <motion.div className="hero-type" inert={!reduce&&phase!==0} style={reduce?{}:{opacity:copyOpacity}}><p className="eyebrow">AN OPEN WORLD. A DIFFERENT LENS.</p><h1>See the <em>system.</em></h1><p>The independent workbench for smart glasses.</p><div className="button-row"><a className="button primary" href="#/lab">Enter Lens Lab <span aria-hidden="true">↗</span></a><a className="text-link" href="#/devices">Explore the field</a></div></motion.div>
     <motion.div className="hero-depth-rings" aria-hidden="true" style={reduce?{}:{scale:ringScale,opacity:ringOpacity}}><i/><i/><i/><span/></motion.div>
-    <motion.div className="glasses-stage" style={reduce?{}:{scale,x,rotate}}><img src={`${import.meta.env.BASE_URL}assets/openlens-glasses-hero-v2.png`} alt="Detailed graphite OpenLens smart glasses with smoked optical lenses" draggable={false}/><div className="glass-caustic" aria-hidden="true"/><div className="lens-energy-line" aria-hidden="true"/></motion.div>
-    <div className="optic-callout callout-camera"><i/>01 / CAMERA ARRAY</div><div className="optic-callout callout-display"><i/>02 / WAVEGUIDE</div><div className="optic-callout callout-hinge"><i/>03 / COMPUTE HINGE</div>
+    <motion.div className="glasses-stage" style={reduce?{}:{scale,y,opacity:glassOpacity}}><img src={`${import.meta.env.BASE_URL}assets/openlens-glasses-hero-v2.png`} width="1760" height="880" fetchPriority="high" alt="Detailed graphite OpenLens smart glasses with smoked optical lenses" draggable={false}/></motion.div>
+    <motion.div className="studio-caption" style={reduce?{}:{opacity:copyOpacity}}><span>01 / THE OPTICAL TWIN</span><p>Graphite frame.<br/>Open possibilities.</p><small>CONCEPT VISUAL · SIMULATION WORKBENCH</small></motion.div>
     <motion.div className="hero-readout" style={reduce?{}:{opacity:copyOpacity}}><span>OPENLENS / PUBLIC PREVIEW</span><div><b>LOCAL-FIRST</b><b>SOURCED CLAIMS</b><b>REPLAYABLE RUNS</b></div><small>SCROLL TO ENTER THE RIGHT LENS ↓</small></motion.div>
-    <motion.div className="lens-hud" style={reduce?{}:{opacity:hudOpacity}}><span>OPTICAL TWIN / ACTIVE</span><strong>ENTERING<br/>PERCEPTION LAYER</strong><div className="hud-reticle"/><small>SIMULATION VIEWPORT · NOT A DEVICE MEASUREMENT</small></motion.div>
-    <motion.div className="perception-world" style={reduce?{}:{opacity:worldOpacity}}><div className="world-grid"/><div className="perception-orbit" aria-hidden="true"><span/><span/><span/><i/><i/></div><p className="eyebrow">YOU ARE THROUGH THE LENS</p><h2>Every signal becomes<br/><em>inspectable.</em></h2><div className="perception-actions"><a href="#/lab" className="button primary">Start a live simulation</a><a href="#home-live-proof" className="text-link">See it run below</a></div><div className="perception-telemetry"><span>INPUT</span><i/> <span>ROUTE</span><i/> <span>OUTPUT</span><i/> <span>EVIDENCE</span></div></motion.div>
-    <div className="cinematic-progress"><span>APPROACH</span><i/><span>ENTER</span><i/><span>PERCEIVE</span></div>
+    <motion.div className="lens-hud" aria-hidden="true" style={reduce?{}:{opacity:hudOpacity}}><span>OPTICAL TWIN / ACTIVE</span><strong>ENTERING<br/>PERCEPTION LAYER</strong><div className="hud-reticle"/><small>SIMULATION VIEWPORT · NOT A DEVICE MEASUREMENT</small></motion.div>
+    <motion.div className="perception-world" inert={!!reduce||phase!==2} style={reduce?{}:{opacity:worldOpacity}}><div className="world-grid"/><div className="perception-orbit" aria-hidden="true"><span/><span/><span/><i/><i/></div><p className="eyebrow">YOU ARE THROUGH THE LENS</p><h2>Every signal becomes<br/><em>inspectable.</em></h2><div className="perception-actions"><a href="#/lab" className="button primary">Start a live simulation</a><a href="#home-live-proof" className="text-link">See it run below</a></div><div className="perception-telemetry"><span>INPUT</span><i/> <span>ROUTE</span><i/> <span>OUTPUT</span><i/> <span>EVIDENCE</span></div></motion.div>
+    <div className="cinematic-progress"><span>01 / APPROACH</span><i><motion.b style={{scaleX:scrollYProgress}}/></i><span>02 / ENTER THE LENS</span><i/><span>03 / EXPLORE</span></div>
    </div>
   </section>
   <section className="manifesto"><p className="eyebrow">THE OPEN OPTICAL LAYER</p><div><h2>Glasses are becoming computers.<br/><em>Their differences should be visible.</em></h2><p>OpenLens turns a fragmented hardware landscape into an environment you can inspect, simulate, compile, trace, and benchmark. Every boundary stays attached to the work.</p></div></section>

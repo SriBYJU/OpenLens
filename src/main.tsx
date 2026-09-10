@@ -10,4 +10,5 @@ import './a11y-hotfix.css';
 import './resilience.css';
 import './scenario-capsule.css';
 import './workbench-polish.css';
+import './optical-studio.css';
 createRoot(document.getElementById('root')!).render(<React.StrictMode><App /></React.StrictMode>);

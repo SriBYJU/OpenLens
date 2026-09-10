@@ -25,6 +25,7 @@
     "@axe-core/playwright": "latest",
     "@eslint/js": "latest",
     "@playwright/test": "latest",
+    "@types/node": "^22.20.2",
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "@vitejs/plugin-react": "latest",

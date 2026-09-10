@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect,useState} from 'react';
 import FeatureGuide from '../components/FeatureGuide';
 import Page from '../components/Page';
 import {capabilityKeys} from '../core';
@@ -8,6 +8,7 @@ const requestedDevice=()=>{try{const id=new URLSearchParams(location.hash.split(
 
 export default function Research(){
  const [open,setOpen]=useState(requestedDevice);
+ useEffect(()=>{const sync=()=>setOpen(requestedDevice());addEventListener('hashchange',sync);return()=>removeEventListener('hashchange',sync)},[]);
  return <Page index="05" eyebrow="RESEARCH / EVIDENCE LEDGER" title={<>Unknown stays<br/><em>unknown.</em></>} lead="For researchers and builders verifying what each pair of glasses can do. Every claim stays attached to a publisher, access date, confidence, and integration boundary.">
   <FeatureGuide title="Read a device claim correctly" intro="The ledger prevents three different facts—physical hardware, a maker's developer access, and working OpenLens code—from being collapsed into one support badge." steps={[
    {number:'1',title:'Open a device',body:'The selected record expands to show each capability and its documented access path.'},

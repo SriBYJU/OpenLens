@@ -41,4 +41,4 @@ Real hardware verification depends on access to the relevant device and SDK. Clo
 
 Continue against this list and the original master directive. Do not mark a partial item complete merely because it has a page or label.
 
-Latest integrated checkpoint: 58 unit tests, 24 browser checks passed locally; two redundant mobile checks intentionally skipped. TypeScript, lint and production build also checked. Physical hardware and optional cloud services remain outside these results.
+Latest integrated checkpoint: 62 unit tests and 28 browser checks passed locally with retries disabled; two redundant mobile checks were intentionally skipped. TypeScript, lint, automated WCAG checks and the production build also passed. Physical hardware and optional cloud services remain outside these results.

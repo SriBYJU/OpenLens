@@ -1,5 +1,5 @@
 import {expect,it} from 'vitest';
-import {compileExperience,defaultSimulationConfig,experiencePresets,getDevice,importRun,simulate} from '../src/core';
+import {benchmark,compileExperience,defaultSimulationConfig,experiencePresets,getDevice,importArtifact,importRun,simulate} from '../src/core';
 const run=()=>simulate(compileExperience(experiencePresets[0],getDevice('openlens-twin')),defaultSimulationConfig);
 it.each(['trace','deviceSnapshot','versions','plan'] as const)('rejects modified %s even when totals are unchanged',field=>{
  const artifact=run();
@@ -18,4 +18,16 @@ it('translates each fixture rather than returning one canned word',()=>{
 it('fails explicitly when a requested fixture translation is unavailable',()=>{
  const plan=compileExperience({...experiencePresets[0],language:'Japanese'},getDevice('openlens-twin'));
  expect(simulate(plan,defaultSimulationConfig)).toMatchObject({status:'failed',output:null});
+});
+it('reopens a full benchmark including failed samples',()=>{
+ const suite=benchmark(run().plan,{...defaultSimulationConfig,failureRate:.5},20);
+ expect(suite.failures).toBeGreaterThan(0);
+ expect(importArtifact(JSON.stringify(suite))).toEqual(suite);
+});
+it.each(['statistics','sample','trials'] as const)('rejects a forged benchmark %s',field=>{
+ const suite=benchmark(run().plan,defaultSimulationConfig,3);
+ if(field==='statistics')suite.statistics.mean=0;
+ if(field==='sample')suite.runs[1].trace[0].message='Forged';
+ if(field==='trials')suite.trials=501;
+ expect(()=>importArtifact(JSON.stringify(suite))).toThrow();
 });
