@@ -27,7 +27,7 @@ export default function Lab(){
  const update=<K extends keyof SimulationConfig>(key:K,value:SimulationConfig[K])=>work.setConfig({...work.config,[key]:value});
  const chooseScenario=(id:string)=>{const scenario=scenarios.find(item=>item.id===id)!;work.setConfig({...work.config,battery:defaultSimulationConfig.battery,network:defaultSimulationConfig.network,permission:defaultSimulationConfig.permission,failureRate:0,...scenario.change})};
  const runScenario=()=>{if(device.kind!=='research')work.runCurrent()};
- return <Page className="lab-page" index="01" eyebrow="LENS LAB / INTERACTIVE DIGITAL TWIN" title={<>The optical <em>workbench.</em></>} lead="Put an idea in the frame. Change the conditions. Inspect what happens." actions={<div className="instrument-status"><span className="live-dot"/> LOCAL SIMULATION<span>Seeded · repeatable · inspectable</span></div>}>
+ return <Page className="instrument-page lab-page" index="01" eyebrow="LENS LAB / INTERACTIVE DIGITAL TWIN" title={<>The optical <em>workbench.</em></>} lead="Put an idea in the frame. Change the conditions. Inspect what happens." actions={<div className="instrument-status"><span className="live-dot"/> LOCAL SIMULATION<span>Seeded · repeatable · inspectable</span></div>}>
   <nav className="workspace-tabs"><a className="active" href="#/lab">1. Run</a><a href="#/compiler">2. Create experience</a><a href="#/benchmarks">3. Benchmark</a><a href="#/research">4. Verify claims</a></nav>
   <div className="workbench-grid">
    <aside className="workbench-rail panel-dark"><div className="panel-title"><span>YOUR TEST</span><b>EDITABLE</b></div>

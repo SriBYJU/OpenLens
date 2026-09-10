@@ -5,12 +5,12 @@ Updated 2026-09-10. A passing build does not mean the entire directive is comple
 ## Implemented and exercised
 
 - Browser-first public deployment through GitHub Pages, without a required account or paid API.
-- Graphite glasses opening, scroll transforms, optical transition layers, reduced-motion fallback.
+- Graphite glasses opening with continuous lens fade, reduced-motion fallback, and a simulation-first optical workbench with three environment-responsive synthetic fixture scenes.
 - Eight sourced device profiles, search, three-way comparison, typed physical specifications, explicit unknown values, conflict preservation, evidence ledger and direct claim-level source links.
 - Deterministic Optical Twin with scenario selection, configurable latency/jitter/failure probability, battery, network and permission state, plus a documented illumination/head-motion/noise stress model that changes quality, timing, trace data and acquisition outcomes.
-- Live constrained-language compiler, structured corrections, persisted experience and cross-device route plans.
+- Live constrained-language compiler with a dedicated writing surface, structured corrections, guarded draft handoff and cross-device route plans.
 - Trace inspection, JSON run export, full artifact replay validation and pipeline playback.
-- Benchmark suites, successful-sample statistics, failed-run retention and JSON/CSV export.
+- Benchmark suites, successful-sample statistics, all-outcome chart scaling, failed-run retention, current-run trace details and JSON/CSV export.
 - Eight-condition resilience matrix with event-level trace comparison and export.
 - Scenario capsules preserve the exact device, experience and conditions in a validated JSON file or replayable URL; these are checksummed snapshots, not signed evidence.
 - Device-fit ranking with explainable requirements, sourced device diagnosis, and a keyboard-operated command palette.

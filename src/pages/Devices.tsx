@@ -17,7 +17,7 @@ export default function Devices(){
  const rows=useMemo(()=>capabilityKeys.filter(key=>!differences||new Set(compare.map(d=>`${d.capabilities[key].physical}/${d.capabilities[key].manufacturerAccess}`)).size>1),[compare,differences]);
  const specRows=useMemo(()=>specificationKeys.filter(key=>!differences||new Set(compare.map(d=>String(d.specifications[key].value))).size>1),[compare,differences]);
  const toggle=(id:string)=>setSelected(current=>current.includes(id)?current.filter(v=>v!==id):current.length<3?[...current,id]:[...current.slice(1),id]);
- return <Page className="devices-page" index="02" eyebrow="DEVICE UNIVERSE / 8 SOURCED PROFILES" title={<>The device <em>field guide.</em></>} lead="Eight perspectives on spatial computing. Explore the hardware, compare the constraints, and follow the evidence." actions={<button className="button" onClick={()=>jumpTo('device-fit')}>Find your fit ↗</button>}>
+ return <Page className="instrument-page devices-page" index="02" eyebrow="DEVICE UNIVERSE / 8 SOURCED PROFILES" title={<>The device <em>field guide.</em></>} lead="Eight perspectives on spatial computing. Explore the hardware, compare the constraints, and follow the evidence." actions={<button className="button" onClick={()=>jumpTo('device-fit')}>Find your fit ↗</button>}>
   {doctorId&&<DeviceDoctor device={getDevice(doctorId)} onClose={()=>setDoctorId(null)}/>} 
   <section className="catalog-section" aria-labelledby="catalog-title">
    <header className="catalog-section-head"><div><p className="eyebrow">DEVICE CATALOG</p><h2 id="catalog-title">Inspect the field directly.</h2></div><p>Eight initial profiles. Source depth will continue expanding; unknown stays unknown until evidence exists.</p></header>

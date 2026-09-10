@@ -4,7 +4,7 @@
 
 - Branch: `main`
 - Live URL: https://sribyju.github.io/OpenLens/
-- Latest confirmed deployed checkpoint at this update: `8187bed`
+- Latest confirmed deployed checkpoint at this update: `72a7966`
 - Every push to `main` runs lint, unit tests, browser/accessibility checks, build, release stamping, and GitHub Pages deployment.
 
 ## Working systems
@@ -29,7 +29,7 @@ The reference twin and seven capability models execute locally. Manufacturer har
 
 ## Next priorities
 
-1. Continue the instrument/editorial design treatment through Compiler and Benchmarks; keep their primary tools above long explanation panels.
+1. Continue the design and interaction audit through Research and Developers. Keep source evidence and runnable starter workflows prominent.
 2. Add quantified performance budgets and a release-time asset audit.
 3. Expand accessibility review to dialog keyboard behavior and manual screen-reader checks.
 4. Add a physical adapter only when SDK access and hardware verification exist.
@@ -43,3 +43,10 @@ No credential or authorization blocker is active. Real-hardware integration rema
 - Lens entry no longer hides the glasses before the opacity transition finishes. The regression covers the middle of that fade.
 - Scenario selection reflects actual configuration instead of retaining an outdated selection badge after manual edits.
 - Desktop, tablet and phone screenshots inspected. OCR contrast remains explicitly scoped to its light surface.
+
+## Authoring and evidence checkpoint
+
+- Compiler has a paper writing surface beside the live editable contract. Its guide follows the actual tool. Runnable device-plan links now save the current draft; actions cannot submit an older draft during the parser debounce.
+- Benchmarks puts trial controls and statistics first, then distribution and trace, then fault isolation. Plot scaling includes failed durations, large suites scroll within the chart, and chart labels have contrast against the bars.
+- Trace inspectors derive their event from the current run; switching trials no longer retains stale event metadata. A 500-trial browser regression verifies the exported final seed and inspector content.
+- The author and evidence screens were visually inspected at 1280, 768 and 375 pixels; a clipped phone editor and chart overflow were fixed during review.

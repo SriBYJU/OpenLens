@@ -13,4 +13,5 @@ import './workbench-polish.css';
 import './environment.css';
 import './optical-studio.css';
 import './instrument-workspace.css';
+import './author-evidence.css';
 createRoot(document.getElementById('root')!).render(<React.StrictMode><App /></React.StrictMode>);

@@ -294,3 +294,60 @@ test('optical workbench shows the instrument first and updates its scene',async(
   await expect(page.locator('#device-fit')).toBeFocused();
  }
 });
+
+test('compiler route opens the current draft and evidence views stay usable',async({page},testInfo)=>{
+ test.skip(testInfo.project.name!=='desktop','Explicitly exercises desktop, tablet and phone widths.');
+ await page.goto('/#/compiler');
+ await page.getByLabel('Describe the experience').fill('When I hear a conversation, caption it in French on the display.');
+ await expect(page.getByRole('combobox',{name:'Task',exact:true})).toHaveValue('caption');
+ await expect(page.getByRole('textbox',{name:'Language',exact:true})).toHaveValue('French');
+ await page.locator('.compile-row.runnable').first().click();
+ await expect(page).toHaveURL(/#\/lab/);
+ await expect(page.getByLabel('Input fixture')).toHaveValue('conversation');
+ await expect(page.locator('.workbench-rail')).toContainText('caption it in French');
+ await page.getByRole('button',{name:/Run this scenario/i}).click();
+ await expect(page.locator('.lab-hud')).toContainText('CAPTION');
+ for(const width of [1280,768,375]){
+  await page.setViewportSize({width,height:900});
+  await page.goto('/#/compiler');
+  const input=page.getByLabel('Describe the experience');
+  await expect(input).toBeVisible();
+  const inputBox=(await input.boundingBox())!;
+  expect(inputBox.y).toBeLessThan(480);
+  expect(inputBox.x+inputBox.width).toBeLessThan(width-10);
+  await page.evaluate(()=>scrollTo({top:0,behavior:'instant'}));
+  await page.screenshot({path:testInfo.outputPath(`author-${width}.png`)});
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
+  await page.goto('/#/benchmarks');
+  await page.getByRole('button',{name:'Run 24 trials',exact:true}).click();
+  await expect(page.getByLabel('Benchmark trial outcomes').getByRole('button')).toHaveCount(24);
+  await page.evaluate(()=>scrollTo({top:0,behavior:'instant'}));
+  await page.screenshot({path:testInfo.outputPath(`evidence-${width}.png`)});
+  await page.locator('.distribution-panel').scrollIntoViewIfNeeded();
+  await page.screenshot({path:testInfo.outputPath(`evidence-chart-${width}.png`)});
+  if(width===1280){const audit=await new AxeBuilder({page}).include('.benchmark-workspace').analyze();expect(audit.violations.filter(item=>['serious','critical'].includes(item.impact??''))).toEqual([])}
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
+ }
+});
+
+test('benchmark chart preserves failed runs and contains large trial sets',async({page})=>{
+ await page.goto('/#/lab');
+ await page.getByLabel('Injected failure').selectOption('timeout');
+ await page.goto('/#/benchmarks');
+ await page.getByLabel('Benchmark trial count').fill('500');
+ await page.getByRole('button',{name:'Run 500 trials',exact:true}).click();
+ const chart=page.getByLabel('Benchmark trial outcomes');
+ await expect(chart.getByRole('button')).toHaveCount(500);
+ const heights=await chart.evaluate(element=>({height:element.clientHeight,max:Math.max(...[...element.children].map(child=>child.getBoundingClientRect().height))}));
+ expect(heights.max).toBeLessThanOrEqual(heights.height+1);
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
+ await chart.getByRole('button').last().click();
+ await expect(chart.getByRole('button').last()).toHaveClass(/selected/);
+ const exported=page.waitForEvent('download');
+ await page.locator('.trace-workspace').getByRole('button',{name:'Export JSON',exact:true}).click();
+ const artifact=JSON.parse(readFileSync((await (await exported).path())!,'utf8'));
+ expect(artifact.seed).toBe(541);
+ const inspector=page.locator('.trace-inspector');
+ await expect(inspector).toContainText(artifact.trace[0].id);
+ await expect(inspector.locator('pre')).toHaveText(JSON.stringify(artifact.trace[0].metadata,null,2));
+});

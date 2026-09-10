@@ -1,4 +1,4 @@
-# atlas: src (1914 LOC, 52 files) | budget 3000 | rendered 2463 tok | public API only, parameter names omitted to fit budget — raise --budget
+# atlas: src (1918 LOC, 52 files) | budget 3000 | rendered 2463 tok | public API only, parameter names omitted to fit budget — raise --budget
 
 ## core/types.ts (#1 — imported by 14 file(s))
     export interface EvidenceSource { id:string; title:string; url:string; publisher:string; accessed:string; confidence:Confidence; note:string }
