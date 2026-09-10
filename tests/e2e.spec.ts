@@ -71,6 +71,13 @@ test('compiled text becomes the active simulated experience',async({page})=>{
 
 test('device fit and doctor preserve the hardware access boundary',async({page})=>{
   await page.goto('/#/devices');
+  const matrix=page.getByRole('region',{name:/See the boundary in one glance/i});
+  await expect(matrix.locator('.matrix-device')).toHaveCount(8);
+  await matrix.getByRole('button',{name:'Developer access',exact:true}).click();
+  await expect(matrix.getByRole('button',{name:/Frame, camera: documented-api/i})).toContainText('documented api');
+  await matrix.getByRole('button',{name:/Frame, camera: documented-api/i}).click();
+  await expect(page.locator('.device-doctor').getByRole('heading',{name:'Frame',exact:true})).toBeVisible();
+  await page.locator('.device-doctor').getByRole('button',{name:'Close Device Doctor',exact:true}).click();
   await expect(page.getByRole('heading',{name:/Describe the hardware.*your idea actually needs/i})).toBeVisible();
   await expect(page.getByText(/PROFILES CHECKED/)).toBeVisible();
   await page.locator('.catalog-tools .search-input').fill('Rokid');

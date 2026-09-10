@@ -1,6 +1,6 @@
 # Production performance budget
 
-OpenLens checks the built GitHub Pages artifact on every deployment. The check fails when the initial document and its direct imports, total application JavaScript, CSS, largest lazy route, glasses hero, or virtual park scene exceed their declared ceilings.
+OpenLens checks the built GitHub Pages artifact on every deployment. The check fails when the initial document and its direct imports, total application JavaScript, initial CSS, total application CSS, largest lazy route, glasses hero, or virtual park scene exceed their declared ceilings. Route-specific styles remain separate from the first-load stylesheet.
 
 The local OCR engine is intentionally separate. Its English model and WebAssembly variants make the deployed artifact large, but they are not referenced by the initial HTML and load only after a visitor opens the OCR drawer. The budget fails if an OCR worker, OCR engine path, or the Local AI route becomes an initial import.
 

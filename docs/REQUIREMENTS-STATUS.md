@@ -6,7 +6,7 @@ Updated 2026-09-10. A passing build does not mean the entire directive is comple
 
 - Browser-first public deployment through GitHub Pages, without a required account or paid API.
 - Graphite glasses opening with continuous lens fade, reduced-motion fallback, a connected five-surface homepage system atlas, and a simulation-first optical workbench with a photorealistic virtual park plus three diagnostic fixtures.
-- Eight sourced device profiles, search, three-way comparison, typed physical specifications, explicit unknown values, conflict preservation, evidence ledger and direct claim-level source links.
+- Eight sourced device profiles, a three-layer interactive capability matrix, search, three-way comparison with difference-only mode, typed physical specifications, explicit unknown values, conflict preservation, evidence ledger and direct claim-level source links.
 - Search and integration-state filtering on the evidence ledger, with claim, capability, and primary-source detail kept in one expandable record.
 - Deterministic Optical Twin with scenario selection, configurable latency/jitter/failure probability, battery, network and permission state, plus a documented illumination/head-motion/noise stress model that changes quality, timing, trace data and acquisition outcomes.
 - Live constrained-language compiler with a dedicated writing surface, structured corrections, guarded draft handoff and cross-device route plans.

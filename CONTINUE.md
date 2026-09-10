@@ -4,7 +4,7 @@
 
 - Branch: `main`
 - Live URL: https://sribyju.github.io/OpenLens/
-- Latest confirmed deployed checkpoint at this update: `fc937c7`
+- Latest confirmed deployed checkpoint at this update: `330eab5`
 - Every push to `main` runs lint, unit tests, browser/accessibility checks, build, release stamping, and GitHub Pages deployment.
 
 ## Working systems
@@ -71,3 +71,9 @@ No credential or authorization blocker is active. Real-hardware integration rema
 - The virtual view responds to fixture, task, run output, failure state, illumination, head motion, ambient noise, and the selected device field of view. The prior authored SVG fixture view remains available through the Diagnostic toggle.
 - The generated park source was visually inspected, then reduced from a 2.98 MiB PNG to a 595 KiB production JPEG. CI enforces a 700 KiB ceiling and the asset remains isolated to the lazy Lens Lab route.
 - The homepage feature sequence is now a connected five-surface system atlas. Each destination has a distinct artifact view and direct link instead of reusing one decorative lens treatment.
+
+## Device matrix checkpoint
+
+- Device Universe opens with an evidence-derived capability matrix across all eight profiles. Visitors can switch among physical hardware, maker developer access, and current OpenLens execution.
+- Device headings add or remove comparison candidates. Every capability cell opens Device Doctor for the selected profile, preserving the distinction among physical presence, manufacturer access, and OpenLens support.
+- Matrix styles ship with the lazy Devices route. CI separately enforces the 150 KiB initial CSS ceiling and a 160 KiB all-application ceiling.

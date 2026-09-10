@@ -3,6 +3,8 @@ import FeatureGuide from '../components/FeatureGuide';
 import Page from '../components/Page';
 import DeviceFitEngine from '../components/DeviceFitEngine';
 import DeviceDoctor from '../components/DeviceDoctor';
+import DeviceCapabilityMatrix from '../components/DeviceCapabilityMatrix';
+import '../device-matrix.css';
 import {capabilityKeys,formatSpecification,getDevice,specificationKeys,specificationLabels} from '../core';
 import {devices} from '../data/devices';
 
@@ -19,6 +21,7 @@ export default function Devices(){
  const toggle=(id:string)=>setSelected(current=>current.includes(id)?current.filter(v=>v!==id):current.length<3?[...current,id]:[...current.slice(1),id]);
  return <Page className="instrument-page devices-page" index="02" eyebrow="DEVICE UNIVERSE / 8 SOURCED PROFILES" title={<>The device <em>field guide.</em></>} lead="Eight perspectives on spatial computing. Explore the hardware, compare the constraints, and follow the evidence." actions={<button className="button" onClick={()=>jumpTo('device-fit')}>Find your fit ↗</button>}>
   {doctorId&&<DeviceDoctor device={getDevice(doctorId)} onClose={()=>setDoctorId(null)}/>} 
+  <DeviceCapabilityMatrix devices={devices} selected={selected} onToggle={toggle} onInspect={setDoctorId}/>
   <section className="catalog-section" aria-labelledby="catalog-title">
    <header className="catalog-section-head"><div><p className="eyebrow">DEVICE CATALOG</p><h2 id="catalog-title">Inspect the field directly.</h2></div><p>Eight initial profiles. Source depth will continue expanding; unknown stays unknown until evidence exists.</p></header>
    <div className="catalog-tools"><input className="search-input" value={query} onChange={e=>setQuery(e.target.value)} aria-label="Search device catalog" placeholder="Search the field…"/><span className="result-count">{filtered.length} OF {devices.length} PROFILES</span><label className="toggle"><input type="checkbox" checked={differences} onChange={e=>setDifferences(e.target.checked)}/><span/>Show differences only</label></div>
