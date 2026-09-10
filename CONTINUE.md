@@ -4,7 +4,7 @@
 
 - Branch: `main`
 - Live URL: https://sribyju.github.io/OpenLens/
-- Latest confirmed deployed checkpoint at this update: `c4c461b`
+- Latest confirmed deployed checkpoint at this update: `fc856b4`
 - Every push to `main` runs lint, unit tests, browser/accessibility checks, build, release stamping, and GitHub Pages deployment.
 
 ## Working systems
@@ -24,7 +24,7 @@ The reference twin and seven capability models execute locally. Manufacturer har
 
 ## Verification
 
-- Latest confirmed Pages checkpoint completed its lint, unit, browser, build, and deployment workflow successfully at `c4c461b`.
+- Latest confirmed Pages checkpoint completed its lint, unit, browser, build, and deployment workflow successfully at `fc856b4`.
 - Current release candidate: 74 unit tests and 36 browser checks passed with retries disabled; six intentionally redundant small-phone checks were skipped. The open OCR drawer passes automated contrast checks; desktop, tablet, and phone screenshots were inspected.
 
 ## Next priorities
@@ -82,6 +82,7 @@ No credential or authorization blocker is active. Real-hardware integration rema
 
 - The homepage now asks what the visitor wants to do: explore, build, choose glasses, or verify evidence.
 - Each selection redraws a three-step route and leads to the corresponding implemented tool. The pathfinder is keyboard-operated, uses a Home-only stylesheet, and passes the homepage accessibility regression.
+- A user-invoked eight-step tour now teaches the complete working loop without auto-opening or requiring an account. It traps and restores keyboard focus and links every step to a real surface.
 
 ## Homepage device field checkpoint
 

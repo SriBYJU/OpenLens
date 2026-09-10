@@ -390,6 +390,21 @@ test('benchmark chart preserves failed runs and contains large trial sets',async
  await expect(inspector.locator('pre')).toHaveText(JSON.stringify(artifact.trace[0].metadata,null,2));
 });
 
+test('optional visitor tour teaches the working loop and restores focus',async({page})=>{
+ await page.goto('/#/');
+ const opener=page.getByRole('button',{name:/Take the 2-minute tour/i});
+ await opener.click();
+ const dialog=page.getByRole('dialog',{name:'Explore the field.'});
+ await expect(dialog.getByText('GUIDED TOUR · 1 / 8')).toBeVisible();
+ await dialog.getByRole('button',{name:'Next step'}).click();
+ await expect(page.getByRole('dialog',{name:'Choose a target.'})).toBeVisible();
+ const accessibility=await new AxeBuilder({page}).include('.help-drawer').analyze();
+ expect(accessibility.violations.filter(item=>['serious','critical'].includes(item.impact??''))).toEqual([]);
+ await page.keyboard.press('Escape');
+ await expect(page.getByRole('dialog')).toHaveCount(0);
+ await expect(opener).toBeFocused();
+});
+
 test('evidence index filters records and adapter workshop stays usable',async({page},testInfo)=>{
  test.skip(testInfo.project.name!=='desktop','Explicitly exercises desktop, tablet and phone widths.');
  await page.goto('/#/research');

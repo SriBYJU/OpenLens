@@ -20,6 +20,7 @@ Updated 2026-09-10. A passing build does not mean the entire directive is comple
 - About page with the existing founder portrait; architecture, privacy, security, research and benchmark documentation.
 - Route-safe Methodology section navigation and responsive editorial layouts for About, Research, and Developers.
 - Interactive first-time pathfinder for visitors exploring, building, comparing devices, or verifying evidence; every route ends in an implemented tool.
+- Optional eight-step first-visit tour covering device exploration, fit, capability boundaries, the virtual park, local OCR, benchmarks, comparison and adapter building; it never opens automatically.
 - Homepage device switchboard that compares all seven sourced physical profiles in place and launches the selected documented-capability model into Lens Lab.
 - Unit, desktop, phone and automated accessibility checks in the deployment workflow.
 - Modal command and route-guide surfaces trap keyboard focus, close on Escape, prevent background scrolling, and restore focus to their opening control.
