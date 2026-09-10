@@ -175,10 +175,26 @@ test('hardware capability models produce different routes',async({page})=>{
  await page.getByRole('button',{name:/Run this scenario/i}).click();
  await expect(page.getByRole('button',{name:/Rendered audio response/})).toBeVisible();
  await page.locator('.workbench-rail select').first().selectOption('model-vuzix-z100');
- await page.getByText('Advanced simulation conditions',{exact:true}).click();
+ await page.getByText('Advanced timing and reliability',{exact:true}).click();
  await page.getByLabel('Missing capability policy').selectOption('block');
  await page.getByRole('button',{name:/Run this scenario/i}).click();
  await expect(page.getByRole('heading',{name:'This device cannot execute the plan.'})).toBeVisible();
+});
+
+test('environment controls change timing, quality, and acquisition outcome',async({page})=>{
+ await page.goto('/#/lab');
+ const score=page.locator('.signal-score strong');
+ await expect(score).toContainText('100');
+ await page.getByRole('button',{name:/Night walk/}).click();
+ await expect(score).toHaveText('43/100');
+ await page.getByRole('button',{name:/Run this scenario/i}).click();
+ await expect(page.getByRole('heading',{name:'The experience completed.'})).toBeVisible();
+ await page.getByLabel('Illumination in lux').fill('0');
+ await page.getByLabel('Head motion in degrees per second').fill('160');
+ await expect(page.locator('.signal-score')).toHaveClass(/unusable/);
+ await page.getByRole('button',{name:/Run this scenario/i}).click();
+ await expect(page.getByRole('heading',{name:'The scenario exposed a failure.'})).toBeVisible();
+ await expect(page.locator('.outcome-card').getByText(/environment model could not acquire/i)).toBeVisible();
 });
 
 test('exported benchmark suites reopen and help keeps keyboard focus',async({page})=>{

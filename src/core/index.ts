@@ -8,4 +8,5 @@ export * from './fit';
 export * from './resilience';
 export * from './scenario';
 export * from './adapter-starter';
+export * from './environment';
 export * from '../data/devices';

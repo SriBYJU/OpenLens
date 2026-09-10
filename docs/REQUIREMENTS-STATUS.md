@@ -7,7 +7,7 @@ Updated 2026-09-09. A passing build does not mean the entire directive is comple
 - Browser-first public deployment through GitHub Pages, without a required account or paid API.
 - Graphite glasses opening, scroll transforms, optical transition layers, reduced-motion fallback.
 - Eight sourced device profiles, search, three-way comparison, evidence ledger and source links.
-- Deterministic Optical Twin, scenario selection, configurable latency/jitter/failure probability, battery, network and permission state.
+- Deterministic Optical Twin with scenario selection, configurable latency/jitter/failure probability, battery, network and permission state, plus a documented illumination/head-motion/noise stress model that changes quality, timing, trace data and acquisition outcomes.
 - Live constrained-language compiler, structured corrections, persisted experience and cross-device route plans.
 - Trace inspection, JSON run export, full artifact replay validation and pipeline playback.
 - Benchmark suites, successful-sample statistics, failed-run retention and JSON/CSV export.
@@ -22,7 +22,7 @@ Updated 2026-09-09. A passing build does not mean the entire directive is comple
 ## Partial: requires further implementation or verification
 
 - Hardware-specific digital twins: seven executable capability models now reflect documented sensor/output presence and explicit companion fallback. Full optical, sensor and vendor SDK emulation remains incomplete.
-- Simulation fidelity: authored inputs and outputs test routing and failure handling. There is no optical physics, environmental sensor model, continuous live scene model or hardware timing calibration.
+- Simulation fidelity: authored inputs and outputs test routing and failure handling, and synthetic environmental conditions now affect the active camera, microphone, display or audio path. Optical physics, continuous live scenes and hardware timing calibration remain incomplete.
 - Experience Compiler: four supported tasks with rule-based intent parsing; it does not generate arbitrary runnable applications.
 - Local AI: OCR and speech output exist. General translation, scene understanding, speech recognition, provider adapters and model management remain incomplete.
 - Developer platform: complete repository-ready adapter scaffolding and browser-readiness Device Doctor exist. A published SDK package, vendor transport implementations and hardware example applications remain incomplete.
@@ -41,4 +41,4 @@ Real hardware verification depends on access to the relevant device and SDK. Clo
 
 Continue against this list and the original master directive. Do not mark a partial item complete merely because it has a page or label.
 
-Latest integrated checkpoint: 64 unit tests and 28 browser checks passed locally with retries disabled; two redundant mobile checks were intentionally skipped. TypeScript, lint, automated WCAG checks, dependency audit and the production build also passed. Physical hardware and optional cloud services remain outside these results.
+Latest integrated checkpoint: 67 unit tests and 30 browser checks passed locally with retries disabled; two redundant mobile checks were intentionally skipped. TypeScript, lint, automated WCAG checks, dependency audit and the production build also passed. Physical hardware and optional cloud services remain outside these results.
