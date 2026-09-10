@@ -19,6 +19,7 @@ Updated 2026-09-10. A passing build does not mean the entire directive is comple
 - Four-file adapter starter generator with a transport implementation boundary, lifecycle and capability guards, contract tests, verification template, safe string escaping and ZIP export.
 - About page with the existing founder portrait; architecture, privacy, security, research and benchmark documentation.
 - Route-safe Methodology section navigation and responsive editorial layouts for About, Research, and Developers.
+- Interactive first-time pathfinder for visitors exploring, building, comparing devices, or verifying evidence; every route ends in an implemented tool.
 - Unit, desktop, phone and automated accessibility checks in the deployment workflow.
 
 ## Partial: requires further implementation or verification

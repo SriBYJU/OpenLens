@@ -1,6 +1,8 @@
 import {useRef,useState} from 'react';
 import {motion,useMotionValueEvent,useReducedMotion,useScroll,useTransform} from 'motion/react';
 import HomeSignalDemo from './HomeSignalDemo';
+import VisitorPathfinder from './VisitorPathfinder';
+import '../home-explorer.css';
 
 const chapters=[
  {number:'01',label:'SENSE',title:'See every input.',body:'Camera, microphone, motion and manual triggers enter one explicit capability model.',route:'lab',metric:'3-stage route',proof:'INPUT · PROCESS · OUTPUT'},
@@ -36,6 +38,7 @@ export default function Home(){
    </div>
   </section>
   <section className="manifesto"><p className="eyebrow">THE OPEN OPTICAL LAYER</p><div><h2>Glasses are becoming computers.<br/><em>Their differences should be visible.</em></h2><p>OpenLens turns a fragmented hardware landscape into an environment you can inspect, simulate, compile, trace, and benchmark. Every boundary stays attached to the work.</p></div></section>
+  <VisitorPathfinder/>
   <div id="home-live-proof"><HomeSignalDemo/></div>
   <section className="system-atlas" aria-labelledby="system-atlas-title">
    <header className="system-atlas-head"><div><p className="eyebrow">THE SYSTEM / FIVE OPEN SURFACES</p><h2 id="system-atlas-title">Follow one signal<br/>through the stack.</h2></div><p>Each surface below opens a real tool. Move from intent to route, hardware boundary, repeatable evidence, and an adapter package you can inspect.</p></header>

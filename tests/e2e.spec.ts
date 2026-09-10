@@ -14,6 +14,9 @@ test('homepage renders the optical opening without page overflow',async({page})=
   const atlas=page.getByRole('region',{name:/Follow one signal through the stack/i});
   await expect(atlas.getByRole('link')).toHaveCount(5);
   await expect(atlas.getByRole('link',{name:/Compile the intent/i})).toHaveAttribute('href','#/compiler');
+  const pathfinder=page.getByRole('region',{name:/Choose a way into OpenLens/i});
+  await pathfinder.getByRole('button',{name:/I want to build/i}).click();
+  await expect(pathfinder.getByRole('link',{name:/Open the Experience Compiler/i})).toHaveAttribute('href','#/compiler');
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth+1)).toBe(true);
 });
 

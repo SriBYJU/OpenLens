@@ -4,7 +4,7 @@
 
 - Branch: `main`
 - Live URL: https://sribyju.github.io/OpenLens/
-- Latest confirmed deployed checkpoint at this update: `d8caf07`
+- Latest confirmed deployed checkpoint at this update: `5b1fa3f`
 - Every push to `main` runs lint, unit tests, browser/accessibility checks, build, release stamping, and GitHub Pages deployment.
 
 ## Working systems
@@ -78,3 +78,8 @@ No credential or authorization blocker is active. Real-hardware integration rema
 - Device Universe opens with an evidence-derived capability matrix across all eight profiles. Visitors can switch among physical hardware, maker developer access, and current OpenLens execution.
 - Device headings add or remove comparison candidates. Every capability cell opens Device Doctor for the selected profile, preserving the distinction among physical presence, manufacturer access, and OpenLens support.
 - Matrix styles ship with the lazy Devices route. CI separately enforces the 150 KiB initial CSS ceiling and a 160 KiB all-application ceiling.
+
+## First-time visitor checkpoint
+
+- The homepage now asks what the visitor wants to do: explore, build, choose glasses, or verify evidence.
+- Each selection redraws a three-step route and leads to the corresponding implemented tool. The pathfinder is keyboard-operated, uses a Home-only stylesheet, and passes the homepage accessibility regression.
