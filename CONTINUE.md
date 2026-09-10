@@ -4,7 +4,7 @@
 
 - Branch: `main`
 - Live URL: https://sribyju.github.io/OpenLens/
-- Latest confirmed deployed checkpoint at this update: `330eab5`
+- Latest confirmed deployed checkpoint at this update: `d8caf07`
 - Every push to `main` runs lint, unit tests, browser/accessibility checks, build, release stamping, and GitHub Pages deployment.
 
 ## Working systems
@@ -69,6 +69,7 @@ No credential or authorization blocker is active. Real-hardware integration rema
 
 - Lens Lab opens in a first-person virtual park with a French `SORTIE` sign. Running the default translation produces `SALIDA` from the same deterministic artifact shown in the trace.
 - The virtual view responds to fixture, task, run output, failure state, illumination, head motion, ambient noise, and the selected device field of view. The prior authored SVG fixture view remains available through the Diagnostic toggle.
+- The sign and detected-speaker marker are keyboard and pointer targets that execute the current plan directly. Eight scenario cards now switch actual experiences and conditions across translation, captions, description, reminders, and failure cases.
 - The generated park source was visually inspected, then reduced from a 2.98 MiB PNG to a 595 KiB production JPEG. CI enforces a 700 KiB ceiling and the asset remains isolated to the lazy Lens Lab route.
 - The homepage feature sequence is now a connected five-surface system atlas. Each destination has a distinct artifact view and direct link instead of reusing one decorative lens treatment.
 

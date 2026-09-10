@@ -295,10 +295,16 @@ test('optical workbench shows the instrument first and updates its scene',async(
   const before=await scene.getAttribute('style');
   await page.getByLabel('Illumination in lux').fill('0');
   expect(await scene.getAttribute('style')).not.toBe(before);
-  await page.getByRole('button',{name:/Run this scenario/i}).click();
+  await page.getByRole('button',{name:/Focus JARDIN \/ 1847 sign and run translate/i}).click();
   await expect(page.locator('.world-caption')).toContainText('Instrumentos ópticos, 1847');
   await page.getByRole('button',{name:'Diagnostic'}).click();
   await expect(page.locator('.fixture-scene').getByRole('img')).toHaveAccessibleName('Synthetic museum room with an exhibit label');
+  await page.getByRole('button',{name:/Conversation captions/}).click();
+  await expect(page.locator('.workbench-rail select').nth(1)).toHaveValue('live-captions');
+  await expect(page.getByLabel('Virtual environment')).toHaveValue('conversation');
+  await page.getByRole('button',{name:'Virtual world',exact:true}).click();
+  await page.getByRole('button',{name:/Focus detected speakers and run caption/i}).click();
+  await expect(page.locator('.world-caption')).toContainText('The next turn is on your left.');
   await page.goto('/#/devices');
   await expect(page.locator('.device-record')).toHaveCount(8);
   await page.screenshot({path:testInfo.outputPath(`field-guide-${width}.png`)});

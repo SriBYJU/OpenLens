@@ -8,6 +8,8 @@ type VirtualWorldSceneProps={
  output:string|null|undefined;
  status:'success'|'failed'|'blocked'|undefined;
  failureMode:FailureMode;
+ canRun:boolean;
+ onRun:()=>void;
 };
 
 const prompts:Record<TaskKind,string>={
@@ -17,7 +19,7 @@ const prompts:Record<TaskKind,string>={
  notify:'The reminder will enter the wearer’s display plane.',
 };
 
-export default function VirtualWorldScene({fixture,environment,task,output,status,failureMode}:VirtualWorldSceneProps){
+export default function VirtualWorldScene({fixture,environment,task,output,status,failureMode,canRun,onRun}:VirtualWorldSceneProps){
  const light=Math.max(.28,Math.min(1.12,.3+Math.log10(environment.illuminationLux+1)/5.7));
  const blur=Math.min(3.2,environment.headMotionDps/55);
  const shift=Math.min(12,environment.headMotionDps/18);
@@ -29,7 +31,8 @@ export default function VirtualWorldScene({fixture,environment,task,output,statu
   <img src={`${import.meta.env.BASE_URL}assets/openlens-virtual-park-v1.jpg`} alt="Photorealistic virtual park used as a simulated smart-glasses environment" draggable={false}/>
   <div className="world-exposure"/><div className="world-edge"/>
   <div className="world-origin"><span>VIRTUAL PARK / 01</span><strong>PRAGUE · RIVER WALK</strong><small>GENERATED TEST ENVIRONMENT</small></div>
-  {fixture!=='conversation'&&<div className="world-sign"><small>VISIBLE SIGN</small><strong>{signText}</strong><span>{task==='translate'?'FRENCH · TARGET ACQUIRED':'VISUAL FIXTURE'}</span></div>}
+  {fixture!=='conversation'&&<button type="button" disabled={!canRun} onClick={onRun} className="world-sign" aria-label={`Focus ${signText} sign and run ${task}`}><small>SELECT TARGET</small><strong>{signText}</strong><span>{task==='translate'?'FRENCH · TAP TO TRANSLATE':'TAP TO RUN EXPERIENCE'}</span></button>}
+  {fixture==='conversation'&&<button type="button" disabled={!canRun} onClick={onRun} className="world-speaker-target" aria-label={`Focus detected speakers and run ${task}`}><i/><span>2 SPEAKERS</span><strong>TAP TO {task==='caption'?'CAPTION':'RUN'}</strong></button>}
   <div className={`world-caption ${task==='caption'?'speaker-caption':''}`}><span>{status?'SIMULATED OUTPUT':'BEFORE RUN'}</span><strong>{message}</strong></div>
   <div className="world-gaze" aria-hidden="true"><i/><i/><span>{task==='caption'?'VOICE':task==='notify'?'TIME':'GAZE'}</span></div>
   <div className="world-audio" aria-hidden="true"><span>AMBIENT {environment.ambientNoiseDb} dB</span><i/><i/><i/><i/><i/></div>
