@@ -87,6 +87,8 @@ test('compiled text becomes the active simulated experience',async({page})=>{
 
 test('device fit and doctor preserve the hardware access boundary',async({page})=>{
   await page.goto('/#/devices');
+  await expect(page).toHaveTitle('Device Universe — OpenLens');
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute('content',/Compare sourced smart-glasses hardware/);
   const matrix=page.getByRole('region',{name:/See the boundary in one glance/i});
   await expect(matrix.locator('.matrix-device')).toHaveCount(8);
   await matrix.getByRole('button',{name:'Developer access',exact:true}).click();
