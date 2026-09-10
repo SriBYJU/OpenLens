@@ -25,7 +25,7 @@ export default function CommandPalette({close,inputRef}:{close:()=>void;inputRef
  const filtered=entries.filter(entry=>`${entry.title} ${entry.meta} ${entry.keywords}`.toLowerCase().includes(query.trim().toLowerCase())).slice(0,14);
  useEffect(()=>setActive(0),[query]);
  useEffect(()=>{if(active>=filtered.length)setActive(Math.max(0,filtered.length-1))},[active,filtered.length]);
- useEffect(()=>{const previous=document.body.style.overflow;document.body.style.overflow='hidden';return()=>{document.body.style.overflow=previous}},[]);
+ useEffect(()=>{const previousOverflow=document.body.style.overflow;const previousFocus=document.activeElement as HTMLElement|null;document.body.style.overflow='hidden';inputRef.current?.focus();return()=>{document.body.style.overflow=previousOverflow;if(previousFocus?.isConnected)previousFocus.focus()}},[inputRef]);
  const choose=(entry:PaletteEntry|undefined)=>entry?.action();
  const trapFocus=(event:ReactKeyboardEvent<HTMLDivElement>)=>{
   if(event.key!=='Tab')return;

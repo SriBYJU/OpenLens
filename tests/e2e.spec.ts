@@ -41,8 +41,15 @@ test('homepage live proof runs the same deterministic workbench',async({page})=>
 
 test('command palette carries workbench state into Lens Lab',async({page})=>{
   await page.goto('/#/');
-  await page.keyboard.press('Control+K');
+  const trigger=page.getByRole('button',{name:/Command/i});
+  const opener=await trigger.isVisible()?trigger:page.getByRole('button',{name:'Menu',exact:true});
+  await opener.focus();
+  if(await trigger.isVisible())await trigger.click();else await page.keyboard.press('Control+K');
   const input=page.getByPlaceholder(/Search devices, experiences, tools, evidence/i);
+  await expect(input).toBeFocused();
+  await page.keyboard.press('Escape');
+  await expect(opener).toBeFocused();
+  if(await trigger.isVisible())await trigger.click();else await page.keyboard.press('Control+K');
   await expect(input).toBeFocused();
   await input.fill('Translate the world');
   await page.getByRole('button',{name:/Run: Translate the world/i}).click();

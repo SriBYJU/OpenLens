@@ -22,6 +22,7 @@ Updated 2026-09-10. A passing build does not mean the entire directive is comple
 - Interactive first-time pathfinder for visitors exploring, building, comparing devices, or verifying evidence; every route ends in an implemented tool.
 - Homepage device switchboard that compares all seven sourced physical profiles in place and launches the selected documented-capability model into Lens Lab.
 - Unit, desktop, phone and automated accessibility checks in the deployment workflow.
+- Modal command and route-guide surfaces trap keyboard focus, close on Escape, prevent background scrolling, and restore focus to their opening control.
 
 ## Partial: requires further implementation or verification
 
@@ -32,7 +33,7 @@ Updated 2026-09-10. A passing build does not mean the entire directive is comple
 - Developer platform: complete repository-ready adapter scaffolding and browser-readiness Device Doctor exist. A published SDK package, vendor transport implementations and hardware example applications remain incomplete.
 - Research: first-party claims now cover core optical, mass, power, endurance, display and camera fields where manufacturers publish them, with one documented conflicting resolution preserved. More device breadth, firmware history and measurement ingestion remain incomplete.
 - Visual QA: desktop, small-phone, tablet, ultrawide and reduced-motion checks are automated; slow-device, cinematic frame pacing and manual screen-reader verification remain open.
-- Accessibility: automated serious/critical checks cover the four core routes; full WCAG conformance and dialog keyboard auditing are not yet established.
+- Accessibility: automated serious/critical checks cover the five core routes and both global dialogs have keyboard regressions; full WCAG conformance and manual screen-reader verification remain open.
 - Security/performance: import and upload boundaries have tests. The release now enforces initial-import, JavaScript, CSS, route-chunk, hero-image, virtual-scene, and OCR-isolation budgets; a constrained local profile covers initial layout shift and cinematic frame intervals. Full security review, CSP/header policy, field Core Web Vitals, and further hero transfer reduction remain open.
 
 ## Not implemented

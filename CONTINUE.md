@@ -4,7 +4,7 @@
 
 - Branch: `main`
 - Live URL: https://sribyju.github.io/OpenLens/
-- Latest confirmed deployed checkpoint at this update: `5b1fa3f`
+- Latest confirmed deployed checkpoint at this update: `a73ae3b`
 - Every push to `main` runs lint, unit tests, browser/accessibility checks, build, release stamping, and GitHub Pages deployment.
 
 ## Working systems
@@ -24,7 +24,7 @@ The reference twin and seven capability models execute locally. Manufacturer har
 
 ## Verification
 
-- Latest confirmed Pages checkpoint completed its lint, unit, browser, build, and deployment workflow successfully at `5b1fa3f`.
+- Latest confirmed Pages checkpoint completed its lint, unit, browser, build, and deployment workflow successfully at `a73ae3b`.
 - Current release candidate: 74 unit tests and 36 browser checks passed with retries disabled; six intentionally redundant small-phone checks were skipped. The open OCR drawer passes automated contrast checks; desktop, tablet, and phone screenshots were inspected.
 
 ## Next priorities
@@ -88,3 +88,7 @@ No credential or authorization blocker is active. Real-hardware integration rema
 
 - The homepage switchboard compares all seven sourced physical profiles in place. Selecting a pair changes the field-of-view aperture, key specifications, and physical capability signal map.
 - The primary action loads a simulation of that profile's documented boundaries into Lens Lab; it remains explicitly separate from the unavailable physical adapter.
+
+## Dialog keyboard checkpoint
+
+- The command palette now owns initial focus, scroll locking, focus trapping and focus restoration. Escape returns focus to the control that opened it; the route guide follows the same keyboard contract.
