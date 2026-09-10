@@ -86,9 +86,15 @@ test('device research, benchmark, and adapter generator are interactive',async({
   await page.locator('.catalog-tools .search-input').fill('Rokid');
   const record=page.locator('.device-catalog .device-record').filter({hasText:'Rokid Glasses'});
   await expect(record.getByRole('heading',{name:'Rokid Glasses'})).toBeVisible();
+  await expect(record.getByText('49 G',{exact:true})).toBeVisible();
+  await expect(record.getByText('480×400',{exact:true})).toBeVisible();
   await expect(page.getByText('1 OF 8 PROFILES')).toBeVisible();
   await record.getByRole('link',{name:/Inspect evidence/i}).click();
-  await expect(page.locator('.evidence-ledger article.open').getByText('Rokid Glasses',{exact:true})).toBeVisible();
+  const evidence=page.locator('.evidence-ledger article.open');
+  await expect(evidence.getByText('Rokid Glasses',{exact:true})).toBeVisible();
+  await expect(evidence.getByText('1500 nits',{exact:true})).toBeVisible();
+  await expect(evidence.getByText(/CONFLICTING VALUE · 480×640 per eye/)).toBeVisible();
+  await expect(evidence.getByRole('link',{name:/Rokid ↗/}).first()).toHaveAttribute('href','https://global.rokid.com/products/rokid-glasses');
   await page.goto('/#/benchmarks');
   await page.getByLabel('Benchmark trial count').fill('12');
   await page.getByRole('button',{name:/Run 12 trials/i}).click();

@@ -1,12 +1,12 @@
 # Master directive implementation status
 
-Updated 2026-09-09. A passing build does not mean the entire directive is complete.
+Updated 2026-09-10. A passing build does not mean the entire directive is complete.
 
 ## Implemented and exercised
 
 - Browser-first public deployment through GitHub Pages, without a required account or paid API.
 - Graphite glasses opening, scroll transforms, optical transition layers, reduced-motion fallback.
-- Eight sourced device profiles, search, three-way comparison, evidence ledger and source links.
+- Eight sourced device profiles, search, three-way comparison, typed physical specifications, explicit unknown values, conflict preservation, evidence ledger and direct claim-level source links.
 - Deterministic Optical Twin with scenario selection, configurable latency/jitter/failure probability, battery, network and permission state, plus a documented illumination/head-motion/noise stress model that changes quality, timing, trace data and acquisition outcomes.
 - Live constrained-language compiler, structured corrections, persisted experience and cross-device route plans.
 - Trace inspection, JSON run export, full artifact replay validation and pipeline playback.
@@ -26,7 +26,7 @@ Updated 2026-09-09. A passing build does not mean the entire directive is comple
 - Experience Compiler: four supported tasks with rule-based intent parsing; it does not generate arbitrary runnable applications.
 - Local AI: OCR and speech output exist. General translation, scene understanding, speech recognition, provider adapters and model management remain incomplete.
 - Developer platform: complete repository-ready adapter scaffolding and browser-readiness Device Doctor exist. A published SDK package, vendor transport implementations and hardware example applications remain incomplete.
-- Research: evidence is versioned in Git; structured conflicting claims, detailed optical/power/weight specifications, firmware history and measurement ingestion need expansion.
+- Research: first-party claims now cover core optical, mass, power, endurance, display and camera fields where manufacturers publish them, with one documented conflicting resolution preserved. More device breadth, firmware history and measurement ingestion remain incomplete.
 - Visual QA: desktop, small-phone, tablet, ultrawide and reduced-motion checks are automated; slow-device, cinematic frame pacing and manual screen-reader verification remain open.
 - Accessibility: automated serious/critical checks cover the four core routes; full WCAG conformance and dialog keyboard auditing are not yet established.
 - Security/performance: import and upload boundaries have tests; full security review, CSP/header policy and quantified performance budgets remain open.
@@ -41,4 +41,4 @@ Real hardware verification depends on access to the relevant device and SDK. Clo
 
 Continue against this list and the original master directive. Do not mark a partial item complete merely because it has a page or label.
 
-Latest integrated checkpoint: 67 unit tests and 30 browser checks passed locally with retries disabled; two redundant mobile checks were intentionally skipped. TypeScript, lint, automated WCAG checks, dependency audit and the production build also passed. Physical hardware and optional cloud services remain outside these results.
+Latest integrated checkpoint: 68 unit tests and 30 browser checks passed locally with retries disabled; two redundant mobile checks were intentionally skipped. TypeScript, lint, automated WCAG checks, dependency audit and the production build also passed. Physical hardware and optional cloud services remain outside these results.

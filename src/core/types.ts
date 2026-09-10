@@ -1,6 +1,6 @@
 export const RELEASE_VERSION = '0.2.0';
 export const ENGINE_VERSION = '0.3.0';
-export const CATALOG_VERSION = '2026.09.08';
+export const CATALOG_VERSION = '2026.09.10';
 export const METHODOLOGY_VERSION = '1.2.0';
 export const ARTIFACT_SCHEMA_VERSION = 2;
 
@@ -11,10 +11,23 @@ export type ManufacturerAccess = 'documented-api'|'companion-only'|'unsupported'
 export type IntegrationStatus = 'unavailable'|'simulated'|'implemented-untested'|'verified-hardware';
 export type Confidence = 'high'|'medium'|'low';
 export interface EvidenceSource { id:string; title:string; url:string; publisher:string; accessed:string; confidence:Confidence; note:string }
-export interface Claim<T> { value:T|null; status:ClaimStatus; sourceIds:string[]; confidence:Confidence; note?:string }
+export interface ClaimConflict<T> { value:T; sourceIds:string[]; note:string }
+export interface Claim<T> { value:T|null; status:ClaimStatus; sourceIds:string[]; confidence:Confidence; note?:string; conflicts?:ClaimConflict<T>[] }
 export interface CapabilityInfo { physical:'present'|'absent'|'unknown'; manufacturerAccess:ManufacturerAccess; note:string; sourceIds:string[] }
 export interface OpticalProfile { horizontalFovDegrees:Claim<number>|null; fovAxis?:'horizontal'|'diagonal'|'unknown' }
-export interface DeviceProfile { id:string; revision:number; name:string; manufacturer:string; kind:'digital-twin'|'research'; summary:string; integrationStatus:IntegrationStatus; capabilities:Record<Capability,CapabilityInfo>; optics:OpticalProfile; sources:EvidenceSource[] }
+export const specificationKeys = ['massGrams','displayTechnology','displayResolution','brightnessNits','refreshRateHz','enduranceHours','batteryCapacityMah','cameraResolution'] as const;
+export type SpecificationKey = typeof specificationKeys[number];
+export interface DeviceSpecifications {
+ massGrams:Claim<number>;
+ displayTechnology:Claim<string>;
+ displayResolution:Claim<string>;
+ brightnessNits:Claim<number>;
+ refreshRateHz:Claim<number>;
+ enduranceHours:Claim<number>;
+ batteryCapacityMah:Claim<number>;
+ cameraResolution:Claim<string>;
+}
+export interface DeviceProfile { id:string; revision:number; name:string; manufacturer:string; kind:'digital-twin'|'research'; summary:string; integrationStatus:IntegrationStatus; capabilities:Record<Capability,CapabilityInfo>; optics:OpticalProfile; specifications:DeviceSpecifications; sources:EvidenceSource[] }
 export interface AdapterManifest { id:string; deviceId:string; name:string; status:IntegrationStatus; mode:'simulation'|'hardware'; capabilities:Capability[]; disclosure:string }
 export type InputMode = 'camera'|'microphone'|'manual';
 export type TaskKind = 'translate'|'describe'|'caption'|'notify';
