@@ -5,7 +5,7 @@ Updated 2026-09-10. A passing build does not mean the entire directive is comple
 ## Implemented and exercised
 
 - Browser-first public deployment through GitHub Pages, without a required account or paid API.
-- Graphite glasses opening with continuous lens fade, reduced-motion fallback, and a simulation-first optical workbench with three environment-responsive synthetic fixture scenes.
+- Graphite glasses opening with continuous lens fade, reduced-motion fallback, a connected five-surface homepage system atlas, and a simulation-first optical workbench with a photorealistic virtual park plus three diagnostic fixtures.
 - Eight sourced device profiles, search, three-way comparison, typed physical specifications, explicit unknown values, conflict preservation, evidence ledger and direct claim-level source links.
 - Search and integration-state filtering on the evidence ledger, with claim, capability, and primary-source detail kept in one expandable record.
 - Deterministic Optical Twin with scenario selection, configurable latency/jitter/failure probability, battery, network and permission state, plus a documented illumination/head-motion/noise stress model that changes quality, timing, trace data and acquisition outcomes.
@@ -24,14 +24,14 @@ Updated 2026-09-10. A passing build does not mean the entire directive is comple
 ## Partial: requires further implementation or verification
 
 - Hardware-specific digital twins: seven executable capability models now reflect documented sensor/output presence and explicit companion fallback. Full optical, sensor and vendor SDK emulation remains incomplete.
-- Simulation fidelity: authored inputs and outputs test routing and failure handling, and synthetic environmental conditions now affect the active camera, microphone, display or audio path. Optical physics, continuous live scenes and hardware timing calibration remain incomplete.
+- Simulation fidelity: authored inputs and outputs test routing and failure handling. The virtual park changes with the selected fixture, task, output, device field of view, illumination, motion, noise and failure state; a separate diagnostic view exposes the authored signal. Optical physics, navigable 3D worlds, continuous camera scenes and hardware timing calibration remain incomplete.
 - Experience Compiler: four supported tasks with rule-based intent parsing; it does not generate arbitrary runnable applications.
 - Local AI: OCR, matched-language speech output and bounded sign translation exist. General translation, scene understanding, speech recognition, provider adapters and model management remain incomplete.
 - Developer platform: complete repository-ready adapter scaffolding and browser-readiness Device Doctor exist. A published SDK package, vendor transport implementations and hardware example applications remain incomplete.
 - Research: first-party claims now cover core optical, mass, power, endurance, display and camera fields where manufacturers publish them, with one documented conflicting resolution preserved. More device breadth, firmware history and measurement ingestion remain incomplete.
 - Visual QA: desktop, small-phone, tablet, ultrawide and reduced-motion checks are automated; slow-device, cinematic frame pacing and manual screen-reader verification remain open.
 - Accessibility: automated serious/critical checks cover the four core routes; full WCAG conformance and dialog keyboard auditing are not yet established.
-- Security/performance: import and upload boundaries have tests. The release now enforces initial-import, JavaScript, CSS, route-chunk, hero-image, and OCR-isolation budgets; a constrained local profile covers initial layout shift and cinematic frame intervals. Full security review, CSP/header policy, field Core Web Vitals, and further hero transfer reduction remain open.
+- Security/performance: import and upload boundaries have tests. The release now enforces initial-import, JavaScript, CSS, route-chunk, hero-image, virtual-scene, and OCR-isolation budgets; a constrained local profile covers initial layout shift and cinematic frame intervals. Full security review, CSP/header policy, field Core Web Vitals, and further hero transfer reduction remain open.
 
 ## Not implemented
 

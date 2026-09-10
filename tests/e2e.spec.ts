@@ -11,6 +11,9 @@ test('homepage renders the optical opening without page overflow',async({page})=
   await page.goto('/#/');
   await expect(page.getByRole('heading',{name:/See the system/})).toBeVisible();
   await expect(page.getByAltText(/Detailed graphite OpenLens/)).toBeVisible();
+  const atlas=page.getByRole('region',{name:/Follow one signal through the stack/i});
+  await expect(atlas.getByRole('link')).toHaveCount(5);
+  await expect(atlas.getByRole('link',{name:/Compile the intent/i})).toHaveAttribute('href','#/compiler');
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth+1)).toBe(true);
 });
 
@@ -273,19 +276,22 @@ test('optical workbench shows the instrument first and updates its scene',async(
   await page.setViewportSize({width,height:900});
   await page.goto('/#/lab');
   await page.reload();
-  const scene=page.locator('.fixture-scene');
+  const scene=page.locator('.virtual-world-scene');
   await expect(scene).toHaveAttribute('data-fixture','street-sign');
+  await expect(scene.getByText('SORTIE',{exact:true})).toBeVisible();
   const box=await scene.boundingBox();
   expect(box!.y,`Instrument must appear in first viewport at ${width}`).toBeLessThan(480);
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
   await page.screenshot({path:testInfo.outputPath(`instrument-${width}.png`)});
-  await page.getByLabel('Input fixture').selectOption('museum-label');
-  await expect(scene.getByRole('img')).toHaveAccessibleName('Synthetic museum room with an exhibit label');
+  await page.getByLabel('Virtual environment').selectOption('museum-label');
+  await expect(scene.getByText('JARDIN / 1847',{exact:true})).toBeVisible();
   const before=await scene.getAttribute('style');
   await page.getByLabel('Illumination in lux').fill('0');
   expect(await scene.getAttribute('style')).not.toBe(before);
   await page.getByRole('button',{name:/Run this scenario/i}).click();
-  await expect(page.locator('.lab-hud')).not.toContainText('Ready when you are.');
+  await expect(page.locator('.world-caption')).toContainText('Instrumentos ópticos, 1847');
+  await page.getByRole('button',{name:'Diagnostic'}).click();
+  await expect(page.locator('.fixture-scene').getByRole('img')).toHaveAccessibleName('Synthetic museum room with an exhibit label');
   await page.goto('/#/devices');
   await expect(page.locator('.device-record')).toHaveCount(8);
   await page.screenshot({path:testInfo.outputPath(`field-guide-${width}.png`)});
@@ -303,10 +309,10 @@ test('compiler route opens the current draft and evidence views stay usable',asy
  await expect(page.getByRole('textbox',{name:'Language',exact:true})).toHaveValue('French');
  await page.locator('.compile-row.runnable').first().click();
  await expect(page).toHaveURL(/#\/lab/);
- await expect(page.getByLabel('Input fixture')).toHaveValue('conversation');
+ await expect(page.getByLabel('Virtual environment')).toHaveValue('conversation');
  await expect(page.locator('.workbench-rail')).toContainText('caption it in French');
  await page.getByRole('button',{name:/Run this scenario/i}).click();
- await expect(page.locator('.lab-hud')).toContainText('CAPTION');
+ await expect(page.locator('.world-caption')).toContainText('The next turn is on your left.');
  for(const width of [1280,768,375]){
   await page.setViewportSize({width,height:900});
   await page.goto('/#/compiler');

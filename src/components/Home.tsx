@@ -3,11 +3,11 @@ import {motion,useMotionValueEvent,useReducedMotion,useScroll,useTransform} from
 import HomeSignalDemo from './HomeSignalDemo';
 
 const chapters=[
- ['01','SENSE','See every input.','Camera, microphone, motion and manual triggers enter one explicit capability model.','lab'],
- ['02','UNDERSTAND','Compile the intent.','Turn constrained language into a reviewable graph with routes, fallbacks and privacy boundaries.','compiler'],
- ['03','RESPOND','Adapt across hardware.','Compare what a device claims with what an OpenLens adapter can actually execute.','devices'],
- ['04','MEASURE','Keep the whole trace.','Replay seeded runs, inspect failure spans and export the artifact behind every number.','benchmarks'],
- ['05','BUILD','Make the layer open.','Typed contracts, local-first tools and research methods that stay readable end to end.','developers']
+ {number:'01',label:'SENSE',title:'See every input.',body:'Camera, microphone, motion and manual triggers enter one explicit capability model.',route:'lab',metric:'3-stage route',proof:'INPUT · PROCESS · OUTPUT'},
+ {number:'02',label:'UNDERSTAND',title:'Compile the intent.',body:'Turn constrained language into a reviewable graph with routes, fallbacks and privacy boundaries.',route:'compiler',metric:'4 authoring modes',proof:'TRANSLATE · CAPTION · DESCRIBE · NOTIFY'},
+ {number:'03',label:'RESPOND',title:'Adapt across hardware.',body:'Compare what a device claims with what an OpenLens adapter can actually execute.',route:'devices',metric:'8 sourced profiles',proof:'PHYSICAL · ACCESS · INTEGRATION'},
+ {number:'04',label:'MEASURE',title:'Keep the whole trace.',body:'Replay seeded runs, inspect failure spans and export the artifact behind every number.',route:'benchmarks',metric:'Seeded replay',proof:'RAW TRIALS · TRACE · EXPORT'},
+ {number:'05',label:'BUILD',title:'Make the layer open.',body:'Generate a typed adapter boundary with lifecycle tests and an explicit verification record.',route:'developers',metric:'4-file starter',proof:'ADAPTER · TEST · README · RECORD'}
 ];
 export default function Home(){
  const ref=useRef<HTMLElement>(null); const reduce=useReducedMotion(); const {scrollYProgress}=useScroll({target:ref,offset:['start start','end end']});
@@ -37,7 +37,11 @@ export default function Home(){
   </section>
   <section className="manifesto"><p className="eyebrow">THE OPEN OPTICAL LAYER</p><div><h2>Glasses are becoming computers.<br/><em>Their differences should be visible.</em></h2><p>OpenLens turns a fragmented hardware landscape into an environment you can inspect, simulate, compile, trace, and benchmark. Every boundary stays attached to the work.</p></div></section>
   <div id="home-live-proof"><HomeSignalDemo/></div>
-  <section className="chapter-field">{chapters.map(([n,label,title,body,route],index)=><a href={`#/${route}`} className={`chapter chapter-${index+1}`} key={n}><div className="chapter-number">{n}</div><div className="chapter-copy"><p className="eyebrow">{label}</p><h3>{title}</h3><p>{body}</p><span>OPEN SYSTEM <b>↗</b></span></div><div className="chapter-lens" aria-hidden="true"><i/><i/><span>{label}</span></div></a>)}</section>
+  <section className="system-atlas" aria-labelledby="system-atlas-title">
+   <header className="system-atlas-head"><div><p className="eyebrow">THE SYSTEM / FIVE OPEN SURFACES</p><h2 id="system-atlas-title">Follow one signal<br/>through the stack.</h2></div><p>Each surface below opens a real tool. Move from intent to route, hardware boundary, repeatable evidence, and an adapter package you can inspect.</p></header>
+   <div className="atlas-rail" aria-hidden="true"><span>INTENT</span><i/><span>ROUTE</span><i/><span>DEVICE</span><i/><span>TRACE</span><i/><span>ADAPTER</span></div>
+   <div className="chapter-field">{chapters.map((chapter,index)=><a href={`#/${chapter.route}`} aria-label={`${chapter.title} Open ${chapter.label.toLowerCase()} tool`} className={`chapter chapter-${index+1} chapter-${chapter.route}`} key={chapter.number}><div className="chapter-number">{chapter.number}</div><div className="chapter-copy"><p className="eyebrow">{chapter.label}</p><h3>{chapter.title}</h3><p>{chapter.body}</p><span>OPEN {chapter.route==='lab'?'LENS LAB':chapter.route.toUpperCase()} <b>↗</b></span></div><div className="chapter-instrument" aria-hidden="true"><header><span>{chapter.route.toUpperCase()} / LIVE SURFACE</span><i>OPENLENS</i></header><div className="instrument-figure"><i/><i/><i/><b/><b/><b/><b/><b/></div><footer><strong>{chapter.metric}</strong><span>{chapter.proof}</span></footer></div></a>)}</div>
+  </section>
   <section className="proof-strip"><span>NO ACCOUNT</span><span>LOCAL-FIRST</span><span>ZERO-COST CORE</span><span>VERSIONED ARTIFACTS</span><span>SOURCED CLAIMS</span></section>
   <section className="home-closing"><p className="eyebrow">OPENLENS / PUBLIC PREVIEW</p><h2>Don’t just imagine<br/>the next interface.<br/><em>Run it.</em></h2><div className="button-row"><a className="button primary" href="#/lab">Open the workbench</a><a className="text-link" href="#/compiler">Compile an idea</a></div><img src={`${import.meta.env.BASE_URL}assets/openlens-glasses-hero-v2.png`} alt="" aria-hidden="true"/></section>
  </main>

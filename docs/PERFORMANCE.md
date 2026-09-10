@@ -1,6 +1,6 @@
 # Production performance budget
 
-OpenLens checks the built GitHub Pages artifact on every deployment. The check fails when the initial document and its direct imports, total application JavaScript, CSS, largest lazy route, or glasses hero exceed their declared ceilings.
+OpenLens checks the built GitHub Pages artifact on every deployment. The check fails when the initial document and its direct imports, total application JavaScript, CSS, largest lazy route, glasses hero, or virtual park scene exceed their declared ceilings.
 
 The local OCR engine is intentionally separate. Its English model and WebAssembly variants make the deployed artifact large, but they are not referenced by the initial HTML and load only after a visitor opens the OCR drawer. The budget fails if an OCR worker, OCR engine path, or the Local AI route becomes an initial import.
 
@@ -12,6 +12,8 @@ npm run budget
 ```
 
 Current ceilings are recorded in `scripts/check-performance-budget.mjs`. They are regression limits based on the current production architecture, not claims about field Core Web Vitals. Browser responsiveness and cinematic frame pacing still require runtime profiling on representative hardware.
+
+The ImageGen park source is preserved outside the repository. Its production JPEG is 595 KiB, down from the 2.98 MiB generated PNG, and loads only with the lazy Lens Lab route. CI holds that scene below 700 KiB.
 
 For a repeatable local stress profile, start the production preview on port 4176 and run `npm run profile:cinematic`. The script uses a 4× CPU slowdown and a 1.6 Mbps, 150 ms round-trip network model. It reports navigation timing, lab-observed LCP and CLS, and frame intervals while traversing the full lens sequence. These are development diagnostics from the current machine, not field measurements.
 

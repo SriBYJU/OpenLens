@@ -64,3 +64,10 @@ No credential or authorization blocker is active. Real-hardware integration rema
 - CI enforces initial raw and compressed imports, total application JavaScript, largest lazy route, CSS, glasses hero, and OCR isolation budgets after every production build.
 - A reusable production profiler applies 4× CPU slowdown and a 1.6 Mbps, 150 ms RTT network model. The current local result is CLS 0, median 16.7 ms and p95 16.8 ms over 120 cinematic frames, with no interval above 50 ms.
 - The same stress run reports a 5.64 second LCP. The detailed 809 KiB glasses image dominates that result; this is kept as an explicit optimization target and not presented as field performance.
+
+## Virtual world and homepage atlas checkpoint
+
+- Lens Lab opens in a first-person virtual park with a French `SORTIE` sign. Running the default translation produces `SALIDA` from the same deterministic artifact shown in the trace.
+- The virtual view responds to fixture, task, run output, failure state, illumination, head motion, ambient noise, and the selected device field of view. The prior authored SVG fixture view remains available through the Diagnostic toggle.
+- The generated park source was visually inspected, then reduced from a 2.98 MiB PNG to a 595 KiB production JPEG. CI enforces a 700 KiB ceiling and the asset remains isolated to the lazy Lens Lab route.
+- The homepage feature sequence is now a connected five-surface system atlas. Each destination has a distinct artifact view and direct link instead of reusing one decorative lens treatment.

@@ -18,13 +18,14 @@ const initial=[htmlFile,...new Set(initialPaths)];
 const appJs=files.filter(file=>file.endsWith('.js')&&!label(file).startsWith('ocr/'));
 const routeJs=appJs.filter(file=>!initial.includes(file)&&!basename(file).startsWith('ocr.worker-'));
 const hero=join(dist,'assets','openlens-glasses-hero-v2.png');
+const virtualScene=join(dist,'assets','openlens-virtual-park-v1.jpg');
 const css=files.filter(file=>file.endsWith('.css'));
 const initialRaw=initial.reduce((sum,file)=>sum+size(file),0);
 const initialGzip=initial.reduce((sum,file)=>sum+gzip(file),0);
 const appJsGzip=appJs.reduce((sum,file)=>sum+gzip(file),0);
 const largestRoute=routeJs.sort((a,b)=>size(b)-size(a))[0];
 const cssRaw=css.reduce((sum,file)=>sum+size(file),0);
-const limits={initialRaw:430*1024,initialGzip:120*1024,appJsGzip:210*1024,routeChunkRaw:170*1024,cssRaw:150*1024,heroRaw:900*1024};
+const limits={initialRaw:430*1024,initialGzip:120*1024,appJsGzip:210*1024,routeChunkRaw:170*1024,cssRaw:150*1024,heroRaw:900*1024,virtualSceneRaw:700*1024};
 const rows=[
  ['Initial document + imports',initialRaw,limits.initialRaw],
  ['Initial document + imports (gzip)',initialGzip,limits.initialGzip],
@@ -32,6 +33,7 @@ const rows=[
  [`Largest lazy route (${largestRoute?basename(largestRoute):'none'})`,largestRoute?size(largestRoute):0,limits.routeChunkRaw],
  ['Application CSS',cssRaw,limits.cssRaw],
  ['Glasses hero image',size(hero),limits.heroRaw],
+ ['Virtual park scene',size(virtualScene),limits.virtualSceneRaw],
 ];
 const format=bytes=>`${(bytes/1024).toFixed(1)} KiB`;
 console.log('OpenLens production performance budget');
