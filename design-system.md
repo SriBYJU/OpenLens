@@ -1,49 +1,23 @@
-# OpenLens Design System — Foundation v0.1
+# OpenLens design direction — September 2026
 
-## Intent
-OpenLens should feel like an optical instrument and developer platform, not a generic dark SaaS site. The visual language is built from **vision, optics, glass, depth, light, field-of-view geometry and hardware detail**.
+## Product and audience
+An optical instrument for builders inspecting smart-glasses behavior. The working object, controls and evidence come first. Explanations belong beside the relevant decision or in a clearly named disclosure.
 
-## Palette
-- Background: `#060708`
-- Raised background: `#0A0D10`
-- Surface: `#0D1115`
-- Primary text: `#F4F7F8`
-- Muted text: `#9AA8AF`
-- Optical accent: `#9BDCF3`
-- Highlight: `#D8F6FF`
-- Hairline: `rgba(196,225,238,.13)`
+## Two surfaces
+- The opening is a dark studio: detailed graphite glasses, reflected ambient light, a continuous approach through the lens. The current concept asset is `public/assets/openlens-glasses-hero-v2.png`; it is not a photograph of a manufactured device.
+- Working screens are charcoal instruments and editorial records. Lens Lab uses a restrained sage accent for optical signal and warm white for primary text. Status text accompanies every status color. The field guide uses numbered records, source status and labeled specifications, without generic device illustrations.
 
-The accent is intentionally desaturated and should appear as reflected optical light rather than neon.
+## Type and geometry
+- UI/body: locally available Segoe UI, Helvetica Neue, Arial; readable body copy at 15–16 px or larger.
+- Display: restrained system sans with the existing serif italic accent. Compact tool headings replace oversized marketing introductions.
+- Monospace is reserved for short telemetry. Explanatory text uses the body font.
+- Hairlines divide information. Small radii belong to real controls and instrument boundaries. Avoid card grids inside card grids.
 
-## Typography
-- Display: Space Grotesk 500–600
-- UI/body: Inter 400–700
-- Telemetry: system monospace
-- Display tracking should be tight; telemetry tracking should be loose.
+## Motion and truth
+- Home: approach → lens entry → perception. Opacity stays continuous through the entire transition; phase changes control focus eligibility, not premature visual cuts.
+- Fixture diagrams react to authored environment inputs. Brightness and blur communicate the synthetic model; they are not calibrated optical or camera measurements.
+- No autonomous shaking or waveform playback. Reduced-motion removes transitional effects.
+- Real OCR, fixture simulation, bounded phrase lookup and physical hardware claims remain visibly distinct.
 
-## Geometry
-- Large radii are reserved for real containers such as Lens Lab and the header.
-- Avoid endless rounded cards and pill-shaped labels.
-- Technical content should often use lines, rails, grids and measurement geometry.
-
-## Motion
-Motion must explain spatial hierarchy.
-- Hero: approach → enter right lens → optical atmosphere → perception layer.
-- Pointer parallax is subtle and disabled on mobile/reduced motion.
-- `prefers-reduced-motion` receives a deliberate non-zoom transition.
-- Native animation is the baseline fallback; Motion 13.2.0 progressively enhances in-view content.
-
-## Cinematic hero architecture
-The smart glasses are procedural SVG, not a raster hero image. This lets future work:
-1. separate frame/lens/sensor layers,
-2. move to WebGL or React Three Fiber without changing the narrative,
-3. add device-specific variants,
-4. animate optical reflections and telemetry independently.
-
-## Mobile
-Mobile is intentionally different:
-- larger crop on the glasses,
-- no hover/parallax,
-- lighter effects,
-- stacked systems and telemetry,
-- preserved scroll-through-lens concept with less transform complexity.
+## Responsive and verification
+The scene and run action remain in the first phone viewport. The full configuration follows. Desktop keeps controls beside the scene. Device records stack without horizontal page overflow. Test actual browser screenshots at 375, 768 and 1280 px, check keyboard focus and contrast, and retain all executable flows.

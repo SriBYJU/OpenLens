@@ -26,8 +26,6 @@ body{font-family:var(--sans)}
 .world-grid,.perception-orbit,.ambient,.grain,.cinematic-progress{pointer-events:none}
 .perception-actions{position:relative;z-index:2}
 .cinematic:not([data-phase="0"]) .hero-type,.cinematic:not([data-phase="0"]) .studio-caption,.cinematic:not([data-phase="0"]) .hero-readout{visibility:hidden}
-.cinematic[data-phase="2"] .glasses-stage,.cinematic[data-phase="2"] .lens-hud{visibility:hidden}
-.cinematic[data-phase="2"] .perception-world{opacity:1!important}
 .lens-hud{z-index:6;pointer-events:none}.lens-hud strong{font-size:clamp(38px,5vw,78px);line-height:1.04}.lens-hud>span,.lens-hud>small{font-size:12px}
 .perception-world{z-index:4;background:radial-gradient(ellipse at 75% 45%,#23363a,#0c1418 50%,#080c10);padding:8%}
 .perception-world h2{font-family:var(--sans);font-size:clamp(52px,7vw,110px);line-height:1.03;font-weight:400;letter-spacing:-.055em;max-width:1050px}

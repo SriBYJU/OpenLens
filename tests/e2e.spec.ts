@@ -253,9 +253,10 @@ test('cinematic lens entry preserves its axis and exposes only active actions',a
  await expect(page.getByRole('heading',{name:'See the system.',exact:true})).toBeVisible();
  await expect(page.locator('.glasses-stage img')).toHaveJSProperty('complete',true);
  await page.screenshot({path:testInfo.outputPath('optical-01-approach.png')});
- for(const [name,progress] of [['lens',.4],['world',.82]] as const){
+ for(const [name,progress] of [['lens',.4],['transition',.7],['world',.82]] as const){
   await page.locator('.cinematic').evaluate((element,p)=>window.scrollTo({top:element.getBoundingClientRect().top+window.scrollY+(element.clientHeight-window.innerHeight)*p,behavior:'instant'}),progress);
   await expect(page.locator('.hero-type')).toHaveJSProperty('inert',true);
+  if(progress===.7){await expect(page.locator('.glasses-stage')).toBeVisible();expect(await page.locator('.glasses-stage').evaluate(element=>Number(getComputedStyle(element).opacity))).toBeGreaterThan(0)}
   if(progress>.7)await expect(page.locator('.perception-world')).toHaveJSProperty('inert',false);
   await page.screenshot({path:testInfo.outputPath(`optical-${name}.png`)});
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth+1)).toBe(true);
@@ -264,3 +265,32 @@ test('cinematic lens entry preserves its axis and exposes only active actions',a
  await expect(page).toHaveURL(/#\/lab/);
 });
 
+
+// First-screen layout and fixture feedback are product behavior, not just snapshots.
+test('optical workbench shows the instrument first and updates its scene',async({page},testInfo)=>{
+ test.skip(testInfo.project.name!=='desktop','Desktop test explicitly covers all three widths.');
+ for(const width of [1280,768,375]){
+  await page.setViewportSize({width,height:900});
+  await page.goto('/#/lab');
+  await page.reload();
+  const scene=page.locator('.fixture-scene');
+  await expect(scene).toHaveAttribute('data-fixture','street-sign');
+  const box=await scene.boundingBox();
+  expect(box!.y,`Instrument must appear in first viewport at ${width}`).toBeLessThan(480);
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
+  await page.screenshot({path:testInfo.outputPath(`instrument-${width}.png`)});
+  await page.getByLabel('Input fixture').selectOption('museum-label');
+  await expect(scene.getByRole('img')).toHaveAccessibleName('Synthetic museum room with an exhibit label');
+  const before=await scene.getAttribute('style');
+  await page.getByLabel('Illumination in lux').fill('0');
+  expect(await scene.getAttribute('style')).not.toBe(before);
+  await page.getByRole('button',{name:/Run this scenario/i}).click();
+  await expect(page.locator('.lab-hud')).not.toContainText('Ready when you are.');
+  await page.goto('/#/devices');
+  await expect(page.locator('.device-record')).toHaveCount(8);
+  await page.screenshot({path:testInfo.outputPath(`field-guide-${width}.png`)});
+  await page.getByRole('button',{name:'Find your fit ↗'}).click();
+  await expect(page).toHaveURL(/#\/devices$/);
+  await expect(page.locator('#device-fit')).toBeFocused();
+ }
+});

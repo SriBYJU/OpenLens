@@ -12,7 +12,7 @@ const chapters=[
 export default function Home(){
  const ref=useRef<HTMLElement>(null); const reduce=useReducedMotion(); const {scrollYProgress}=useScroll({target:ref,offset:['start start','end end']});
  const [phase,setPhase]=useState(0);
- useMotionValueEvent(scrollYProgress,'change',value=>{const next=value<.22?0:value<.7?1:2;setPhase(current=>current===next?current:next)});
+ useMotionValueEvent(scrollYProgress,'change',value=>{const next=value<.22?0:value<.76?1:2;setPhase(current=>current===next?current:next)});
  const scale=useTransform(scrollYProgress,[0,.16,.4,.65,.82],[.88,1,2.1,5.5,7]);
  const y=useTransform(scrollYProgress,[0,.24,.5],['18vh','8vh','0vh']);
  const glassOpacity=useTransform(scrollYProgress,[0,.58,.76],[1,1,0]);

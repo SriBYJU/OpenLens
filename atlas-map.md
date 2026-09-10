@@ -1,4 +1,4 @@
-# atlas: src (1858 LOC, 51 files) | budget 3000 | rendered 2442 tok | public API only, parameter names omitted to fit budget — raise --budget
+# atlas: src (1914 LOC, 52 files) | budget 3000 | rendered 2463 tok | public API only, parameter names omitted to fit budget — raise --budget
 
 ## core/types.ts (#1 — imported by 14 file(s))
     export interface EvidenceSource { id:string; title:string; url:string; publisher:string; accessed:string; confidence:Confidence; note:string }
@@ -12,9 +12,9 @@
 … (176 more symbol(s))
 used by: adapters/registry.ts, core/adapter-starter.ts, core/benchmark.ts, core/compiler.ts, core/environment.ts, core/exchange.ts, core/experience.ts, core/fit.ts
 
-## core/simulation.ts (#2, 14 symbol(s) — collapsed to fit)
+## core/simulation.ts (#3, 14 symbol(s) — collapsed to fit)
 
-## app/workbench.tsx (#3 — imported by 9 file(s))
+## app/workbench.tsx (#4 — imported by 9 file(s))
     interface Workbench {deviceId:string;setDeviceId:(string)=>void;experience:ExperienceDefinition;setExperience:(value:ExperienceDefinition)=>void;config:SimulationConfig;setConfig:(value:SimulationConfig)=>void;plan:CompiledPlan;run:RunResult|null;runHistory:RunResult[];runCurrent:()=>RunResult;benchmarkResult:BenchmarkResult|null;benchmarkCurrent:(trials:number)=>BenchmarkResult;clearArtifact:()=>void}
     interface Workbench {deviceId:string;setDeviceId:(string)=>void;experience:ExperienceDefinition;setExperience:(value:ExperienceDefinition)=>void;config:SimulationConfig;setConfig:(value:SimulationConfig)=>void;plan:CompiledPlan;run:RunResult|null;runHistory:RunResult[];runCurrent:()=>RunResult;benchmarkResult:BenchmarkResult|null;benchmarkCurrent:(trials:number)=>BenchmarkResult;clearArtifact:()=>void}
     interface Workbench {deviceId:string;setDeviceId:(string)=>void;experience:ExperienceDefinition;setExperience:(value:ExperienceDefinition)=>void;config:SimulationConfig;setConfig:(value:SimulationConfig)=>void;plan:CompiledPlan;run:RunResult|null;runHistory:RunResult[];runCurrent:()=>RunResult;benchmarkResult:BenchmarkResult|null;benchmarkCurrent:(trials:number)=>BenchmarkResult;clearArtifact:()=>void}
@@ -28,7 +28,7 @@ imports: core/index.ts, data/devices.ts
 used by: App.tsx, components/CommandPalette.tsx, components/HomeSignalDemo.tsx, components/ResilienceMatrix.tsx, components/ScenarioCapsulePanel.tsx, components/SimulationControls.tsx, pages/Benchmarks.tsx, pages/Compiler.tsx
 
 ## components/Page.tsx (#5 — imported by 8 file(s))
-export default function Page({index:string;eyebrow:string;title:ReactNode;lead:string;actions?:ReactNode;children:ReactNode}){return <main id="main" tabIndex={-1} className="page"><header className="page-hero"><div className="page-index">{index}</div><div><p className="eyebrow">{eyebrow}</p><h1>{title}</h1><p className="page-lead">{lead}</p></div>{actions&&<div className="page-actions">{actions}</div>}</header>{children}</main>}
+export default function Page({index:string;eyebrow:string;title:ReactNode;lead:string;actions?:ReactNode;children:ReactNode;className?:string}){return <main id="main" tabIndex={-1} className={`page ${className}`}><header className="page-hero"><div className="page-index">{index}</div><div><p className="eyebrow">{eyebrow}</p><h1>{title}</h1><p className="page-lead">{lead}</p></div>{actions&&<div className="page-actions">{actions}</div>}</header>{children}</main>}
 used by: pages/About.tsx, pages/Benchmarks.tsx, pages/Compiler.tsx, pages/Developers.tsx, pages/Devices.tsx, pages/Lab.tsx, pages/Methodology.tsx, pages/Research.tsx
 
 ## data/devices.ts (#6 — imported by 10 file(s))
@@ -88,23 +88,24 @@ core/specifications.ts: formatSpecification, sourcesForClaim
 components/BrowserReadiness.tsx: BrowserReadiness, add
 components/TraceViewer.tsx: save, TraceViewer
 components/RunPlayback.tsx: RunPlayback, play
-components/Glasses.tsx: Glasses
 components/ScenarioCapsulePanel.tsx: download, load
 components/ResilienceMatrix.tsx: save, ResilienceMatrix
 components/DeviceDoctor.tsx: DeviceDoctor
 components/DeviceFitEngine.tsx: DeviceFitEngine, setPriority
+components/FixtureScene.tsx: FixtureScene
 components/SimulationControls.tsx: SimulationControls, change
 core/scenario.ts: hash, createScenarioCapsule
 mobile.ts: update, useMobile
 ai/ocr.worker.ts: report
+components/Glasses.tsx: Glasses
 core/adapter-starter.ts: validateAdapterStarter, buildAdapterStarter
 core/exchange.ts: exportArtifact, importArtifact
 core/fit.ts: assessCapability, fitDevices
 pages/Benchmarks.tsx: save, Benchmarks
 pages/Compiler.tsx: Compiler, update
 pages/Developers.tsx: save, toggle
-pages/Devices.tsx: toggle
-pages/Lab.tsx: Lab, update
+pages/Devices.tsx: jumpTo, toggle
+pages/Lab.tsx: update, chooseScenario
 pages/Research.tsx: requestedDevice, sync
 
-[44 low-rank file(s) collapsed: ./* (4), adapters/* (1), ai/* (4), app/* (1), components/* (14), core/* (12), pages/* (8)]
+[45 low-rank file(s) collapsed: ./* (4), adapters/* (1), ai/* (4), app/* (1), components/* (15), core/* (12), pages/* (8)]
