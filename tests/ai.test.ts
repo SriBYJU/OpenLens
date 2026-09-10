@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { MAX_IMAGE_BYTES, inspectImageHeader, validateDimensions, validateImageFile } from '../src/ai/images';
+import {translateSignText} from '../src/ai/phrasebook';
 
 describe('local image resource limits', () => {
   it('rejects empty, oversized, and unapproved formats', () => {
@@ -32,5 +33,27 @@ describe('local image resource limits', () => {
   it('rejects renamed non-images and truncated files', () => {
     expect(() => inspectImageHeader(new TextEncoder().encode('<html>not an image</html>').buffer)).toThrow('header');
     expect(() => inspectImageHeader(new ArrayBuffer(2))).toThrow('header');
+  });
+});
+
+describe('local sign phrasebook',()=>{
+  it('translates supported sign phrases without a provider or network',()=>{
+    expect(translateSignText('SALIDA', 'French','Spanish')).toMatchObject({output:'SORTIE',coverage:100,sourceLanguage:'Spanish',unknownSegments:[]});
+    expect(translateSignText('DANGER LEFT', 'Spanish')).toMatchObject({output:'PELIGRO IZQUIERDA',coverage:100});
+  });
+  it('preserves unknown segments and reports exact coverage',()=>{
+    expect(translateSignText('EXIT OAK STREET', 'French')).toMatchObject({output:'SORTIE OAK STREET',coverage:33,unknownSegments:['OAK','STREET']});
+  });
+  it('returns a zero-coverage result for empty input',()=>expect(translateSignText('  ', 'German')).toMatchObject({output:'  ',coverage:0,matchedConcepts:[]}));
+  it('preserves punctuation, case, numbers, newlines and unsupported scripts',()=>{
+    expect(translateSignText('Exit: Oak St.\n9:00 — 東京', 'Spanish').output).toBe('SALIDA: Oak St.\n9:00 — 東京');
+  });
+  it('does not match multiword phrases across lines or silently resolve ambiguity',()=>{
+    expect(translateSignText('NO\nENTRY', 'French').coverage).toBe(0);
+    expect(translateSignText('USCITA','German','Italian')).toMatchObject({output:'USCITA',coverage:0,unknownSegments:['USCITA']});
+  });
+  it('rejects unbounded input and invalid language values',()=>{
+    expect(()=>translateSignText('X'.repeat(20001),'French')).toThrow('20,000');
+    expect(()=>translateSignText('EXIT','invalid' as 'French')).toThrow('language');
   });
 });

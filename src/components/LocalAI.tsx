@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { canvasBlob, createDemoImage, decodeImage, validateDimensions } from '../ai/images';
+import {phrasebookLanguages,signPhrasebook,translateSignText,type PhrasebookLanguage,type PhrasebookTranslation} from '../ai/phrasebook';
 import type { OcrMessage, OcrResult } from '../ai/types';
 
 const OCR_TIMEOUT_MS = 90_000;
+const voicePrefixes:Record<PhrasebookLanguage,string>={English:'en',Spanish:'es',French:'fr',German:'de',Italian:'it'};
 
 export default function LocalAI() {
   const [image, setImage] = useState<Blob | null>(null);
@@ -14,8 +16,13 @@ export default function LocalAI() {
   const [error, setError] = useState('');
   const [result, setResult] = useState<OcrResult | null>(null);
   const [camera, setCamera] = useState<'off' | 'requesting' | 'on'>('off');
-  const [localVoice, setLocalVoice] = useState<SpeechSynthesisVoice | null>(null);
+  const [localVoices, setLocalVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [speaking, setSpeaking] = useState(false);
+  const [targetLanguage,setTargetLanguage]=useState<PhrasebookLanguage>('English');
+  const [sourceLanguage,setSourceLanguage]=useState<PhrasebookLanguage>('English');
+  const [translation,setTranslation]=useState<PhrasebookTranslation|null>(null);
+  const [translationMs,setTranslationMs]=useState(0);
+  const [translationStatus,setTranslationStatus]=useState('');
   const mounted = useRef(false);
   const previewRef = useRef('');
   const workerRef = useRef<Worker | null>(null);
@@ -25,6 +32,8 @@ export default function LocalAI() {
   const preparationToken = useRef(0);
   const cameraTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const spokenLanguage=translation?.targetLanguage??sourceLanguage;
+  const localVoice=localVoices.find(voice=>voice.lang.toLowerCase().startsWith(voicePrefixes[spokenLanguage]));
 
   function stopWorker() {
     workerRef.current?.terminate();
@@ -46,7 +55,7 @@ export default function LocalAI() {
   useEffect(() => {
     mounted.current = true;
     const synthesis = 'speechSynthesis' in window ? window.speechSynthesis : null;
-    const updateVoices = () => setLocalVoice(synthesis?.getVoices().find(voice => voice.localService && voice.lang.startsWith('en')) ?? null);
+    const updateVoices = () => setLocalVoices(synthesis?.getVoices().filter(voice => voice.localService) ?? []);
     updateVoices();
     synthesis?.addEventListener('voiceschanged', updateVoices);
     const onHidden = () => { if (document.hidden) stopCamera(); };
@@ -72,6 +81,8 @@ export default function LocalAI() {
     setImage(blob);
     setImageLabel(label);
     setResult(null);
+    setTranslation(null);
+    setTranslationStatus('');
     setError('');
     setStatus('Image ready. Select Read text to start.');
     if ('speechSynthesis' in window) window.speechSynthesis.cancel();
@@ -101,6 +112,10 @@ export default function LocalAI() {
     setBusy(true);
     setError('');
     setResult(null);
+    setTranslation(null);
+    setTranslationStatus('');
+    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    setSpeaking(false);
     setStatus('Loading local OCR engine and English model…');
     try {
       const worker = new Worker(new URL('../ai/ocr.worker.ts', import.meta.url), { type: 'module' });
@@ -125,6 +140,7 @@ export default function LocalAI() {
           setStatus(`${labels[data.status] ?? 'Preparing OCR'} · ${Math.round(Math.max(0, Math.min(1, data.progress || 0)) * 100)}%`);
         } else if (data.type === 'result') {
           setResult(data.result);
+          setTranslation(null);
           setStatus(data.result.text ? 'Reading complete' : 'No readable text found');
           setBusy(false);
           stopWorker();
@@ -204,11 +220,35 @@ export default function LocalAI() {
     }
   }
 
+  function runTranslation(){
+    if(!result?.text)return;
+    const started=performance.now();
+    let translated:PhrasebookTranslation;
+    try{translated=translateSignText(result.text,targetLanguage,sourceLanguage)}catch(cause){setTranslationStatus(cause instanceof Error?cause.message:'Translation failed.');return}
+    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    setSpeaking(false);
+    setTranslationMs(Math.max(.01,performance.now()-started));
+    setTranslation(translated);
+    setTranslationStatus(`Translated locally with ${translated.coverage}% phrasebook coverage.`);
+  }
+
+  async function copyOutput(){
+    const value=translation?.output||result?.text;if(!value)return;
+    try{await navigator.clipboard.writeText(value);setTranslationStatus('Output copied to the clipboard.')}catch{setTranslationStatus('Clipboard access was unavailable. Select the output text to copy it.')}
+  }
+
+  function exportOutput(){
+    if(!result)return;
+    const artifact={version:1,createdAt:new Date().toISOString(),mode:'local-browser',ocr:result,translation:translation??null,translationMs:translation?translationMs:null,disclosure:'OCR ran in this browser. Translation, when present, used the bounded OpenLens sign phrasebook and preserved unknown segments.'};
+    const url=URL.createObjectURL(new Blob([JSON.stringify(artifact,null,2)],{type:'application/json'}));const link=document.createElement('a');link.href=url;link.download='openlens-local-ai-result.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),0);setTranslationStatus('Local pipeline artifact downloaded.');
+  }
+
   function speak() {
-    if (!localVoice || !result?.text) return;
+    const value=translation?.output||result?.text;
+    if (!localVoice || !value) return;
     window.speechSynthesis.cancel();
     if (speaking) { setSpeaking(false); return; }
-    const utterance = new SpeechSynthesisUtterance(result.text);
+    const utterance = new SpeechSynthesisUtterance(value);
     utterance.voice = localVoice;
     utterance.lang = localVoice.lang;
     utterance.onend = utterance.onerror = () => { if (mounted.current) setSpeaking(false); };
@@ -234,7 +274,7 @@ export default function LocalAI() {
     <div className="button-row">
       <button className="button primary" disabled={!image || busy || preparing} onClick={readImage}>{busy ? 'Reading…' : 'Read text locally'}</button>
       {busy && <button className="button" onClick={() => { stopWorker(); setBusy(false); setStatus('Reading cancelled'); }}>Cancel reading</button>}
-      {image && !busy && !preparing && <button className="button" onClick={() => { preparationToken.current += 1; URL.revokeObjectURL(previewRef.current); previewRef.current = ''; setPreview(''); setImage(null); setResult(null); setError(''); setStatus('Image cleared'); if ('speechSynthesis' in window) window.speechSynthesis.cancel(); setSpeaking(false); }}>Clear image</button>}
+      {image && !busy && !preparing && <button className="button" onClick={() => { preparationToken.current += 1; URL.revokeObjectURL(previewRef.current); previewRef.current = ''; setPreview(''); setImage(null); setResult(null); setTranslation(null); setTranslationStatus(''); setError(''); setStatus('Image cleared'); if ('speechSynthesis' in window) window.speechSynthesis.cancel(); setSpeaking(false); }}>Clear image</button>}
     </div>
     <p className="status ai-status" role="status" aria-live="polite">{preparing ? 'Preparing image…' : status}</p>
     {error && <p className="notice error" role="alert">{error}</p>}
@@ -243,7 +283,10 @@ export default function LocalAI() {
       <p className="ocr-text">{result.text || 'No text found. Try a sharper image with larger, well-lit lettering.'}</p>
       <p className="muted">{Math.round(result.confidence)}% engine confidence · {result.inferenceMs.toLocaleString()} ms recognition time in this browser (excludes model loading).</p>
       <p className="muted">OCR can make mistakes. Check important text against the original image.</p>
-      {result.text && (localVoice ? <button className="button" onClick={speak}>{speaking ? 'Stop speaking' : 'Read aloud with local voice'}</button> : <p className="muted">No local English voice is available in this browser.</p>)}
+      {result.text&&<div className="translation-workbench"><div>{(['source','target'] as const).map(direction=><label key={direction}>{direction==='source'?'Source language':'Translate sign phrase to'}<select aria-label={direction==='source'?'Translation source language':'Translation target language'} value={direction==='source'?sourceLanguage:targetLanguage} onChange={event=>{const language=event.target.value as PhrasebookLanguage;if(direction==='source')setSourceLanguage(language);else setTargetLanguage(language);setTranslation(null);if('speechSynthesis' in window)window.speechSynthesis.cancel();setSpeaking(false);setTranslationStatus('Language changed. Run translation to update the output.')}}>{phrasebookLanguages.map(language=><option key={language}>{language}</option>)}</select></label>)}<button className="button" onClick={runTranslation}>Translate locally</button></div><p>This offline phrasebook covers {signPhrasebook.length} navigation, safety, transit, and access phrases across five languages. Use short signs; sentence grammar and negation are not interpreted. OCR uses an English model, so verify accented text. Unknown or ambiguous words remain unchanged.</p></div>}
+      {translation&&<div className="translation-result"><div className="ai-pipeline" aria-label="Local AI pipeline"><article><span>01 / PERCEIVE</span><strong>OCR complete</strong><small>{result.inferenceMs.toLocaleString()} ms · {Math.round(result.confidence)}% confidence</small></article><i>→</i><article><span>02 / TRANSFORM</span><strong>Phrasebook matched</strong><small>{translationMs.toFixed(2)} ms · {translation.coverage}% coverage</small></article><i>→</i><article><span>03 / OUTPUT</span><strong>{targetLanguage}</strong><small>{translation.unknownSegments.length} unknown segment{translation.unknownSegments.length===1?'':'s'}</small></article></div><h3>Translated output</h3><p className="translated-text">{translation.output}</p>{translation.unknownSegments.length>0&&<p className="translation-warning"><b>UNCHANGED:</b> {translation.unknownSegments.join(', ')}</p>}<p className="muted">{translation.disclosure}</p></div>}
+      {result.text&&<div className="button-row"><button className="button" onClick={()=>void copyOutput()}>Copy {translation?'translation':'recognized text'}</button><button className="button" onClick={exportOutput}>Download result JSON</button>{localVoice?<button className="button" onClick={speak}>{speaking?'Stop speaking':`Speak ${translation?'translation':'recognized text'}`}</button>:<p className="muted">No local {spokenLanguage} voice is available in this browser.</p>}</div>}
+      {translationStatus&&<p className="status" role="status" aria-live="polite">{translationStatus}</p>}
     </div>}
     <p className="notice">Images are processed in this browser and never uploaded. The OCR engine and English model load from this site on demand. Model files may be cached; images and results are kept only in memory. Offline use depends on your browser cache.</p>
   </section>;

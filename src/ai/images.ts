@@ -111,5 +111,7 @@ export async function createDemoImage(): Promise<Blob> {
   ctx.font = '48px Arial, sans-serif';
   ctx.fillText('Open Monday to Saturday', 600, 352);
   ctx.fillText('9:00 AM - 6:00 PM', 600, 435);
+  ctx.font = 'bold 36px Arial, sans-serif';
+  ctx.fillText('EXIT LEFT', 600, 500);
   return canvasBlob(canvas);
 }

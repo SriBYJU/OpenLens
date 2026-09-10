@@ -14,9 +14,9 @@ OpenLens turns fragmented smart-glasses hardware into an inspectable development
 - **Experience Compiler:** supported plain language updates a structured input/process/output contract live, evaluates execution across the device catalog, and persists executable plans into Lens Lab.
 - **Device Fit Engine:** choose required/preferred capabilities, developer-access rules, companion fallback policy, and whether the target must execute in OpenLens today. Results explain blockers and caveats instead of inventing compatibility percentages.
 - **Device Doctor:** inspects a profile subsystem by subsystem while keeping physical hardware, manufacturer API access, and actual OpenLens execution visibly separate.
-- **Device Universe:** eight sourced profiles—OpenLens Twin, Brilliant Frame, XREAL Air 2, Ray-Ban Meta, Snap Spectacles, Even Realities G1, Rokid Glasses, and Vuzix Z100—with search and three-device comparison.
+- **Device Universe:** eight sourced profiles—OpenLens Twin, Brilliant Frame, XREAL Air 2, Ray-Ban Meta, Snap Spectacles, Even Realities G1, Rokid Glasses, and Vuzix Z100—with typed physical specifications, explicit unknowns, source conflicts, search, and three-device comparison.
 - **Benchmark Lab:** deterministic trial suites, visible failures, sample statistics, raw-run selection, JSON/CSV export, and replay verification.
-- **Local AI:** real English OCR runs in a same-origin Web Worker without uploading the image.
+- **Local AI:** real English OCR runs in a same-origin Web Worker without uploading the image, then an optional deterministic sign phrasebook translates recognized text across five languages with exact coverage, unchanged-token disclosure, pipeline timing, speech, and JSON export.
 - **Command Palette:** `Ctrl/Cmd + K` searches tools, device evidence, experiences, and current workbench state; experience actions load directly into Lens Lab.
 - **Build With Us:** configure and download a typed adapter-manifest starter.
 
@@ -46,7 +46,7 @@ Playwright browser binaries are required for the end-to-end suite. CI installs C
 
 The app is a static React/TypeScript deployment. Core contracts, compiler, simulator, benchmark engine, Device Fit rules, and artifact exchange are framework-independent. Browser local storage keeps the current experience and target. There is no application database, account, analytics service, or hidden cloud AI route.
 
-Device evidence keeps physical capability, manufacturer API access, and OpenLens integration as separate claims. Simulation values are labeled simulated; missing hardware facts remain unknown. See [Research Methodology](RESEARCH-METHODOLOGY.md), [Privacy](PRIVACY.md), [Security](SECURITY.md), [Flagship Interaction Pass](docs/FLAGSHIP-INTERACTION-PASS.md), and [Zero-Cost Architecture](ZERO-COST-ARCHITECTURE.md).
+Device evidence keeps physical capability, manufacturer API access, and OpenLens integration as separate claims. Simulation values are labeled simulated; missing hardware facts remain unknown. See [AI Architecture](AI-ARCHITECTURE.md), [Research Methodology](RESEARCH-METHODOLOGY.md), [Privacy](PRIVACY.md), [Security](SECURITY.md), [Flagship Interaction Pass](docs/FLAGSHIP-INTERACTION-PASS.md), and [Zero-Cost Architecture](ZERO-COST-ARCHITECTURE.md).
 
 ## Deployment
 

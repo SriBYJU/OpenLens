@@ -14,7 +14,7 @@ Updated 2026-09-10. A passing build does not mean the entire directive is comple
 - Eight-condition resilience matrix with event-level trace comparison and export.
 - Scenario capsules preserve the exact device, experience and conditions in a validated JSON file or replayable URL; these are checksummed snapshots, not signed evidence.
 - Device-fit ranking with explainable requirements, sourced device diagnosis, and a keyboard-operated command palette.
-- Real local English OCR from sample, upload or camera capture; local voice readout where a browser voice exists.
+- Real local English OCR from sample, upload or camera capture; a deterministic five-language sign phrasebook with coverage and unknown-token disclosure; local voice readout where a matching browser voice exists; downloadable local-pipeline artifacts.
 - Four-file adapter starter generator with a transport implementation boundary, lifecycle and capability guards, contract tests, verification template, safe string escaping and ZIP export.
 - About page with the existing founder portrait; architecture, privacy, security, research and benchmark documentation.
 - Unit, desktop, phone and automated accessibility checks in the deployment workflow.
@@ -24,7 +24,7 @@ Updated 2026-09-10. A passing build does not mean the entire directive is comple
 - Hardware-specific digital twins: seven executable capability models now reflect documented sensor/output presence and explicit companion fallback. Full optical, sensor and vendor SDK emulation remains incomplete.
 - Simulation fidelity: authored inputs and outputs test routing and failure handling, and synthetic environmental conditions now affect the active camera, microphone, display or audio path. Optical physics, continuous live scenes and hardware timing calibration remain incomplete.
 - Experience Compiler: four supported tasks with rule-based intent parsing; it does not generate arbitrary runnable applications.
-- Local AI: OCR and speech output exist. General translation, scene understanding, speech recognition, provider adapters and model management remain incomplete.
+- Local AI: OCR, matched-language speech output and bounded sign translation exist. General translation, scene understanding, speech recognition, provider adapters and model management remain incomplete.
 - Developer platform: complete repository-ready adapter scaffolding and browser-readiness Device Doctor exist. A published SDK package, vendor transport implementations and hardware example applications remain incomplete.
 - Research: first-party claims now cover core optical, mass, power, endurance, display and camera fields where manufacturers publish them, with one documented conflicting resolution preserved. More device breadth, firmware history and measurement ingestion remain incomplete.
 - Visual QA: desktop, small-phone, tablet, ultrawide and reduced-motion checks are automated; slow-device, cinematic frame pacing and manual screen-reader verification remain open.
@@ -41,4 +41,4 @@ Real hardware verification depends on access to the relevant device and SDK. Clo
 
 Continue against this list and the original master directive. Do not mark a partial item complete merely because it has a page or label.
 
-Latest integrated checkpoint: 68 unit tests and 30 browser checks passed locally with retries disabled; two redundant mobile checks were intentionally skipped. TypeScript, lint, automated WCAG checks, dependency audit and the production build also passed. Physical hardware and optional cloud services remain outside these results.
+Latest integrated checkpoint: 74 unit tests and 30 browser checks passed locally with retries disabled; two redundant mobile checks were intentionally skipped. TypeScript, lint, automated WCAG checks (including the open OCR drawer), dependency audit and the production build also passed. Physical hardware and optional cloud services remain outside these results.

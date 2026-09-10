@@ -173,6 +173,31 @@ test('local OCR recognizes the supplied image in a browser worker',async({page},
  await expect(page.locator('.ocr-result, .local-ai [role="alert"]')).toBeVisible({timeout:120000});
  await expect(page.locator('.local-ai [role="alert"]')).toHaveCount(0);
  await expect(page.locator('.ocr-text')).toContainText(/RIVERSIDE LIBRARY/i);
+ await page.getByLabel('Translation target language').selectOption('Spanish');
+ await page.getByRole('button',{name:'Translate locally'}).click();
+ await expect(page.locator('.translated-text')).toContainText(/SALIDA IZQUIERDA/i);
+ await expect(page.locator('.ai-pipeline')).toContainText(/PHRASEBOOK MATCHED/i);
+ await expect(page.locator('.translation-warning')).toContainText(/RIVERSIDE/i);
+ const resultDownload=page.waitForEvent('download');
+ await page.getByRole('button',{name:'Download result JSON'}).click();
+ const downloaded=await resultDownload;
+ expect(downloaded.suggestedFilename()).toBe('openlens-local-ai-result.json');
+ const saved=JSON.parse(readFileSync((await downloaded.path())!,'utf8'));
+ expect(saved).toMatchObject({mode:'local-browser',translation:{sourceLanguage:'English',targetLanguage:'Spanish',provider:'openlens-sign-phrasebook-v1'}});
+ expect(saved.translation.output).toMatch(/SALIDA IZQUIERDA/);
+ expect(saved.translationMs).toBeGreaterThan(0);
+ const accessibility=await new AxeBuilder({page}).include('.ai-drawer').analyze();
+ expect(accessibility.violations.filter(item=>['serious','critical'].includes(item.impact??''))).toEqual([]);
+ for(const viewport of [{width:1280,height:900},{width:768,height:1024},{width:375,height:812}]){
+  await page.setViewportSize(viewport);
+  await page.locator('.translation-result').evaluate(element=>window.scrollTo(0,element.getBoundingClientRect().top+window.scrollY-100));
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
+  await page.screenshot({path:testInfo.outputPath(`openlens-local-ai-${viewport.width}.png`),animations:'disabled'});
+ }
+ await page.getByLabel('Translation target language').selectOption('French');
+ await expect(page.locator('.translation-result')).toHaveCount(0);
+ await page.getByRole('button',{name:'Clear image',exact:true}).click();
+ await expect(page.locator('.ocr-result')).toHaveCount(0);
 });
 
 test('hardware capability models produce different routes',async({page})=>{

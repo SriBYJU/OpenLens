@@ -1,10 +1,30 @@
-# AI architecture
+# OpenLens AI architecture
 
-The free baseline contains one real AI path: English OCR with Tesseract.js in a Web Worker. Images stay in the browser, model assets are served from the same deployment, and terminating the controller worker also cancels recognition.
+OpenLens has one real browser pipeline and one separate deterministic simulation pipeline. They share user-facing concepts, but their results and timing never mix.
 
-Uploads are limited to image MIME types and 20 MB. Camera access requires a secure context and an explicit browser permission. Frames are transient unless a user explicitly downloads an artifact. OpenLens does not send camera or microphone content to a server.
+## Real local pipeline
 
-The Experience Compiler is rules-based and labels itself that way. The Digital Twin uses deterministic fixtures; it does not claim generative model inference or physical-device performance.
+1. **Acquire:** the user chooses the generated demo, uploads a bounded PNG/JPEG/WebP, or explicitly starts and captures the browser camera.
+2. **Validate:** encoded type, file size, decoded dimensions, side length, and total pixels are checked before OCR.
+3. **Perceive:** a same-origin Web Worker runs Tesseract.js with the bundled English model and returns text, engine confidence, and inference duration.
+4. **Transform (optional):** `openlens-sign-phrasebook-v1` maps recognized navigation, safety, transit, and access phrases across English, Spanish, French, German, and Italian. It reports word coverage and preserves every unmatched segment unchanged.
+5. **Output:** the visitor may copy the text, export the complete result as JSON, or use a matching browser-local speech voice when one exists.
 
-Future providers should implement explicit adapters with provider identity, model version, cost mode, privacy route, timeout, and error metadata. Local execution remains the default. Cloud processing must be opt-in and must degrade to a useful local path.
+Images and results remain in page memory. Camera tracks stop after capture, when the page is hidden, when the browser ends the track, or when the tool unmounts. No request sends image content to an OpenLens server because the baseline application has no application server.
 
+## Simulation pipeline
+
+Lens Lab uses authored fixtures and deterministic rules to exercise capability routing, environment stress, fallback logic, latency, and failures. Its translation fixtures cover only the named fixture text. These outputs are `SIMULATED`; they are not OCR inference, a general translation model, or measurements of a physical device.
+
+## Provider boundary
+
+No external AI provider is configured. There is no hidden cloud fallback, API key, quota, account, or billing dependency. A future provider adapter must declare its identity, network behavior, data retention, capabilities, costs, and failure mode, and it must remain optional. Provider results must remain distinguishable from local and simulated results in artifacts and the interface.
+
+## Current limits
+
+- OCR recognizes English text and may be wrong; confidence is an engine signal rather than proof.
+- The sign phrasebook is curated deterministic lookup. It cannot translate arbitrary sentences or infer meaning.
+- Browser speech depends on installed local voices and varies by operating system.
+- Scene understanding, speech recognition, general translation, model selection, and provider routing are not implemented.
+
+These boundaries are intentional: unsupported input produces a visible limitation instead of a fabricated AI result.
