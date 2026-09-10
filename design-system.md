@@ -8,6 +8,7 @@ An optical instrument for builders inspecting smart-glasses behavior. The workin
 - Working screens are charcoal instruments and editorial records. Lens Lab uses a restrained sage accent for optical signal and warm white for primary text. Status text accompanies every status color. The field guide uses numbered records, source status and labeled specifications, without generic device illustrations.
 
 - Compiler uses a warm paper authoring surface beside a dark editable contract. Benchmarks is an evidence bench: trial controls, metrics and plotted outcomes precede its deeper methods and fault tools.
+- Research is a dark index opening into warm source dossiers. Developers pairs a paper transport form with a dark code stage. Methodology is a warm field manual; About keeps the studio palette and treats the portrait as the primary visual.
 
 ## Type and geometry
 - UI/body: locally available Segoe UI, Helvetica Neue, Arial; readable body copy at 15–16 px or larger.

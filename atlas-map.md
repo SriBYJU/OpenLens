@@ -1,4 +1,4 @@
-# atlas: src (1918 LOC, 52 files) | budget 3000 | rendered 2463 tok | public API only, parameter names omitted to fit budget — raise --budget
+# atlas: src (1944 LOC, 52 files) | budget 3000 | rendered 2472 tok | public API only, parameter names omitted to fit budget — raise --budget
 
 ## core/types.ts (#1 — imported by 14 file(s))
     export interface EvidenceSource { id:string; title:string; url:string; publisher:string; accessed:string; confidence:Confidence; note:string }
@@ -106,6 +106,7 @@ pages/Compiler.tsx: Compiler, update
 pages/Developers.tsx: save, toggle
 pages/Devices.tsx: jumpTo, toggle
 pages/Lab.tsx: update, chooseScenario
-pages/Research.tsx: requestedDevice, sync
+pages/Methodology.tsx: jump
+pages/Research.tsx: requestedDevice, Research
 
 [45 low-rank file(s) collapsed: ./* (4), adapters/* (1), ai/* (4), app/* (1), components/* (15), core/* (12), pages/* (8)]

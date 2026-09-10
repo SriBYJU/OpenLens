@@ -14,4 +14,6 @@ import './environment.css';
 import './optical-studio.css';
 import './instrument-workspace.css';
 import './author-evidence.css';
+import './evidence-builder.css';
+import './editorial-pages.css';
 createRoot(document.getElementById('root')!).render(<React.StrictMode><App /></React.StrictMode>);

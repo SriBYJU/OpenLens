@@ -351,3 +351,55 @@ test('benchmark chart preserves failed runs and contains large trial sets',async
  await expect(inspector).toContainText(artifact.trace[0].id);
  await expect(inspector.locator('pre')).toHaveText(JSON.stringify(artifact.trace[0].metadata,null,2));
 });
+
+test('evidence index filters records and adapter workshop stays usable',async({page},testInfo)=>{
+ test.skip(testInfo.project.name!=='desktop','Explicitly exercises desktop, tablet and phone widths.');
+ await page.goto('/#/research');
+ await page.getByLabel('Search evidence').fill('Rokid');
+ await expect(page.locator('.evidence-ledger article')).toHaveCount(1);
+ await expect(page.locator('.evidence-ledger')).toContainText('Rokid Glasses');
+ await page.getByLabel('Filter integration state').selectOption('simulated');
+ await expect(page.getByText('No evidence record matches.')).toBeVisible();
+ await page.getByRole('button',{name:'Clear filters'}).click();
+ await expect(page.locator('.evidence-ledger article')).toHaveCount(7);
+ for(const width of [1280,768,375]){
+  await page.setViewportSize({width,height:900});
+  await page.goto('/#/research');
+  await page.evaluate(()=>scrollTo({top:0,behavior:'instant'}));
+  await page.screenshot({path:testInfo.outputPath(`ledger-${width}.png`)});
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
+  await page.goto('/#/developers');
+  await expect(page.getByText('4/4 files')).toBeVisible();
+  await page.getByLabel('Stable device ID').fill('');
+  await expect(page.getByText('0/4 files')).toBeVisible();
+  await expect(page.locator('.builder-errors')).toBeVisible();
+  await page.getByLabel('Stable device ID').fill('aurora-one');
+  await expect(page.getByText('4/4 files')).toBeVisible();
+  await expect(page.getByLabel('Generated adapter files').getByRole('button')).toHaveCount(4);
+  await page.evaluate(()=>scrollTo({top:0,behavior:'instant'}));
+  await page.screenshot({path:testInfo.outputPath(`adapter-${width}.png`)});
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
+ }
+});
+
+test('methodology index and about story remain readable at every width',async({page},testInfo)=>{
+ test.skip(testInfo.project.name!=='desktop','Explicitly exercises desktop, tablet and phone widths.');
+ for(const width of [1280,768,375]){
+  await page.setViewportSize({width,height:900});
+  await page.goto('/#/methodology');
+  await page.getByRole('button',{name:'04 / Statistics'}).click();
+  await expect(page.locator('#stats')).toBeInViewport();
+  await expect(page).toHaveURL(/#\/methodology$/);
+  await expect(page.locator('#stats')).toBeFocused();
+  await page.evaluate(()=>scrollTo({top:0,behavior:'instant'}));
+  await page.screenshot({path:testInfo.outputPath(`method-${width}.png`)});
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
+  await page.goto('/#/about');
+  await expect(page.getByAltText('Shriyan Avadhanula, founder and developer of OpenLens')).toHaveJSProperty('complete',true);
+  await page.evaluate(()=>scrollTo({top:0,behavior:'instant'}));
+  await page.screenshot({path:testInfo.outputPath(`about-${width}.png`)});
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
+ }
+ const audit=await new AxeBuilder({page}).include('main').analyze();
+ expect(audit.violations.filter(item=>['serious','critical'].includes(item.impact??''))).toEqual([]);
+});

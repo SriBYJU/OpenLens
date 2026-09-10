@@ -4,7 +4,7 @@
 
 - Branch: `main`
 - Live URL: https://sribyju.github.io/OpenLens/
-- Latest confirmed deployed checkpoint at this update: `72a7966`
+- Latest confirmed deployed checkpoint at this update: `c5cebf4`
 - Every push to `main` runs lint, unit tests, browser/accessibility checks, build, release stamping, and GitHub Pages deployment.
 
 ## Working systems
@@ -29,7 +29,7 @@ The reference twin and seven capability models execute locally. Manufacturer har
 
 ## Next priorities
 
-1. Continue the design and interaction audit through Research and Developers. Keep source evidence and runnable starter workflows prominent.
+1. Add quantified asset and browser-performance budgets to the release workflow, then profile the cinematic frames on a constrained device.
 2. Add quantified performance budgets and a release-time asset audit.
 3. Expand accessibility review to dialog keyboard behavior and manual screen-reader checks.
 4. Add a physical adapter only when SDK access and hardware verification exist.
@@ -50,3 +50,11 @@ No credential or authorization blocker is active. Real-hardware integration rema
 - Benchmarks puts trial controls and statistics first, then distribution and trace, then fault isolation. Plot scaling includes failed durations, large suites scroll within the chart, and chart labels have contrast against the bars.
 - Trace inspectors derive their event from the current run; switching trials no longer retains stale event metadata. A 500-trial browser regression verifies the exported final seed and inspector content.
 - The author and evidence screens were visually inspected at 1280, 768 and 375 pixels; a clipped phone editor and chart overflow were fixed during review.
+
+## Evidence, adapter, and editorial checkpoint
+
+- Research is now a searchable evidence index with integration-state filtering, visible record counts, a clear empty result, and the source-backed claim body before the methodology explanation.
+- The adapter generator is presented as a working code workshop. Its validation state, generated-file count, capability boundary, file tabs, code, and three download paths remain live at desktop and phone widths.
+- Methodology has a route-safe section index. The previous `#stats`-style links conflicted with the hash router; controls now scroll and focus the selected section without leaving the page.
+- About uses a composed portrait and project statement while preserving the original founder image and direct repository and evidence actions.
+- Research, Developers, Methodology, and About were visually inspected at 1280, 768, and 375 pixels. Their focused interaction and automated accessibility checks pass.

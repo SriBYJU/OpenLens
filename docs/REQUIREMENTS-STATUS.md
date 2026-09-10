@@ -7,6 +7,7 @@ Updated 2026-09-10. A passing build does not mean the entire directive is comple
 - Browser-first public deployment through GitHub Pages, without a required account or paid API.
 - Graphite glasses opening with continuous lens fade, reduced-motion fallback, and a simulation-first optical workbench with three environment-responsive synthetic fixture scenes.
 - Eight sourced device profiles, search, three-way comparison, typed physical specifications, explicit unknown values, conflict preservation, evidence ledger and direct claim-level source links.
+- Search and integration-state filtering on the evidence ledger, with claim, capability, and primary-source detail kept in one expandable record.
 - Deterministic Optical Twin with scenario selection, configurable latency/jitter/failure probability, battery, network and permission state, plus a documented illumination/head-motion/noise stress model that changes quality, timing, trace data and acquisition outcomes.
 - Live constrained-language compiler with a dedicated writing surface, structured corrections, guarded draft handoff and cross-device route plans.
 - Trace inspection, JSON run export, full artifact replay validation and pipeline playback.
@@ -17,6 +18,7 @@ Updated 2026-09-10. A passing build does not mean the entire directive is comple
 - Real local English OCR from sample, upload or camera capture; a deterministic five-language sign phrasebook with coverage and unknown-token disclosure; local voice readout where a matching browser voice exists; downloadable local-pipeline artifacts.
 - Four-file adapter starter generator with a transport implementation boundary, lifecycle and capability guards, contract tests, verification template, safe string escaping and ZIP export.
 - About page with the existing founder portrait; architecture, privacy, security, research and benchmark documentation.
+- Route-safe Methodology section navigation and responsive editorial layouts for About, Research, and Developers.
 - Unit, desktop, phone and automated accessibility checks in the deployment workflow.
 
 ## Partial: requires further implementation or verification
