@@ -4,7 +4,7 @@
 
 - Branch: `main`
 - Live URL: https://sribyju.github.io/OpenLens/
-- Latest confirmed deployed checkpoint at this update: `fc856b4`
+- Deployment source of truth: the latest successful `Verify and deploy OpenLens` workflow on `main`.
 - Every push to `main` runs lint, unit tests, browser/accessibility checks, build, release stamping, and GitHub Pages deployment.
 
 ## Working systems
@@ -24,8 +24,8 @@ The reference twin and seven capability models execute locally. Manufacturer har
 
 ## Verification
 
-- Latest confirmed Pages checkpoint completed its lint, unit, browser, build, and deployment workflow successfully at `fc856b4`.
-- Current release candidate: 74 unit tests and 36 browser checks passed with retries disabled; six intentionally redundant small-phone checks were skipped. The open OCR drawer passes automated contrast checks; desktop, tablet, and phone screenshots were inspected.
+- The current Pages checkpoint completed its lint, unit, browser, build, budget, release-stamping, and deployment workflow successfully.
+- Current release candidate: 74 unit tests and 38 browser checks passed with retries disabled; six intentionally redundant small-phone checks were skipped. The open OCR drawer and optional visitor tour pass automated contrast checks; desktop, tablet, and phone screenshots were inspected.
 
 ## Next priorities
 
