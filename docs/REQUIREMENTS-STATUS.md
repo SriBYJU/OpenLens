@@ -23,6 +23,7 @@ Updated 2026-09-10. A passing build does not mean the entire directive is comple
 - Homepage device switchboard that compares all seven sourced physical profiles in place and launches the selected documented-capability model into Lens Lab.
 - Unit, desktop, phone and automated accessibility checks in the deployment workflow.
 - Modal command and route-guide surfaces trap keyboard focus, close on Escape, prevent background scrolling, and restore focus to their opening control.
+- Dedicated 1200×630 OpenGraph artwork, complete OpenGraph/Twitter metadata, canonical URL, crawl directives, sitemap and SoftwareApplication structured data.
 
 ## Partial: requires further implementation or verification
 

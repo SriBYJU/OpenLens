@@ -92,3 +92,8 @@ No credential or authorization blocker is active. Real-hardware integration rema
 ## Dialog keyboard checkpoint
 
 - The command palette now owns initial focus, scroll locking, focus trapping and focus restoration. Escape returns focus to the control that opened it; the route guide follows the same keyboard contract.
+
+## Social presentation checkpoint
+
+- Sharing OpenLens now uses a dedicated 1200×630, 102 KiB cinematic product image instead of the heavier in-page hero, with explicit image dimensions and accessible alternative text.
+- OpenGraph, Twitter card, canonical, crawl, sitemap and SoftwareApplication metadata describe only implemented public behavior.

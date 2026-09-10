@@ -13,7 +13,7 @@ npm run budget
 
 Current ceilings are recorded in `scripts/check-performance-budget.mjs`. They are regression limits based on the current production architecture, not claims about field Core Web Vitals. Browser responsiveness and cinematic frame pacing still require runtime profiling on representative hardware.
 
-The ImageGen park source is preserved outside the repository. Its production JPEG is 595 KiB, down from the 2.98 MiB generated PNG, and loads only with the lazy Lens Lab route. CI holds that scene below 700 KiB.
+The ImageGen park source is preserved outside the repository. Its production JPEG is 595 KiB, down from the 2.98 MiB generated PNG, and loads only with the lazy Lens Lab route. CI holds that scene below 700 KiB. The dedicated 1200×630 social card is 102 KiB and has its own 150 KiB release ceiling.
 
 For a repeatable local stress profile, start the production preview on port 4176 and run `npm run profile:cinematic`. The script uses a 4× CPU slowdown and a 1.6 Mbps, 150 ms round-trip network model. It reports navigation timing, lab-observed LCP and CLS, and frame intervals while traversing the full lens sequence. These are development diagnostics from the current machine, not field measurements.
 
