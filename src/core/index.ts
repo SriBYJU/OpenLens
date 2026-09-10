@@ -7,4 +7,5 @@ export * from './exchange';
 export * from './fit';
 export * from './resilience';
 export * from './scenario';
+export * from './adapter-starter';
 export * from '../data/devices';

@@ -13,5 +13,4 @@ A device profile describes researched hardware. An adapter is executable code. O
 
 Use `implemented-untested` while code exists without recorded hardware verification. Use `verified-hardware` only with a reproducible record naming device, firmware, environment, and test procedure. Do not silently route unsupported capabilities through a companion service.
 
-The Build With Us page generates a typed manifest starter. It is a real downloadable file, but the transport-specific methods still require implementation.
-
+The Build With Us page generates a four-file ZIP with a typed transport boundary, guarded adapter lifecycle, Vitest contract test, verification record and integration guide. The bundle is executable scaffolding, while transport-specific vendor calls and physical verification still require the target hardware and SDK.

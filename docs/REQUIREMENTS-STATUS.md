@@ -15,7 +15,7 @@ Updated 2026-09-09. A passing build does not mean the entire directive is comple
 - Scenario capsules preserve the exact device, experience and conditions in a validated JSON file or replayable URL; these are checksummed snapshots, not signed evidence.
 - Device-fit ranking with explainable requirements, sourced device diagnosis, and a keyboard-operated command palette.
 - Real local English OCR from sample, upload or camera capture; local voice readout where a browser voice exists.
-- Adapter manifest generator, repository-relative TypeScript imports and safe string escaping.
+- Four-file adapter starter generator with a transport implementation boundary, lifecycle and capability guards, contract tests, verification template, safe string escaping and ZIP export.
 - About page with the existing founder portrait; architecture, privacy, security, research and benchmark documentation.
 - Unit, desktop, phone and automated accessibility checks in the deployment workflow.
 
@@ -25,7 +25,7 @@ Updated 2026-09-09. A passing build does not mean the entire directive is comple
 - Simulation fidelity: authored inputs and outputs test routing and failure handling. There is no optical physics, environmental sensor model, continuous live scene model or hardware timing calibration.
 - Experience Compiler: four supported tasks with rule-based intent parsing; it does not generate arbitrary runnable applications.
 - Local AI: OCR and speech output exist. General translation, scene understanding, speech recognition, provider adapters and model management remain incomplete.
-- Developer platform: manifest generation and browser-readiness Device Doctor exist; complete adapter scaffolding, a published SDK package and hardware example applications remain incomplete.
+- Developer platform: complete repository-ready adapter scaffolding and browser-readiness Device Doctor exist. A published SDK package, vendor transport implementations and hardware example applications remain incomplete.
 - Research: evidence is versioned in Git; structured conflicting claims, detailed optical/power/weight specifications, firmware history and measurement ingestion need expansion.
 - Visual QA: desktop, small-phone, tablet, ultrawide and reduced-motion checks are automated; slow-device, cinematic frame pacing and manual screen-reader verification remain open.
 - Accessibility: automated serious/critical checks cover the four core routes; full WCAG conformance and dialog keyboard auditing are not yet established.
@@ -41,4 +41,4 @@ Real hardware verification depends on access to the relevant device and SDK. Clo
 
 Continue against this list and the original master directive. Do not mark a partial item complete merely because it has a page or label.
 
-Latest integrated checkpoint: 62 unit tests and 28 browser checks passed locally with retries disabled; two redundant mobile checks were intentionally skipped. TypeScript, lint, automated WCAG checks and the production build also passed. Physical hardware and optional cloud services remain outside these results.
+Latest integrated checkpoint: 64 unit tests and 28 browser checks passed locally with retries disabled; two redundant mobile checks were intentionally skipped. TypeScript, lint, automated WCAG checks, dependency audit and the production build also passed. Physical hardware and optional cloud services remain outside these results.

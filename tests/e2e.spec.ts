@@ -1,6 +1,8 @@
 import {expect,test} from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import {Buffer} from 'node:buffer';
+import {readFileSync} from 'node:fs';
+import {strFromU8,unzipSync} from 'fflate';
 import {benchmark,compileExperience,defaultSimulationConfig,experiencePresets,getDevice} from '../src/core';
 
 test.beforeEach(async({page})=>{await page.addInitScript(()=>localStorage.clear())});
@@ -94,9 +96,29 @@ test('device research, benchmark, and adapter generator are interactive',async({
   await expect(page.getByLabel('Benchmark trial outcomes').getByRole('button')).toHaveCount(12);
   await page.goto('/#/developers');
   await page.getByLabel('DEVICE NAME').fill('Aurora One');
-  await page.getByRole('checkbox',{name:'Audio'}).check();
+  const audioCapability=page.getByRole('checkbox',{name:'Audio'});
+  await audioCapability.focus();
+  await page.keyboard.press('Space');
+  await expect(audioCapability).toBeChecked();
   await expect(page.locator('.code-stage pre')).toContainText('name: "Aurora One adapter"');
-  await expect(page.locator('.code-stage pre')).toContainText("'audio'");
+  await expect(page.locator('.code-stage pre')).toContainText('"audio"');
+  await expect(page.getByLabel('Generated adapter files').getByRole('button')).toHaveCount(4);
+  await page.getByRole('button',{name:/\.test\.ts$/}).click();
+  await expect(page.locator('.code-stage pre')).toContainText('enforces connection and delegates a matching plan');
+  const pendingDownload=page.waitForEvent('download');
+  await page.getByRole('button',{name:/Download ZIP/}).click();
+  const archiveDownload=await pendingDownload;
+  expect(archiveDownload.suggestedFilename()).toBe('my-glasses-openlens-adapter.zip');
+  const archivePath=await archiveDownload.path();
+  expect(archivePath).not.toBeNull();
+  const archive=unzipSync(readFileSync(archivePath!));
+  expect(Object.keys(archive).sort()).toEqual([
+   'my-glasses-openlens-adapter/README.md',
+   'my-glasses-openlens-adapter/src/adapters/my-glasses.test.ts',
+   'my-glasses-openlens-adapter/src/adapters/my-glasses.ts',
+   'my-glasses-openlens-adapter/verification-record.json',
+  ]);
+  expect(strFromU8(archive['my-glasses-openlens-adapter/verification-record.json'])).toContain('"status": "unverified"');
   await page.getByRole('button',{name:'Run readiness checks'}).click();
   await expect(page.locator('.doctor-check')).toHaveCount(8);
   await expect(page.locator('.doctor-check').filter({hasText:'ocr/lang/eng.traineddata.gz'})).toContainText('pass');
