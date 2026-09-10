@@ -8,4 +8,6 @@ Run artifacts are schema-checked and replay-verified before use. OCR accepts onl
 
 This GitHub Pages deployment does not include repository-controlled response headers. The document policy is defense in depth for this static release and does not replace host-level headers such as `frame-ancestors`, HSTS, COOP, COEP, or CORP when OpenLens moves to a configurable host.
 
+The deployment workflow pins each GitHub-maintained action to the immutable commit behind its documented stable release tag. This avoids executing a later retagged action without repository review.
+
 Before adding accounts or an admin console, require server-side authorization, CSRF protection where cookies are used, rate limits, input validation, audit logging, secure headers, and least-privilege secrets. A visual admin page without those controls must not ship.
