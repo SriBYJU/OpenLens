@@ -4,7 +4,7 @@
 
 - Branch: `main`
 - Live URL: https://sribyju.github.io/OpenLens/
-- Latest confirmed deployed checkpoint at this update: `a73ae3b`
+- Latest confirmed deployed checkpoint at this update: `17a84fb`
 - Every push to `main` runs lint, unit tests, browser/accessibility checks, build, release stamping, and GitHub Pages deployment.
 
 ## Working systems
@@ -24,15 +24,14 @@ The reference twin and seven capability models execute locally. Manufacturer har
 
 ## Verification
 
-- Latest confirmed Pages checkpoint completed its lint, unit, browser, build, and deployment workflow successfully at `a73ae3b`.
+- Latest confirmed Pages checkpoint completed its lint, unit, browser, build, and deployment workflow successfully at `17a84fb`.
 - Current release candidate: 74 unit tests and 36 browser checks passed with retries disabled; six intentionally redundant small-phone checks were skipped. The open OCR drawer passes automated contrast checks; desktop, tablet, and phone screenshots were inspected.
 
 ## Next priorities
 
-1. Reduce the 809 KiB glasses hero transfer without losing the current visual fidelity, then re-run the constrained LCP profile.
-2. Add field performance collection only with an explicit privacy-preserving design and deployment decision.
-3. Expand accessibility review to dialog keyboard behavior and manual screen-reader checks.
-4. Add a physical adapter only when SDK access and hardware verification exist.
+1. Add field performance collection only with an explicit privacy-preserving design and deployment decision.
+2. Complete manual screen-reader verification on representative assistive technology.
+3. Add a physical adapter only when SDK access and hardware verification exist.
 
 No credential or authorization blocker is active. Real-hardware integration remains blocked by SDK and device access and must stay labeled unavailable until verified.
 
@@ -63,7 +62,7 @@ No credential or authorization blocker is active. Real-hardware integration rema
 
 - CI enforces initial raw and compressed imports, total application JavaScript, largest lazy route, CSS, glasses hero, and OCR isolation budgets after every production build.
 - A reusable production profiler applies 4× CPU slowdown and a 1.6 Mbps, 150 ms RTT network model. The current local result is CLS 0, median 16.7 ms and p95 16.8 ms over 120 cinematic frames, with no interval above 50 ms.
-- The same stress run reports a 5.64 second LCP. The detailed 809 KiB glasses image dominates that result; this is kept as an explicit optimization target and not presented as field performance.
+- After the optimized 110 KiB WebP hero replaced the 809 KiB transfer in supporting browsers, the same local stress profile improved LCP from 5.64 to 2.33 seconds. CLS remained 0; the cinematic retained a 16.7 ms median, 16.8 ms p95 and no sampled interval above 50 ms.
 
 ## Virtual world and homepage atlas checkpoint
 
@@ -97,3 +96,8 @@ No credential or authorization blocker is active. Real-hardware integration rema
 
 - Sharing OpenLens now uses a dedicated 1200×630, 102 KiB cinematic product image instead of the heavier in-page hero, with explicit image dimensions and accessible alternative text.
 - OpenGraph, Twitter card, canonical, crawl, sitemap and SoftwareApplication metadata describe only implemented public behavior.
+
+## Hero transfer checkpoint
+
+- The cinematic opening serves a visually inspected 110 KiB transparent WebP, down from the 809 KiB PNG; the original remains a compatibility fallback.
+- Both assets have separate CI ceilings. The DOM keeps explicit intrinsic dimensions to prevent layout shift.

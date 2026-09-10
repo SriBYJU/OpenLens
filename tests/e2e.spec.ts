@@ -278,6 +278,7 @@ test('cinematic lens entry preserves its axis and exposes only active actions',a
  await page.goto('/#/');
  await expect(page.getByRole('heading',{name:'See the system.',exact:true})).toBeVisible();
  await expect(page.locator('.glasses-stage img')).toHaveJSProperty('complete',true);
+ expect(await page.locator('.glasses-stage img').evaluate(image=>(image as HTMLImageElement).currentSrc.endsWith('openlens-glasses-hero-v3.webp'))).toBe(true);
  await page.screenshot({path:testInfo.outputPath('optical-01-approach.png')});
  for(const [name,progress] of [['lens',.4],['transition',.7],['world',.82]] as const){
   await page.locator('.cinematic').evaluate((element,p)=>window.scrollTo({top:element.getBoundingClientRect().top+window.scrollY+(element.clientHeight-window.innerHeight)*p,behavior:'instant'}),progress);

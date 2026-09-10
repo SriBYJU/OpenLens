@@ -4,7 +4,18 @@
 
 [Open the live workbench](https://sribyju.github.io/OpenLens/) · [Read the architecture](ARCHITECTURE.md) · [Build an adapter](DEVICE-ADAPTERS.md) · [Review methodology](BENCHMARK-METHODOLOGY.md)
 
+![Dark graphite OpenLens smart glasses in an atmospheric optical landscape](public/assets/openlens-social-v1.jpg)
+
 OpenLens turns fragmented smart-glasses hardware into an inspectable development environment. A visitor can describe an experience, compile it into an explicit capability plan, run it against a deterministic Optical Twin, inject failures, inspect every trace boundary, benchmark repeated trials, and compare the requirements with sourced hardware profiles. The public baseline needs no account, device, API key, paid AI, or backend.
+
+## Try the working loop
+
+1. Open the [virtual park](https://sribyju.github.io/OpenLens/#/lab) and select the French `SORTIE` sign.
+2. Switch glasses or environmental conditions and run the same experience again.
+3. Inspect the route, output, canonical trace, and replayable artifact produced by that run.
+4. Open [Device Universe](https://sribyju.github.io/OpenLens/#/devices) to separate physical hardware, maker API access, and current OpenLens execution.
+
+The simulated loop is executable in the browser. It does not claim a connection to the physical products in the research catalog.
 
 ## What works
 

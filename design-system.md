@@ -4,7 +4,7 @@
 An optical instrument for builders inspecting smart-glasses behavior. The working object, controls and evidence come first. Explanations belong beside the relevant decision or in a clearly named disclosure.
 
 ## Two surfaces
-- The opening is a dark studio: detailed graphite glasses, reflected ambient light, a continuous approach through the lens. The current concept asset is `public/assets/openlens-glasses-hero-v2.png`; it is not a photograph of a manufactured device.
+- The opening is a dark studio: detailed graphite glasses, reflected ambient light, a continuous approach through the lens. Browsers receive `public/assets/openlens-glasses-hero-v3.webp`; `openlens-glasses-hero-v2.png` remains the fallback. This is a concept visual, not a photograph of a manufactured device.
 - Working screens are charcoal instruments and editorial records. Lens Lab uses a restrained sage accent for optical signal and warm white for primary text. Status text accompanies every status color. The field guide uses numbered records, source status and labeled specifications, without generic device illustrations.
 
 - Compiler uses a warm paper authoring surface beside a dark editable contract. Benchmarks is an evidence bench: trial controls, metrics and plotted outcomes precede its deeper methods and fault tools.
