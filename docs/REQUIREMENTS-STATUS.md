@@ -31,7 +31,7 @@ Updated 2026-09-10. A passing build does not mean the entire directive is comple
 - Research: first-party claims now cover core optical, mass, power, endurance, display and camera fields where manufacturers publish them, with one documented conflicting resolution preserved. More device breadth, firmware history and measurement ingestion remain incomplete.
 - Visual QA: desktop, small-phone, tablet, ultrawide and reduced-motion checks are automated; slow-device, cinematic frame pacing and manual screen-reader verification remain open.
 - Accessibility: automated serious/critical checks cover the four core routes; full WCAG conformance and dialog keyboard auditing are not yet established.
-- Security/performance: import and upload boundaries have tests; full security review, CSP/header policy and quantified performance budgets remain open.
+- Security/performance: import and upload boundaries have tests. The release now enforces initial-import, JavaScript, CSS, route-chunk, hero-image, and OCR-isolation budgets; a constrained local profile covers initial layout shift and cinematic frame intervals. Full security review, CSP/header policy, field Core Web Vitals, and further hero transfer reduction remain open.
 
 ## Not implemented
 

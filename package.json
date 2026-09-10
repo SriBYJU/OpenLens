@@ -9,6 +9,8 @@
     "prebuild": "npm run prepare:ocr",
     "dev": "vite --host 127.0.0.1",
     "build": "tsc --noEmit && vite build",
+    "budget": "node scripts/check-performance-budget.mjs",
+    "profile:cinematic": "node scripts/profile-cinematic.mjs",
     "typecheck": "tsc --noEmit",
     "test": "vitest run --exclude tests/e2e.spec.ts",
     "lint": "eslint src tests",

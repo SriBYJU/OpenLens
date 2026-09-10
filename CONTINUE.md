@@ -4,7 +4,7 @@
 
 - Branch: `main`
 - Live URL: https://sribyju.github.io/OpenLens/
-- Latest confirmed deployed checkpoint at this update: `c5cebf4`
+- Latest confirmed deployed checkpoint at this update: `fc937c7`
 - Every push to `main` runs lint, unit tests, browser/accessibility checks, build, release stamping, and GitHub Pages deployment.
 
 ## Working systems
@@ -24,13 +24,13 @@ The reference twin and seven capability models execute locally. Manufacturer har
 
 ## Verification
 
-- Latest deployed catalog checkpoint: 68 unit tests and 30 browser checks passed with retries disabled; two redundant mobile OCR checks were intentionally skipped.
-- Local AI checkpoint: 74 unit tests and 30 browser checks passed with retries disabled. The open OCR drawer passes automated contrast checks; desktop, tablet, and phone screenshots were inspected.
+- Latest confirmed Pages checkpoint completed its lint, unit, browser, build, and deployment workflow successfully at `fc937c7`.
+- Current release candidate: 74 unit tests and 36 browser checks passed with retries disabled; six intentionally redundant small-phone checks were skipped. The open OCR drawer passes automated contrast checks; desktop, tablet, and phone screenshots were inspected.
 
 ## Next priorities
 
-1. Add quantified asset and browser-performance budgets to the release workflow, then profile the cinematic frames on a constrained device.
-2. Add quantified performance budgets and a release-time asset audit.
+1. Reduce the 809 KiB glasses hero transfer without losing the current visual fidelity, then re-run the constrained LCP profile.
+2. Add field performance collection only with an explicit privacy-preserving design and deployment decision.
 3. Expand accessibility review to dialog keyboard behavior and manual screen-reader checks.
 4. Add a physical adapter only when SDK access and hardware verification exist.
 
@@ -58,3 +58,9 @@ No credential or authorization blocker is active. Real-hardware integration rema
 - Methodology has a route-safe section index. The previous `#stats`-style links conflicted with the hash router; controls now scroll and focus the selected section without leaving the page.
 - About uses a composed portrait and project statement while preserving the original founder image and direct repository and evidence actions.
 - Research, Developers, Methodology, and About were visually inspected at 1280, 768, and 375 pixels. Their focused interaction and automated accessibility checks pass.
+
+## Performance checkpoint
+
+- CI enforces initial raw and compressed imports, total application JavaScript, largest lazy route, CSS, glasses hero, and OCR isolation budgets after every production build.
+- A reusable production profiler applies 4× CPU slowdown and a 1.6 Mbps, 150 ms RTT network model. The current local result is CLS 0, median 16.7 ms and p95 16.8 ms over 120 cinematic frames, with no interval above 50 ms.
+- The same stress run reports a 5.64 second LCP. The detailed 809 KiB glasses image dominates that result; this is kept as an explicit optimization target and not presented as field performance.

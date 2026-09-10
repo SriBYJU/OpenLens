@@ -6,3 +6,5 @@
 .methodology-page .methodology aside button{min-height:46px;font:13px var(--sans);text-align:left;color:#4c574a;border:0;border-bottom:1px solid #afb1a2;padding:14px 0;background:transparent;cursor:pointer}.methodology-page .methodology aside button:hover{color:#1f3020;padding-left:7px}
 @media(max-width:900px){.methodology-page .methodology aside button{font-size:12px}}
 @media(max-width:760px){.methodology-page .methodology aside button{font-size:13px}}
+.route-loading{min-height:calc(100svh - 72px)}
+@media(max-width:760px){.route-loading{min-height:calc(100svh - 64px)}}
