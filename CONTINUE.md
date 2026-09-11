@@ -13,7 +13,7 @@
 - Eight source-backed profiles with typed specifications, explicit unknowns, conflict preservation, claim-level links, search, Device Fit, Device Doctor, and three-way comparison.
 - Deterministic Optical Twin and seven capability models with environment stress, configurable timing, battery, permissions, network, failure injection, trace playback, history, and portable scenario capsules.
 - Rules-based Experience Compiler with seven visible task families, editable contracts, cross-device routing, fallbacks, persistence into Lens Lab, and invalid-input feedback.
-- Benchmark Lab with raw trials, failure retention, sample statistics, resilience matrix, JSON/CSV export, and replay-verified imports.
+- Benchmark Lab with raw trials, failure retention, sample statistics, resilience matrix, JSON/CSV export, replay-verified imports, and an explicit opt-in in-memory Browser Field Recorder.
 - Live AI capability routing plus real in-browser pixel-signal preflight and English OCR from demo, upload, or camera. Includes five-language bounded sign translation, visible coverage, unchanged-token disclosure, local speech where available, and versioned JSON result export.
 - Four-file adapter starter ZIP with typed transport boundary, lifecycle guards, contract tests, verification template, and integration guide.
 - Global command palette, route-specific guides, methodology, research ledger, About page with the original Capital Mastery portrait, and durable technical documentation.
@@ -25,12 +25,12 @@ The reference twin and seven capability models execute locally. Manufacturer har
 ## Verification
 
 - The current Pages checkpoint completed its lint, unit, browser, build, budget, release-stamping, and deployment workflow successfully.
-- Current release candidate: 84 unit tests pass. The 54-case Playwright matrix completes with 47 passes and 7 intentional capability skips across desktop and phone. It covers AI capability routing, real pixel preflight, local OCR, all seven compiler and Scenario Studio workflows, adapter conformance mutation probes, benchmark score layers, route motion, responsive layout, and automated contrast.
+- Current release candidate: 84 unit tests pass. The 56-case Playwright matrix completes with 49 passes and 7 intentional capability skips across desktop and phone. It covers private field recording and export, AI capability routing, real pixel preflight, local OCR, all seven compiler and Scenario Studio workflows, adapter conformance mutation probes, benchmark score layers, route motion, responsive layout, and automated contrast.
 
 ## Next priorities
 
-1. Add field performance collection only with an explicit privacy-preserving design and deployment decision.
-2. Complete manual screen-reader verification on representative assistive technology.
+1. Complete manual screen-reader verification on representative assistive technology.
+2. Add aggregated field performance only if a privacy-preserving backend and explicit deployment decision are approved.
 3. Add a physical adapter only when SDK access and hardware verification exist.
 
 No credential or authorization blocker is active. Real-hardware integration remains blocked by SDK and device access and must stay labeled unavailable until verified.
@@ -81,6 +81,7 @@ No credential or authorization blocker is active. Real-hardware integration rema
 
 - Benchmark Lab exposes AI pipeline, camera, microphone, battery, connectivity, developer experience, and usability families.
 - Each family shows raw observation, normalization, and category result. Battery, developer experience, usability, and inactive sensor families remain unscored when the artifact cannot support a number. No overall score is manufactured.
+- The separate Browser Field Recorder begins only after explicit opt-in, keeps page signals in memory, provides a two-frame response probe, and exports a local JSON artifact without user agent, exact screen dimensions, cookies, account, persistent ID, or upload.
 
 ## Device matrix checkpoint
 

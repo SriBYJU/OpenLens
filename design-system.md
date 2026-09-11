@@ -11,6 +11,7 @@ An optical instrument for builders inspecting smart-glasses behavior. The workin
 - Research is a dark index opening into warm source dossiers. Developers pairs a paper transport form with a dark code stage. Methodology is a warm field manual; About keeps the studio palette and treats the portrait as the primary visual.
 - Scenario Studio groups the seven field programs and failure injections as one cinematic test sequence. Benchmark families use an inspectable cyan instrument with a single finite dial sweep. Adapter conformance uses a dark validation console with green pass and coral caught-fault states.
 - Local AI uses a dark routing instrument inside the warm privacy surface. Pixel-signal meters show measured browser data; unavailable semantic routes use explicit status text and never animate like active inference.
+- Browser field recording uses a full-width dark measurement bench with one explicit lime recording state, large raw values, and a visible browser-only boundary. Nothing moves until the visitor starts a session.
 
 ## Type and geometry
 - UI/body: locally available Segoe UI, Helvetica Neue, Arial; readable body copy at 15–16 px or larger.

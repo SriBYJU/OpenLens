@@ -12,6 +12,7 @@ Updated 2026-09-11. A passing build does not mean the entire directive is comple
 - Live constrained-language compiler with a dedicated writing surface, structured corrections, guarded draft handoff and cross-device route plans.
 - Trace inspection, JSON run export, full artifact replay validation and pipeline playback.
 - Benchmark suites, successful-sample statistics, all-outcome chart scaling, failed-run retention, current-run trace details and JSON/CSV export. Seven family layers expose their raw observation, normalization, and category result; absent hardware or wearer evidence remains visibly unscored.
+- Explicitly opt-in Browser Field Recorder for real page-lifecycle LCP/navigation timing, post-start CLS, supported event timing, long tasks and user-invoked response probes. Values remain in memory, export locally, omit persistent identifiers and never enter hardware or simulator scores.
 - Eight-condition resilience matrix with event-level trace comparison and export.
 - Scenario capsules preserve the exact device, experience and conditions in a validated JSON file or replayable URL; these are checksummed snapshots, not signed evidence.
 - Device-fit ranking with explainable requirements, sourced device diagnosis, and a keyboard-operated command palette.
@@ -38,7 +39,7 @@ Updated 2026-09-11. A passing build does not mean the entire directive is comple
 - Research: first-party claims now cover core optical, mass, power, endurance, display and camera fields where manufacturers publish them, with one documented conflicting resolution preserved. More device breadth, firmware history and measurement ingestion remain incomplete.
 - Visual QA: desktop, small-phone, tablet, ultrawide and reduced-motion checks are automated; slow-device, cinematic frame pacing and manual screen-reader verification remain open.
 - Accessibility: automated serious/critical checks cover the five core routes and both global dialogs have keyboard regressions; full WCAG conformance and manual screen-reader verification remain open.
-- Security/performance: import and upload boundaries have tests. A browser-delivered content policy restricts scripts, workers, connections, images, frames, objects, base URLs and forms on the static deployment, with a strict referrer policy. The release enforces initial-import, JavaScript, CSS, route-chunk, optimized hero, fallback hero, virtual-scene, social-card, and OCR-isolation budgets; a constrained local profile covers initial layout shift and cinematic frame intervals. Full response-header review and field Core Web Vitals remain open.
+- Security/performance: import and upload boundaries have tests. A browser-delivered content policy restricts scripts, workers, connections, images, frames, objects, base URLs and forms on the static deployment, with a strict referrer policy. The release enforces initial-import, JavaScript, CSS, route-chunk, optimized hero, fallback hero, virtual-scene, social-card, and OCR-isolation budgets; a constrained local profile and opt-in local recorder cover browser timing and cinematic frame intervals. Host response-header control and aggregated real-user Core Web Vitals remain open.
 
 ## Not implemented
 
@@ -50,4 +51,4 @@ Real hardware verification depends on access to the relevant device and SDK. Clo
 
 Continue against this list and the original master directive. Do not mark a partial item complete merely because it has a page or label.
 
-Latest integrated checkpoint: 84 unit tests pass. The 54-case browser matrix completes with 47 passes and 7 intentional capability skips across desktop and phone, including dedicated AI routing, pixel preflight, expanded compiler, Scenario Studio, adapter conformance, benchmark-family, OCR, accessibility, motion, and responsive-layout regressions. Physical hardware and optional cloud services remain outside these results.
+Latest integrated checkpoint: 84 unit tests pass. The 56-case browser matrix completes with 49 passes and 7 intentional capability skips across desktop and phone, including dedicated private field recording, AI routing, pixel preflight, expanded compiler, Scenario Studio, adapter conformance, benchmark-family, OCR, accessibility, motion, and responsive-layout regressions. Physical hardware and optional cloud services remain outside these results.

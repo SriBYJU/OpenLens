@@ -22,3 +22,7 @@ Benchmark Methodology 1.3 adds an inspectable family view without producing an o
 The interface exposes raw observation → normalization → category result for every family. Missing evidence produces `NOT SCORED`, never a guessed value.
 
 Browser timing and device timing are deliberately excluded from simulator values. A later hardware methodology must separately record device, firmware, temperature, network, sample count, warm-up, and raw observations.
+
+## Browser field session
+
+The separate Browser Field Recorder measures only the current page. Collection starts after explicit opt-in and remains in memory. It reports current page-lifecycle LCP and navigation timing, then accumulates CLS, supported Event Timing, long tasks, and user-invoked two-frame response probes after Start. The local export omits user agent, exact screen dimensions, persistent identifiers, cookies, and network transmission. These browser measurements never enter simulated smart-glasses scores or hardware claims.

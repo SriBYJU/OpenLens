@@ -283,7 +283,7 @@ test('exported benchmark suites reopen and help keeps keyboard focus',async({pag
  const suite=benchmark(compileExperience(experiencePresets[0],getDevice('openlens-twin')),{...defaultSimulationConfig,failureRate:.5},12);
  await page.goto('/#/benchmarks');
  await page.locator('.import-strip input[type="file"]').setInputFiles({name:'benchmark.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(suite))});
- await expect(page.getByRole('status')).toContainText('Verified suite: 12 samples');
+ await expect(page.locator('.import-strip').getByRole('status')).toContainText('Verified suite: 12 samples');
  await expect(page.getByLabel('Benchmark trial outcomes').getByRole('button')).toHaveCount(12);
  await page.getByLabel('Benchmark trial outcomes').getByRole('button').first().click();
  if(!await page.getByRole('button',{name:'What is this?',exact:true}).isVisible())await page.getByRole('button',{name:'Menu',exact:true}).click();
@@ -545,4 +545,21 @@ test('benchmark families expose formulas and withhold unsupported scores',async(
  await expect(panel).toContainText('Score = completed runs ÷ all trials × 100');
  const audit=await new AxeBuilder({page}).include('.benchmark-families').analyze();
  expect(audit.violations.filter(item=>['serious','critical'].includes(item.impact??''))).toEqual([]);
+});
+
+test('browser field recorder requires opt-in and exports a local aggregate artifact',async({page})=>{
+ await page.goto('/#/benchmarks');
+ const recorder=page.locator('.field-recorder');
+ await expect(recorder).toContainText('No browser measurements are being collected.');
+ await recorder.getByRole('button',{name:'Start private recording'}).click();
+ await expect(recorder.locator('.recorder-state')).toHaveText('recording');
+ await recorder.getByRole('button',{name:'Run two-frame response probe'}).click();
+ await expect(recorder).toContainText('1 SAMPLE');
+ const audit=await new AxeBuilder({page}).include('.field-recorder').analyze();expect(audit.violations.filter(item=>['serious','critical'].includes(item.impact??''))).toEqual([]);
+ await recorder.getByRole('button',{name:'Stop recording'}).click();
+ const pending=page.waitForEvent('download');await recorder.getByRole('button',{name:'Download local JSON'}).click();const download=await pending;
+ expect(download.suggestedFilename()).toBe('openlens-browser-field-session.json');const artifact=JSON.parse(readFileSync((await download.path())!,'utf8'));
+ expect(artifact).toMatchObject({kind:'browser-field-session',measurementBoundary:'browser-page-only',consent:'explicit-start-button',storage:'memory-until-clear-or-refresh'});
+ expect(artifact.metrics.responseProbesMs).toHaveLength(1);expect(artifact.userAgent).toBeUndefined();
+ await recorder.getByRole('button',{name:'Clear session'}).click();await expect(recorder.locator('.recorder-state')).toHaveText('ready');
 });
