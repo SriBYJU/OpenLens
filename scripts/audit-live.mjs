@@ -7,7 +7,8 @@ const failures=[];
 const report=(condition,message)=>{if(!condition)failures.push(message)};
 const url=route=>`${root}#/${route}`;
 const browser=await chromium.launch(process.platform==='win32'?{channel:'msedge'}:{});
-const page=await browser.newPage({viewport:{width:1280,height:900}});
+const context=await browser.newContext({viewport:{width:1280,height:900}});
+const page=await context.newPage();
 const badResponses=[];
 const consoleErrors=[];
 page.on('response',response=>{if(response.status()>=400&&response.url().startsWith(root))badResponses.push(`${response.status()} ${response.url()}`)});
@@ -16,7 +17,7 @@ page.on('console',message=>{if(message.type()==='error')consoleErrors.push(messa
 
 for(const route of routes){
  await page.goto(url(route),{waitUntil:'domcontentloaded'});
- await page.locator('main').waitFor({state:'visible'});
+ await page.waitForFunction(()=>document.querySelectorAll('main#main').length===1&&!document.querySelector('.route-loading'));
  await page.waitForTimeout(850);
  report((await page.title()).includes('OpenLens'),`${route||'home'}: document title is missing OpenLens`);
  report(await page.locator('body').getAttribute('data-route')===(route||'home'),`${route||'home'}: route identity did not update`);
@@ -24,7 +25,8 @@ for(const route of routes){
  if(route)report(await page.locator('.page-hero-scene').count()===1,`${route}: route optical scene is missing`);
  const accessibility=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();
  const serious=accessibility.violations.filter(item=>item.impact==='critical'||item.impact==='serious');
- report(serious.length===0,`${route||'home'}: accessibility ${serious.map(item=>item.id).join(', ')}`);
+ const details=serious.flatMap(item=>item.nodes.slice(0,5).map(node=>`${item.id} ${node.target.join(' > ')}${node.any[0]?.data?.contrastRatio?` (${node.any[0].data.contrastRatio}:1)`:''}`));
+ report(serious.length===0,`${route||'home'}: accessibility ${details.join('; ')}`);
 }
 
 await page.goto(url('lab'));
@@ -33,8 +35,9 @@ report(await page.locator('.outcome-card').count()===1,'lab: scenario did not pr
 
 await page.goto(url('compiler'));
 await page.getByLabel(/Describe the experience/i).fill('When I hear a conversation, caption it in French on the display.');
-report(await page.getByLabel('Task',{exact:true}).inputValue()==='caption','compiler: authored text did not update task');
-report(await page.getByLabel('Language',{exact:true}).inputValue()==='French','compiler: authored text did not update language');
+await page.waitForFunction(()=>document.querySelectorAll('.structured-controls select')[1]?.value==='caption'&&document.querySelector('.structured-controls input')?.value==='French');
+report(await page.locator('.structured-controls select').nth(1).inputValue()==='caption','compiler: authored text did not update task');
+report(await page.locator('.structured-controls input').inputValue()==='French','compiler: authored text did not update language');
 
 await page.goto(url('benchmarks'));
 await page.getByLabel('Benchmark trial count').fill('5');
@@ -57,7 +60,7 @@ report(await page.locator('.evidence-ledger article').count()===7,'research: evi
 await page.setViewportSize({width:390,height:844});
 for(const route of routes){
  await page.goto(url(route),{waitUntil:'domcontentloaded'});
- await page.locator('main').waitFor({state:'visible'});
+ await page.waitForFunction(()=>document.querySelectorAll('main#main').length===1&&!document.querySelector('.route-loading'));
  await page.waitForTimeout(250);
  report(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`${route||'home'}: phone horizontal overflow`);
 }

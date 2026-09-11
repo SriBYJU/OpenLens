@@ -461,6 +461,7 @@ test('route motion communicates place without blocking content or reduced-motion
  test.skip(testInfo.project.name!=='desktop','The motion contract only needs one browser pass.');
  await page.goto('/#/');
  await page.getByRole('link',{name:'Lens Lab',exact:true}).first().click();
+ await expect(page.locator('main#main')).toHaveCount(1);
  await expect(page.locator('.route-curtain')).toBeVisible();
  await expect(page.locator('body')).toHaveAttribute('data-route','lab');
  await expect(page.locator('.page-hero-scene')).toHaveAttribute('aria-hidden','true');

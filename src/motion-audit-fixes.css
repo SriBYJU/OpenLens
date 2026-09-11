@@ -25,3 +25,10 @@
 }
 
 @media(prefers-reduced-motion:reduce){.motion-ready .ol-reveal{opacity:1}}
+
+/* Contrast and keyboard findings from the public deployment audit. */
+.trace-empty p{color:#899496}
+.research-page article.open .evidence-summary>span,.research-page article.open .evidence-summary small{color:#485247}
+.developers-page .adapter-form .panel-title b,.developers-page .builder-note b{color:#2f5530}
+.methodology-page .methodology aside>span{color:#495647}
+.methodology-page .methodology section>span{color:#40583d}
