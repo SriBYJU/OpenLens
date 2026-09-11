@@ -14,10 +14,17 @@ const consoleErrors=[];
 page.on('response',response=>{if(response.status()>=400&&response.url().startsWith(root))badResponses.push(`${response.status()} ${response.url()}`)});
 page.on('pageerror',error=>consoleErrors.push(error.message));
 page.on('console',message=>{if(message.type()==='error')consoleErrors.push(message.text())});
+const visit=async route=>{
+ const expected=route||'home';
+ for(let attempt=1;attempt<=2;attempt++){
+  await page.goto(url(route),{waitUntil:'domcontentloaded'});
+  try{await page.waitForFunction(value=>document.body.dataset.route===value&&document.querySelectorAll('main#main').length===1&&!document.querySelector('.route-loading'),expected,{timeout:30000});return}
+  catch(error){if(attempt===2)throw new Error(`${expected}: application did not become ready after two navigations`,{cause:error})}
+ }
+};
 
 for(const route of routes){
- await page.goto(url(route),{waitUntil:'domcontentloaded'});
- await page.waitForFunction(()=>document.querySelectorAll('main#main').length===1&&!document.querySelector('.route-loading'));
+ await visit(route);
  await page.waitForTimeout(850);
  report((await page.title()).includes('OpenLens'),`${route||'home'}: document title is missing OpenLens`);
  report(await page.locator('body').getAttribute('data-route')===(route||'home'),`${route||'home'}: route identity did not update`);
@@ -50,17 +57,23 @@ await page.locator('.catalog-tools .search-input').fill('Rokid');
 report(await page.locator('.device-catalog .device-record').count()===1,'devices: catalog search did not filter to one profile');
 
 await page.goto(url('developers'));
+const sdk=page.locator('.sdk-lab');
+await sdk.getByLabel('SDK command').selectOption('execute');
+await sdk.getByRole('button',{name:'Run SDK example ↗'}).click();
+report((await sdk.locator('.sdk-output>pre').textContent())?.includes('SALIDA'),'developers: SDK execution did not return the reference-twin output');
+await sdk.getByLabel('SDK command').selectOption('benchmark');
+await sdk.getByRole('button',{name:'Run SDK example ↗'}).click();
+report((await sdk.locator('.sdk-output>pre').textContent())?.includes('"trials": 5'),'developers: SDK benchmark did not retain five trials');
 await page.getByLabel('Device name').fill('Aurora One');
 report((await page.locator('.code-stage pre').first().textContent())?.includes('Aurora One adapter'),'developers: generated adapter did not update');
-report(await page.getByLabel('Generated adapter files').getByRole('button').count()===4,'developers: four-file starter is incomplete');
+report(await page.getByLabel('Generated adapter files').getByRole('button').count()===5,'developers: five-file starter is incomplete');
 
 await page.goto(url('research'));
 report(await page.locator('.evidence-ledger article').count()===7,'research: evidence ledger does not contain seven sourced hardware records');
 
 await page.setViewportSize({width:390,height:844});
 for(const route of routes){
- await page.goto(url(route),{waitUntil:'domcontentloaded'});
- await page.waitForFunction(()=>document.querySelectorAll('main#main').length===1&&!document.querySelector('.route-loading'));
+ await visit(route);
  await page.waitForTimeout(250);
  report(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`${route||'home'}: phone horizontal overflow`);
 }

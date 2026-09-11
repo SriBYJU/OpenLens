@@ -9,7 +9,7 @@ test.beforeEach(async({page})=>{await page.addInitScript(()=>localStorage.clear(
 
 test('homepage renders the optical opening without page overflow',async({page})=>{
   await page.goto('/#/');
-  await expect(page.getByRole('heading',{name:/See the system/})).toBeVisible();
+  await expect(page.getByRole('heading',{name:/See the system/})).toBeVisible({timeout:10000});
   await expect(page.getByAltText(/Detailed graphite OpenLens/)).toBeVisible();
   const atlas=page.getByRole('region',{name:/Follow one signal through the stack/i});
   await expect(atlas.getByRole('link')).toHaveCount(5);
@@ -136,7 +136,7 @@ test('device research, benchmark, and adapter generator are interactive',async({
   await expect(audioCapability).toBeChecked();
   await expect(page.locator('.code-stage pre')).toContainText('name: "Aurora One adapter"');
   await expect(page.locator('.code-stage pre')).toContainText('"audio"');
-  await expect(page.getByLabel('Generated adapter files').getByRole('button')).toHaveCount(4);
+  await expect(page.getByLabel('Generated adapter files').getByRole('button')).toHaveCount(5);
   await page.getByRole('button',{name:/\.test\.ts$/}).click();
   await expect(page.locator('.code-stage pre')).toContainText('enforces connection and delegates a matching plan');
   const pendingDownload=page.waitForEvent('download');
@@ -150,6 +150,7 @@ test('device research, benchmark, and adapter generator are interactive',async({
    'my-glasses-openlens-adapter/README.md',
    'my-glasses-openlens-adapter/src/adapters/my-glasses.test.ts',
    'my-glasses-openlens-adapter/src/adapters/my-glasses.ts',
+   'my-glasses-openlens-adapter/src/examples/openlens-sdk-example.ts',
    'my-glasses-openlens-adapter/verification-record.json',
   ]);
   expect(strFromU8(archive['my-glasses-openlens-adapter/verification-record.json'])).toContain('"status": "unverified"');
@@ -159,6 +160,7 @@ test('device research, benchmark, and adapter generator are interactive',async({
 });
 
 test('core workbench pages have no serious automated accessibility violations',async({page})=>{
+  test.setTimeout(60000);
   for(const route of ['','lab','devices','compiler','benchmarks']){
     await page.goto(`/#/${route}`);
     const results=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();
@@ -445,13 +447,13 @@ test('evidence index filters records and adapter workshop stays usable',async({p
   await page.screenshot({path:testInfo.outputPath(`ledger-${width}.png`)});
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
   await page.goto('/#/developers');
-  await expect(page.getByText('4/4 files')).toBeVisible();
+  await expect(page.getByText('5/5 files')).toBeVisible();
   await page.getByLabel('Stable device ID').fill('');
-  await expect(page.getByText('0/4 files')).toBeVisible();
+  await expect(page.getByText('0/5 files')).toBeVisible();
   await expect(page.locator('.builder-errors')).toBeVisible();
   await page.getByLabel('Stable device ID').fill('aurora-one');
-  await expect(page.getByText('4/4 files')).toBeVisible();
-  await expect(page.getByLabel('Generated adapter files').getByRole('button')).toHaveCount(4);
+  await expect(page.getByText('5/5 files')).toBeVisible();
+  await expect(page.getByLabel('Generated adapter files').getByRole('button')).toHaveCount(5);
   await page.evaluate(()=>scrollTo({top:0,behavior:'instant'}));
   await page.screenshot({path:testInfo.outputPath(`adapter-${width}.png`)});
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
@@ -472,9 +474,11 @@ test('methodology index and about story remain readable at every width',async({p
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
   await page.goto('/#/about');
   await expect(page.getByAltText('Shriyan Avadhanula, founder and developer of OpenLens')).toHaveJSProperty('complete',true);
+  await expect(page.locator('.route-curtain')).toHaveCount(0,{timeout:1800});
   await page.evaluate(()=>scrollTo({top:0,behavior:'instant'}));
   await page.screenshot({path:testInfo.outputPath(`about-${width}.png`)});
-  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
+  const geometry=await page.evaluate(()=>({viewport:innerWidth,scrollWidth:document.documentElement.scrollWidth,wide:[...document.querySelectorAll('body *')].flatMap(element=>{const rect=element.getBoundingClientRect();return rect.right>innerWidth+1?[{node:`${element.tagName}.${String(element.className)}`,right:Math.round(rect.right),left:Math.round(rect.left),width:Math.round(rect.width),scrollWidth:(element as HTMLElement).scrollWidth}]:[]}).sort((a,b)=>b.right-a.right).slice(0,10),scrolling:[document.documentElement,document.body,...document.querySelectorAll('body *')].flatMap(element=>element.scrollWidth>element.clientWidth+1?[{node:`${element.tagName}.${String(element.className)}`,scrollWidth:element.scrollWidth,clientWidth:element.clientWidth,overflow:getComputedStyle(element).overflowX}]:[]).sort((a,b)=>b.scrollWidth-a.scrollWidth).slice(0,12)}));
+  expect(geometry.scrollWidth,`about ${width}px overflow: ${JSON.stringify(geometry)}`).toBeLessThanOrEqual(geometry.viewport+1);
  }
  const audit=await new AxeBuilder({page}).include('main').analyze();
  expect(audit.violations.filter(item=>['serious','critical'].includes(item.impact??''))).toEqual([]);
@@ -522,14 +526,45 @@ test('scenario studio executes distinct document, object, and debugging worlds',
 
 test('adapter conformance lab proves clean and damaged bundles',async({page})=>{
  await page.goto('/#/developers');
- await page.getByRole('button',{name:'Run 8 checks ↗'}).click();
- await expect(page.locator('.conformance-orb')).toContainText('8/8');
- await expect(page.locator('.check-stack article.pass')).toHaveCount(8);
+ await page.getByRole('button',{name:'Run 9 checks ↗'}).click();
+ await expect(page.locator('.conformance-orb')).toContainText('9/9');
+ await expect(page.locator('.check-stack article.pass')).toHaveCount(9);
  await page.getByLabel('Probe the validator').selectOption('promoted-status');
- await page.getByRole('button',{name:'Run 8 checks ↗'}).click();
+ await page.getByRole('button',{name:'Run 9 checks ↗'}).click();
  await expect(page.locator('.conformance-orb')).toContainText('FAULT CAUGHT');
  await expect(page.locator('.check-stack article.fail')).toHaveCount(1);
  const audit=await new AxeBuilder({page}).include('.conformance-lab').analyze();
+ expect(audit.violations.filter(item=>['serious','critical'].includes(item.impact??''))).toEqual([]);
+});
+
+test('SDK runtime console executes every public workflow and stays responsive',async({page},testInfo)=>{
+ test.skip(testInfo.project.name!=='desktop','One pass explicitly covers desktop and phone widths.');
+ for(const width of [1280,375]){
+  await page.setViewportSize({width,height:900});
+  await page.goto('/#/developers');
+  const lab=page.locator('.sdk-lab');
+  await expect(lab.getByText('openlens.device',{exact:true})).toBeVisible();
+  await lab.getByLabel('SDK command').selectOption('capabilities');
+  await lab.getByRole('button',{name:'Run SDK example ↗'}).click();
+  await expect(lab.locator('.sdk-output-head b')).toHaveText('complete');
+  await expect(lab.locator('.sdk-output')).toContainText('Camera gate passed');
+  await lab.getByLabel('SDK command').selectOption('execute');
+  await lab.getByRole('button',{name:'Run SDK example ↗'}).click();
+  await expect(lab.locator('.sdk-output>pre')).toContainText('SALIDA');
+  await lab.getByLabel('SDK command').selectOption('benchmark');
+  await lab.getByRole('button',{name:'Run SDK example ↗'}).click();
+  await expect(lab.locator('.sdk-output>pre')).toContainText('"trials": 5');
+  await lab.getByLabel('SDK command').selectOption('failure');
+  await lab.getByRole('button',{name:'Run SDK example ↗'}).click();
+  await expect(lab.locator('.sdk-output>pre')).toContainText('"status": "failed"');
+  await lab.getByLabel('SDK command').selectOption('ai');
+  await lab.getByRole('button',{name:'Run SDK example ↗'}).click();
+  await expect(lab.locator('.sdk-output>pre')).toContainText('local-browser');
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
+  await lab.scrollIntoViewIfNeeded();
+  await page.screenshot({path:testInfo.outputPath(`sdk-runtime-${width}.png`)});
+ }
+ const audit=await new AxeBuilder({page}).include('.sdk-lab').analyze();
  expect(audit.violations.filter(item=>['serious','critical'].includes(item.impact??''))).toEqual([]);
 });
 

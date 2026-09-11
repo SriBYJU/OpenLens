@@ -46,7 +46,7 @@ describe('adapter conformance probes',()=>{
   const input={deviceName:'Aurora One',deviceId:'aurora-one',capabilities:['camera','display'] as const};
   const normalized={...input,capabilities:[...input.capabilities]};
   const files=buildAdapterStarter(normalized);
-  expect(evaluateAdapterBundle(files,normalized,'clean')).toMatchObject({passed:8,total:8});
+  expect(evaluateAdapterBundle(files,normalized,'clean')).toMatchObject({passed:9,total:9});
   for(const probe of ['promoted-status','identity-drift','missing-failure-case'] as const){
    const report=evaluateAdapterBundle(files,normalized,probe);
    expect(report.passed,probe).toBeLessThan(report.total);

@@ -10,7 +10,7 @@ const chapters=[
  {number:'02',label:'UNDERSTAND',title:'Compile the intent.',body:'Turn constrained language into a reviewable graph with routes, fallbacks and privacy boundaries.',route:'compiler',metric:'4 authoring modes',proof:'TRANSLATE · CAPTION · DESCRIBE · NOTIFY'},
  {number:'03',label:'RESPOND',title:'Adapt across hardware.',body:'Compare what a device claims with what an OpenLens adapter can actually execute.',route:'devices',metric:'8 sourced profiles',proof:'PHYSICAL · ACCESS · INTEGRATION'},
  {number:'04',label:'MEASURE',title:'Keep the whole trace.',body:'Replay seeded runs, inspect failure spans and export the artifact behind every number.',route:'benchmarks',metric:'Seeded replay',proof:'RAW TRIALS · TRACE · EXPORT'},
- {number:'05',label:'BUILD',title:'Make the layer open.',body:'Generate a typed adapter boundary with lifecycle tests and an explicit verification record.',route:'developers',metric:'4-file starter',proof:'ADAPTER · TEST · README · RECORD'}
+ {number:'05',label:'BUILD',title:'Make the layer open.',body:'Run the source SDK, then generate a typed adapter boundary with lifecycle tests and an explicit verification record.',route:'developers',metric:'5-file starter',proof:'SDK · ADAPTER · TEST · EXAMPLE · RECORD'}
 ];
 export default function Home(){
  const ref=useRef<HTMLElement>(null); const reduce=useReducedMotion(); const {scrollYProgress}=useScroll({target:ref,offset:['start start','end end']});

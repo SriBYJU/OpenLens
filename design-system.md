@@ -12,6 +12,7 @@ An optical instrument for builders inspecting smart-glasses behavior. The workin
 - Scenario Studio groups the seven field programs and failure injections as one cinematic test sequence. Benchmark families use an inspectable cyan instrument with a single finite dial sweep. Adapter conformance uses a dark validation console with green pass and coral caught-fault states.
 - Local AI uses a dark routing instrument inside the warm privacy surface. Pixel-signal meters show measured browser data; unavailable semantic routes use explicit status text and never animate like active inference.
 - Browser field recording uses a full-width dark measurement bench with one explicit lime recording state, large raw values, and a visible browser-only boundary. Nothing moves until the visitor starts a session.
+- The SDK runtime is a single dark technical bay: a numbered API rail, executable source, and runtime trace share one continuous frame. Cyan marks the source boundary; lime appears only after a command completes. Code and JSON remain at 12 px or larger while tiny telemetry stays secondary and contrast-safe.
 
 ## Type and geometry
 - UI/body: locally available Segoe UI, Helvetica Neue, Arial; readable body copy at 15–16 px or larger.

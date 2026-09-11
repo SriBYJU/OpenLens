@@ -15,7 +15,7 @@ const tour=[
  {title:'Use a real local signal.',body:'Open the OCR drawer to read a demo, uploaded image, or camera frame entirely in the browser.',route:'lab',action:'Try local OCR'},
  {title:'Measure repeated runs.',body:'Run seeded trials, keep every failure, select a raw result, and export its evidence.',route:'benchmarks',action:'Open Benchmark Lab'},
  {title:'Compare the candidates.',body:'Place up to three profiles side by side and keep unknown or conflicting claims visible.',route:'devices',action:'Compare devices'},
- {title:'Build the open layer.',body:'Generate a typed adapter, contract test, guide, and explicit hardware-verification record.',route:'developers',action:'Build an adapter'},
+ {title:'Build the open layer.',body:'Run the source SDK, then generate a typed adapter, contract test, working twin example, guide, and hardware-verification record.',route:'developers',action:'Open the SDK workshop'},
 ] as const;
 
 export default function VisitorPathfinder(){

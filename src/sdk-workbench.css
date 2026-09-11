@@ -1,0 +1,21 @@
+.sdk-lab{margin:0 auto 36px;border:1px solid #45505a;background:#080b0e}
+.sdk-lab>header{display:grid;grid-template-columns:1fr auto;padding:clamp(28px,5vw,68px);border-bottom:1px solid #364149}
+.sdk-lab h2{margin:10px 0 0;font-size:clamp(45px,6.6vw,96px);font-weight:460;line-height:.87;letter-spacing:-.067em}
+.sdk-lab h2 em{color:#b8eff7}
+.sdk-console{display:grid;grid-template-columns:220px minmax(300px,1fr) minmax(320px,.92fr)}
+.sdk-console>nav,.sdk-code{border-right:1px solid #354148}
+.sdk-console>nav div{display:grid;grid-template-columns:24px 1fr;gap:4px 8px;padding:17px 18px;border-bottom:1px solid #293238}
+.sdk-console>nav b{grid-row:1/3;font:10px var(--mono)}
+.sdk-console>nav i{font:9px var(--mono);font-style:normal;color:#829299}
+.sdk-code{display:grid;grid-template-rows:auto 1fr auto}
+.sdk-code label,.sdk-output-head{padding:17px 20px;border-bottom:1px solid #354148;font:10px var(--mono);color:#a1afb3}
+.sdk-code select{margin-top:9px;background:#141c20;color:#edf4f3}
+.sdk-code pre,.sdk-output>pre{min-width:0;margin:0;padding:26px 22px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.7 var(--mono);color:#c6e9d0}
+.sdk-actions{display:flex;gap:9px;flex-wrap:wrap;padding:17px 20px;border-top:1px solid #354148}
+.sdk-output{display:grid;grid-template-rows:auto auto 1fr;min-width:0}
+.sdk-output-head{display:flex;justify-content:space-between}
+.sdk-output-head b{color:#c8e87d}.sdk-output-head b[data-phase=error]{color:#ff9a83}
+.sdk-output ol{padding:15px 20px;list-style:none}
+.sdk-output li{display:grid;grid-template-columns:25px 1fr;font-size:12px;color:#bec8ca}
+@media(max-width:1050px){.sdk-console{grid-template-columns:170px 1fr}.sdk-output{grid-column:1/-1;border-top:1px solid #354148}.sdk-code{border-right:0}}
+@media(max-width:700px){.sdk-lab>header{grid-template-columns:1fr;padding:30px 20px}.sdk-console{display:block}.sdk-console>nav{display:grid;grid-template-columns:1fr 1fr}.sdk-console>nav div{padding:14px 12px}.sdk-console>nav code{font-size:10px}.sdk-actions .button{width:100%}}

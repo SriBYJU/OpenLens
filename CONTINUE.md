@@ -15,7 +15,8 @@
 - Rules-based Experience Compiler with seven visible task families, editable contracts, cross-device routing, fallbacks, persistence into Lens Lab, and invalid-input feedback.
 - Benchmark Lab with raw trials, failure retention, sample statistics, resilience matrix, JSON/CSV export, replay-verified imports, and an explicit opt-in in-memory Browser Field Recorder.
 - Live AI capability routing plus real in-browser pixel-signal preflight and English OCR from demo, upload, or camera. Includes five-language bounded sign translation, visible coverage, unchanged-token disclosure, local speech where available, and versioned JSON result export.
-- Four-file adapter starter ZIP with typed transport boundary, lifecycle guards, contract tests, verification template, and integration guide.
+- Source SDK with seven public surfaces, a live five-command runtime console, asynchronous adapter benchmarking, and a compiled reference-twin example.
+- Five-file adapter starter ZIP with typed transport boundary, lifecycle guards, contract tests, runnable SDK example, verification template, and integration guide.
 - Global command palette, route-specific guides, methodology, research ledger, About page with the original Capital Mastery portrait, and durable technical documentation.
 
 ## Evidence and honesty
@@ -25,7 +26,7 @@ The reference twin and seven capability models execute locally. Manufacturer har
 ## Verification
 
 - The current Pages checkpoint completed its lint, unit, browser, build, budget, release-stamping, and deployment workflow successfully.
-- Current release candidate: 84 unit tests pass. The 56-case Playwright matrix completes with 49 passes and 7 intentional capability skips across desktop and phone. It covers private field recording and export, AI capability routing, real pixel preflight, local OCR, all seven compiler and Scenario Studio workflows, adapter conformance mutation probes, benchmark score layers, route motion, responsive layout, and automated contrast.
+- Current release candidate: 88 unit tests pass. The 58-case Playwright matrix completes with 50 passes and 8 intentional capability skips across desktop and phone. It covers the executable SDK and adapter benchmark, five-file ZIP, private field recording and export, AI capability routing, real pixel preflight, local OCR, all seven compiler and Scenario Studio workflows, conformance mutation probes, benchmark score layers, route motion, responsive layout, and automated contrast.
 
 ## Next priorities
 
@@ -75,7 +76,14 @@ No credential or authorization blocker is active. Real-hardware integration rema
 
 - Lens Lab now supplies seven explicit use cases: menu translation, conversation captions, document reading, scene description, object recognition, hands-free assistance, and live adapter debugging. Each switches the experience contract, authored fixture, environment, virtual target, output, playback, and trace.
 - The prior garden scenario referenced a nonexistent experience ID; it now correctly loads the scene-description contract.
-- Build With Us now executes eight browser-side conformance checks over the generated source, tests, paths, identities, and verification matrix. Three deliberate corruption probes demonstrate that the validator rejects false verification, identity drift, and missing failure coverage.
+- Build With Us now executes nine browser-side conformance checks over the generated source, runnable SDK example, tests, paths, identities, and verification matrix. Three deliberate corruption probes demonstrate that the validator rejects false verification, identity drift, and missing failure coverage.
+
+## SDK and responsive audit checkpoint
+
+- `createOpenLens(adapter)` exposes guarded device lifecycle, shared AI routing, camera, microphone/audio, display and IMU capability gates, plus asynchronous adapter benchmarks that retain successful, failed and rejected trials.
+- The Developers console executes capability inspection, local AI routing, a complete reference-twin plan, five-trial benchmarking and an injected timeout through that source runtime. Each result can be downloaded as JSON.
+- The generated ZIP includes a compiled, network-free SDK example alongside the adapter, test, guide and verification record. The source SDK remains unpublished and no vendor transport or hardware support is implied.
+- Failure-seeking QA found and fixed a keyboard-inaccessible mobile compiler pipeline and an About portrait hover sheen that could expand a 375 px document after route navigation. The sheen now moves inside its fixed frame.
 
 ## Benchmark family checkpoint
 
