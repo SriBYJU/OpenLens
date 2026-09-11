@@ -17,7 +17,7 @@ export function WorkbenchProvider({initialDevice,children}:{initialDevice?:strin
  const [benchmarkResult,setBenchmark]=useState<BenchmarkResult|null>(null);
  useEffect(()=>{if(initialDevice){setDeviceState(validateDeviceId(initialDevice));setRun(null);setBenchmark(null)}},[initialDevice]);
  const setDeviceId=(id:string)=>{const safe=validateDeviceId(id);setDeviceState(safe);writeStorage('openlens.device',safe);setRun(null);setBenchmark(null)};
- const setExperience=(value:ExperienceDefinition)=>{setExperienceState(value);writeStorage('openlens.experience',JSON.stringify(value));setConfigState(current=>({...current,fixture:value.input==='microphone'?'conversation':value.task==='describe'?'museum-label':'street-sign'}));setRun(null);setBenchmark(null)};
+ const setExperience=(value:ExperienceDefinition)=>{setExperienceState(value);writeStorage('openlens.experience',JSON.stringify(value));const fixture:SimulationConfig['fixture']=value.task==='debug'?'debug-console':value.task==='identify'?'object-shelf':value.id==='document-reader'?'document-page':value.input==='microphone'?'conversation':value.task==='describe'?'museum-label':'street-sign';setConfigState(current=>({...current,fixture}));setRun(null);setBenchmark(null)};
  const setConfig=(value:SimulationConfig)=>{setConfigState(value);setRun(null);setBenchmark(null)};
  const plan=useMemo(()=>compileExperience(experience,getDevice(deviceId)),[deviceId,experience]);
  const runCurrent=()=>{const next=simulate(plan,config);setRun(next);setRunHistory(current=>[next,...current.filter(item=>JSON.stringify(item)!==JSON.stringify(next))].slice(0,8));return next};

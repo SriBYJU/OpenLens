@@ -478,3 +478,48 @@ test('route motion communicates place without blocking content or reduced-motion
  await expect(page.getByRole('button',{name:'Run 24 trials',exact:true})).toBeVisible();
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
 });
+
+test('scenario studio executes distinct document, object, and debugging worlds',async({page})=>{
+ await page.goto('/#/lab');
+ await page.getByRole('button',{name:/03 · LOAD Document reading/}).click();
+ await expect(page.getByLabel('Virtual environment')).toHaveValue('document-page');
+ await expect(page.locator('.virtual-world-scene')).toHaveAttribute('data-task','describe');
+ await page.getByRole('button',{name:/Focus PRIVACY NOTE \/ 04 and run describe/}).click();
+ await expect(page.locator('.world-caption')).toContainText('camera frames stay transient');
+ await page.getByRole('button',{name:/05 · LOAD Object recognition/}).click();
+ await expect(page.getByLabel('Virtual environment')).toHaveValue('object-shelf');
+ await page.getByRole('button',{name:/Focus CITY BICYCLE and run identify/}).click();
+ await expect(page.locator('.world-caption')).toContainText('Red city bicycle');
+ await page.getByRole('button',{name:/07 · LOAD Live developer debugging/}).click();
+ await expect(page.getByLabel('Virtual environment')).toHaveValue('debug-console');
+ await page.getByRole('button',{name:/Focus OUTPUT.WRITE and run debug/}).click();
+ await expect(page.locator('.world-caption')).toContainText('First fault');
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
+});
+
+test('adapter conformance lab proves clean and damaged bundles',async({page})=>{
+ await page.goto('/#/developers');
+ await page.getByRole('button',{name:'Run 8 checks ↗'}).click();
+ await expect(page.locator('.conformance-orb')).toContainText('8/8');
+ await expect(page.locator('.check-stack article.pass')).toHaveCount(8);
+ await page.getByLabel('Probe the validator').selectOption('promoted-status');
+ await page.getByRole('button',{name:'Run 8 checks ↗'}).click();
+ await expect(page.locator('.conformance-orb')).toContainText('FAULT CAUGHT');
+ await expect(page.locator('.check-stack article.fail')).toHaveCount(1);
+ const audit=await new AxeBuilder({page}).include('.conformance-lab').analyze();
+ expect(audit.violations.filter(item=>['serious','critical'].includes(item.impact??''))).toEqual([]);
+});
+
+test('benchmark families expose formulas and withhold unsupported scores',async({page})=>{
+ await page.goto('/#/benchmarks');
+ await page.getByLabel('Benchmark trial count').fill('8');
+ await page.getByRole('button',{name:'Run 8 trials',exact:true}).click();
+ await page.getByRole('button',{name:/04 Battery NOT SCORED/}).click();
+ const panel=page.locator('.benchmark-families article');
+ await expect(panel).toContainText('No endurance score');
+ await expect(panel).toContainText('Withheld until the required evidence exists.');
+ await page.getByRole('button',{name:/05 Connectivity/}).click();
+ await expect(panel).toContainText('Score = completed runs ÷ all trials × 100');
+ const audit=await new AxeBuilder({page}).include('.benchmark-families').analyze();
+ expect(audit.violations.filter(item=>['serious','critical'].includes(item.impact??''))).toEqual([]);
+});

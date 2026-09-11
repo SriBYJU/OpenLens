@@ -1,0 +1,9 @@
+import {useMemo,useState} from 'react';
+import {benchmarkFacets,type BenchmarkFamily,type BenchmarkResult} from '../core';
+
+export default function BenchmarkScorecard({result}:{result:BenchmarkResult}){
+ const facets=useMemo(()=>benchmarkFacets(result),[result]);
+ const [active,setActive]=useState<BenchmarkFamily>('AI pipeline');
+ const selected=facets.find(facet=>facet.family===active)??facets[0];
+ return <section className="benchmark-families" aria-labelledby="family-heading"><header><div><p className="eyebrow">TRANSPARENT SCORE LAYERS / NO OVERALL RANK</p><h2 id="family-heading">Seven families. Only what this run can prove.</h2></div><p>Open a family to follow raw observation → normalization → category score. Uncollected hardware and human-study categories stay blank instead of receiving invented numbers.</p></header><div className="family-console"><nav aria-label="Benchmark families">{facets.map((facet,index)=><button key={facet.family} aria-pressed={facet.family===selected.family} onClick={()=>setActive(facet.family)}><span>{(index+1).toString().padStart(2,'0')}</span><strong>{facet.family}</strong><small>{facet.score===null?'NOT SCORED':`${facet.score}/100`}</small></button>)}</nav><article className={selected.score===null?'unscored':'scored'}><div className="family-dial"><span>{selected.score===null?'—':selected.score}</span><small>{selected.score===null?'NO SCORE':'/ 100'}</small></div><div><span className="truth-label">{selected.kind}</span><h3>{selected.family}</h3><ol><li><span>RAW</span><p>{selected.raw}</p></li><li><span>NORMALIZE</span><p>{selected.normalization}</p></li><li><span>CATEGORY</span><p>{selected.score===null?'Withheld until the required evidence exists.':`${selected.score} / 100 for this versioned simulated suite.`}</p></li></ol><p className="family-limit">{selected.detail}</p></div></article></div></section>;
+}

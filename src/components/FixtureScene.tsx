@@ -5,9 +5,18 @@ import type {EnvironmentConfig,SimulationConfig} from '../core';
 export default function FixtureScene({fixture,environment}:{fixture:SimulationConfig['fixture'];environment:EnvironmentConfig}){
  const conversation=fixture==='conversation';
  const museum=fixture==='museum-label';
+ const target={
+  'street-sign':['01 / WAYFINDING FIXTURE','Synthetic corridor with a SORTIE exit sign','SORTIE'],
+  conversation:['02 / AUDIO FIXTURE','Synthetic conversation waveform','Conversation phrase'],
+  'museum-label':['03 / MUSEUM FIXTURE','Synthetic museum room with an exhibit label','MUSEUM LABEL'],
+  'menu-board':['04 / MENU FIXTURE','Synthetic café menu board','TARTE AUX POMMES'],
+  'document-page':['05 / DOCUMENT FIXTURE','Synthetic document reading surface','PRIVACY NOTE'],
+  'object-shelf':['06 / OBJECT FIXTURE','Synthetic object recognition target','CITY BICYCLE'],
+  'debug-console':['07 / DEBUG FIXTURE','Synthetic adapter event stream','OUTPUT.WRITE → DISCONNECT'],
+ }[fixture];
  const light=Math.max(.23,Math.min(1,.32+Math.log10(environment.illuminationLux+1)/6));
  return <div className={`fixture-scene ${conversation?'fixture-audio':'fixture-vision'}`} data-fixture={fixture} style={{'--scene-light':light,'--scene-blur':`${Math.min(2,environment.headMotionDps/80)}px`} as CSSProperties}>
-  <svg viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice" role="img" aria-label={conversation?'Synthetic conversation waveform':museum?'Synthetic museum room with an exhibit label':'Synthetic corridor with a SORTIE exit sign'}>
+  <svg viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice" role="img" aria-label={target[1]}>
    <defs>
     <linearGradient id="scene-wall" x2="0" y2="1"><stop stopColor="#60716c"/><stop offset="1" stopColor="#273733"/></linearGradient>
     <linearGradient id="scene-floor" x2="0" y2="1"><stop stopColor="#41504a"/><stop offset="1" stopColor="#101c1a"/></linearGradient>
@@ -38,12 +47,12 @@ export default function FixtureScene({fixture,environment}:{fixture:SimulationCo
      <rect x="448" y="236" width="153" height="174" fill="#152925" stroke="#839b89" strokeWidth="2"/><path d="M524 236V410" stroke="#668472"/>
      <rect x="372" y="152" width="298" height="75" rx="4" fill="#143f30" stroke="#a0c9aa" strokeWidth="2"/>
      <path d="M402 190H447M416 176L402 190L416 204" fill="none" stroke="#e0efd4" strokeWidth="5"/>
-     <text x="474" y="204" fill="#e0efd4" fontSize="39" letterSpacing="4" fontFamily="sans-serif">SORTIE</text>
+     <text x="474" y="204" fill="#e0efd4" fontSize={fixture==='debug-console'?21:fixture==='document-page'?27:fixture==='menu-board'?25:39} letterSpacing="2" fontFamily="sans-serif">{target[2]}</text>
      <path d="M900 180V450M870 200V428M140 170V445" stroke="#748b78" strokeOpacity=".5" strokeWidth="2"/>
     </>}
    </>}
   </svg>
   <div className="scene-vignette"/>
-  <span className="fixture-caption">{conversation?'02 / AUDIO FIXTURE':museum?'03 / MUSEUM FIXTURE':'01 / WAYFINDING FIXTURE'}</span>
+  <span className="fixture-caption">{target[0]}</span>
  </div>;
 }

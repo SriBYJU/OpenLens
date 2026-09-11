@@ -25,7 +25,7 @@ The reference twin and seven capability models execute locally. Manufacturer har
 ## Verification
 
 - The current Pages checkpoint completed its lint, unit, browser, build, budget, release-stamping, and deployment workflow successfully.
-- Current release candidate: 74 unit tests and 38 browser checks passed with retries disabled; six intentionally redundant small-phone checks were skipped. The open OCR drawer and optional visitor tour pass automated contrast checks; desktop, tablet, and phone screenshots were inspected.
+- Current release candidate: 80 unit tests pass. The 52-case Playwright matrix completes with 45 passes and 7 intentional capability skips across desktop and phone. It covers all seven Scenario Studio workflows, adapter conformance mutation probes, benchmark score layers, OCR overflow, route motion, responsive layout, and automated contrast.
 
 ## Next priorities
 
@@ -62,7 +62,7 @@ No credential or authorization blocker is active. Real-hardware integration rema
 
 - CI enforces initial raw and compressed imports, total application JavaScript, largest lazy route, CSS, glasses hero, and OCR isolation budgets after every production build.
 - A reusable production profiler applies 4× CPU slowdown and a 1.6 Mbps, 150 ms RTT network model. The current local result is CLS 0, median 16.7 ms and p95 16.8 ms over 120 cinematic frames, with no interval above 50 ms.
-- After the optimized 110 KiB WebP hero replaced the 809 KiB transfer in supporting browsers, the same local stress profile improved LCP from 5.64 to 2.33 seconds. CLS remained 0; the cinematic retained a 16.7 ms median, 16.8 ms p95 and no sampled interval above 50 ms.
+- After the optimized 110 KiB WebP hero replaced the 809 KiB transfer in supporting browsers, the local bundled-preview stress profile improved LCP from 5.64 to about 2.30 seconds. The 2026-09-11 Edge run at 4× CPU, 1.6 Mbps, and 150 ms RTT held CLS at 0, with a 33.1 ms median frame interval, 33.5 ms p95, and 1 of 120 sampled intervals above 50 ms.
 
 ## Virtual world and homepage atlas checkpoint
 
@@ -71,6 +71,17 @@ No credential or authorization blocker is active. Real-hardware integration rema
 - The sign and detected-speaker marker are keyboard and pointer targets that execute the current plan directly. Eight scenario cards now switch actual experiences and conditions across translation, captions, description, reminders, and failure cases.
 - The generated park source was visually inspected, then reduced from a 2.98 MiB PNG to a 595 KiB production JPEG. CI enforces a 700 KiB ceiling and the asset remains isolated to the lazy Lens Lab route.
 - The homepage feature sequence is now a connected five-surface system atlas. Each destination has a distinct artifact view and direct link instead of reusing one decorative lens treatment.
+
+## Scenario Studio and conformance checkpoint
+
+- Lens Lab now supplies seven explicit use cases: menu translation, conversation captions, document reading, scene description, object recognition, hands-free assistance, and live adapter debugging. Each switches the experience contract, authored fixture, environment, virtual target, output, playback, and trace.
+- The prior garden scenario referenced a nonexistent experience ID; it now correctly loads the scene-description contract.
+- Build With Us now executes eight browser-side conformance checks over the generated source, tests, paths, identities, and verification matrix. Three deliberate corruption probes demonstrate that the validator rejects false verification, identity drift, and missing failure coverage.
+
+## Benchmark family checkpoint
+
+- Benchmark Lab exposes AI pipeline, camera, microphone, battery, connectivity, developer experience, and usability families.
+- Each family shows raw observation, normalization, and category result. Battery, developer experience, usability, and inactive sensor families remain unscored when the artifact cannot support a number. No overall score is manufactured.
 
 ## Device matrix checkpoint
 

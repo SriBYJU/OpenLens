@@ -9,6 +9,7 @@ An optical instrument for builders inspecting smart-glasses behavior. The workin
 
 - Compiler uses a warm paper authoring surface beside a dark editable contract. Benchmarks is an evidence bench: trial controls, metrics and plotted outcomes precede its deeper methods and fault tools.
 - Research is a dark index opening into warm source dossiers. Developers pairs a paper transport form with a dark code stage. Methodology is a warm field manual; About keeps the studio palette and treats the portrait as the primary visual.
+- Scenario Studio groups the seven field programs and failure injections as one cinematic test sequence. Benchmark families use an inspectable cyan instrument with a single finite dial sweep. Adapter conformance uses a dark validation console with green pass and coral caught-fault states.
 
 ## Type and geometry
 - UI/body: locally available Segoe UI, Helvetica Neue, Arial; readable body copy at 15–16 px or larger.
@@ -22,7 +23,7 @@ An optical instrument for builders inspecting smart-glasses behavior. The workin
 - Pointer light and portrait depth are decorative and stay subtle. They never alter controls, data, outputs or measured-looking values.
 - Decorative telemetry may loop slowly when it is clearly ambient. It must never imply that a measurement, camera feed or hardware connection is running.
 - Fixture diagrams react to authored environment inputs. Brightness and blur communicate the synthetic model; they are not calibrated optical or camera measurements.
-- Route transitions finish within 760 ms. Reduced-motion removes the curtain, parallax, scans, loops and staged reveals.
+- Route transitions finish within 1,120 ms. Reduced-motion removes the curtain, parallax, scans, loops and staged reveals. Large working panels do not translate during reveal because automated and keyboard scrolling require stable targets.
 - Real OCR, fixture simulation, bounded phrase lookup and physical hardware claims remain visibly distinct.
 
 ## Responsive and verification

@@ -1,7 +1,7 @@
-export const RELEASE_VERSION = '0.2.0';
-export const ENGINE_VERSION = '0.3.0';
+export const RELEASE_VERSION = '0.3.0';
+export const ENGINE_VERSION = '0.4.0';
 export const CATALOG_VERSION = '2026.09.10';
-export const METHODOLOGY_VERSION = '1.2.0';
+export const METHODOLOGY_VERSION = '1.3.0';
 export const ARTIFACT_SCHEMA_VERSION = 2;
 
 export const capabilityKeys = ['camera','microphone','display','audio','imu'] as const;
@@ -30,7 +30,7 @@ export interface DeviceSpecifications {
 export interface DeviceProfile { id:string; revision:number; name:string; manufacturer:string; kind:'digital-twin'|'research'; summary:string; integrationStatus:IntegrationStatus; capabilities:Record<Capability,CapabilityInfo>; optics:OpticalProfile; specifications:DeviceSpecifications; sources:EvidenceSource[] }
 export interface AdapterManifest { id:string; deviceId:string; name:string; status:IntegrationStatus; mode:'simulation'|'hardware'; capabilities:Capability[]; disclosure:string }
 export type InputMode = 'camera'|'microphone'|'manual';
-export type TaskKind = 'translate'|'describe'|'caption'|'notify';
+export type TaskKind = 'translate'|'describe'|'caption'|'notify'|'identify'|'assist'|'debug';
 export type OutputMode = 'display'|'audio';
 export interface ExperienceDefinition { version:2; id:string; name:string; prompt:string; input:InputMode; task:TaskKind; preferredOutputs:OutputMode[]; language:string; allowCompanionFallback:boolean; privacy:'local-only'|'provider-allowed' }
 export interface ParseResult { parser:'rules-based-v2'; experience:ExperienceDefinition|null; warnings:string[]; errors:string[] }
@@ -39,7 +39,8 @@ export interface PlanStep { id:string; label:string; stage:'input'|'process'|'ou
 export interface CompiledPlan { version:2; deviceId:string; deviceRevision:number; deviceName:string; adapterId:string|null; experience:ExperienceDefinition; compatibility:'native'|'adapted'|'simulation-only'|'blocked'; steps:PlanStep[]; warnings:string[]; mode:'simulation'; fingerprint:string }
 export type FailureMode = 'none'|'permission'|'disconnect'|'timeout'|'low-battery'|'network-loss'|'model-unavailable';
 export interface EnvironmentConfig { illuminationLux:number; headMotionDps:number; ambientNoiseDb:number }
-export interface SimulationConfig { seed:number; startTime:string; inputMs:number; processMs:number; outputMs:number; bridgeMs:number; jitter:number; failureRate:number; failureMode:FailureMode; battery:number; network:'online'|'offline'|'degraded'; permission:'granted'|'denied'; fixture:'street-sign'|'conversation'|'museum-label'; environment?:EnvironmentConfig }
+export type SimulationFixture='street-sign'|'conversation'|'museum-label'|'menu-board'|'document-page'|'object-shelf'|'debug-console';
+export interface SimulationConfig { seed:number; startTime:string; inputMs:number; processMs:number; outputMs:number; bridgeMs:number; jitter:number; failureRate:number; failureMode:FailureMode; battery:number; network:'online'|'offline'|'degraded'; permission:'granted'|'denied'; fixture:SimulationFixture; environment?:EnvironmentConfig }
 export interface TraceEvent { id:string; parentId:string|null; timestamp:string; elapsedMs:number; stage:'session'|'input'|'process'|'output'|'system'; status:'info'|'success'|'failure'|'skipped'; message:string; durationMs:number; route:PlanRoute|'system'; metadata:Record<string,string|number|boolean|null> }
 export interface ArtifactVersions { release:string; engine:string; catalog:string; methodology:string; schema:number }
 export interface RunResult { version:2; versions:ArtifactVersions; id:string; createdAt:string; mode:'simulation'; deviceSnapshot:Pick<DeviceProfile,'id'|'revision'|'name'|'manufacturer'|'integrationStatus'|'optics'>; adapterSnapshot:AdapterManifest|null; seed:number; status:'success'|'failed'|'blocked'; totalMs:number; output:string|null; trace:TraceEvent[]; config:SimulationConfig; plan:CompiledPlan }

@@ -10,8 +10,8 @@ OpenLens turns fragmented smart-glasses hardware into an inspectable development
 
 ## Try the working loop
 
-1. Open the [virtual park](https://sribyju.github.io/OpenLens/#/lab) and select the French `SORTIE` sign.
-2. Switch glasses or environmental conditions and run the same experience again.
+1. Open [Scenario Studio](https://sribyju.github.io/OpenLens/#/lab) and load menu translation, captions, document reading, scene description, object recognition, hands-free assistance, or adapter debugging.
+2. Select the target inside the virtual field, then switch glasses or environmental conditions and run the same experience again.
 3. Inspect the route, output, canonical trace, and replayable artifact produced by that run.
 4. Open [Device Universe](https://sribyju.github.io/OpenLens/#/devices) to separate physical hardware, maker API access, and current OpenLens execution.
 
@@ -21,15 +21,15 @@ The simulated loop is executable in the browser. It does not claim a connection 
 
 - **Cinematic optical entry:** a dark, physical-feeling smart-glasses opening moves through the lens into the platform, with responsive and reduced-motion behavior.
 - **Live homepage proof:** the real compiler + deterministic Optical Twin can run directly from the homepage, including explicit permission, disconnect, and timeout failure injection.
-- **Lens Lab:** normal, denied-permission, degraded-network, critical-battery, network-loss, timeout, disconnect, and model-unavailable scenarios produce different results and replayable traces.
-- **Experience Compiler:** supported plain language updates a structured input/process/output contract live, evaluates execution across the device catalog, and persists executable plans into Lens Lab.
+- **Lens Lab:** seven distinct everyday scenarios and declared permission, network, battery, timeout, disconnect, and model failures produce different virtual targets, outputs, playback, and replayable traces.
+- **Experience Compiler:** supported translate, describe, caption, reminder, identification, assistance, and debugging language updates a structured input/process/output contract live, evaluates execution across the device catalog, and persists executable plans into Lens Lab.
 - **Device Fit Engine:** choose required/preferred capabilities, developer-access rules, companion fallback policy, and whether the target must execute in OpenLens today. Results explain blockers and caveats instead of inventing compatibility percentages.
 - **Device Doctor:** inspects a profile subsystem by subsystem while keeping physical hardware, manufacturer API access, and actual OpenLens execution visibly separate.
 - **Device Universe:** eight sourced profiles—OpenLens Twin, Brilliant Frame, XREAL Air 2, Ray-Ban Meta, Snap Spectacles, Even Realities G1, Rokid Glasses, and Vuzix Z100—with typed physical specifications, explicit unknowns, source conflicts, search, and three-device comparison.
-- **Benchmark Lab:** deterministic trial suites, visible failures, sample statistics, raw-run selection, JSON/CSV export, and replay verification.
+- **Benchmark Lab:** deterministic trial suites, visible failures, sample statistics, raw-run selection, JSON/CSV export, replay verification, and seven transparent benchmark-family layers. Families without sufficient evidence remain unscored.
 - **Local AI:** real English OCR runs in a same-origin Web Worker without uploading the image, then an optional deterministic sign phrasebook translates recognized text across five languages with exact coverage, unchanged-token disclosure, pipeline timing, speech, and JSON export.
 - **Command Palette:** `Ctrl/Cmd + K` searches tools, device evidence, experiences, and current workbench state; experience actions load directly into Lens Lab.
-- **Build With Us:** configure and download a typed adapter-manifest starter.
+- **Build With Us:** configure and download a four-file typed adapter starter, then run eight browser-side conformance checks against clean or deliberately damaged bundles.
 
 The reference Optical Twin and seven capability models execute locally. A model tests documented capability boundaries and explicit companion fallback; it is not a physical-device connection or hardware performance measurement. Manufacturer hardware profiles remain research records.
 

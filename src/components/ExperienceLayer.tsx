@@ -12,7 +12,7 @@ export default function ExperienceLayer({route}:{route:Route}){
   if(firstRoute.current){firstRoute.current=false;return}
   if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
   setCurtain(value=>value+1);
-  const timer=window.setTimeout(()=>setCurtain(0),760);
+  const timer=window.setTimeout(()=>setCurtain(0),1120);
   return()=>clearTimeout(timer);
  },[route]);
 
