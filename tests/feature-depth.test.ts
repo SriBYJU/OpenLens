@@ -1,5 +1,5 @@
 import {describe,expect,it} from 'vitest';
-import {benchmark,benchmarkFacets,buildAdapterStarter,compileExperience,defaultSimulationConfig,evaluateAdapterBundle,experiencePresets,getDevice,simulate} from '../src/core';
+import {benchmark,benchmarkFacets,buildAdapterStarter,compileExperience,defaultSimulationConfig,evaluateAdapterBundle,experiencePresets,getDevice,planAIRoute,simulate} from '../src/core';
 
 describe('expanded scenario engine',()=>{
  it.each([
@@ -12,6 +12,19 @@ describe('expanded scenario engine',()=>{
   const run=simulate(compileExperience(experience,getDevice('openlens-twin')),{...defaultSimulationConfig,fixture});
   expect(run).toMatchObject({status:'success'});
   expect(run.output).toContain(expected);
+ });
+});
+
+describe('AI capability router',()=>{
+ it('keeps the zero-cost OCR path local and bounded',()=>{
+  const decision=planAIRoute({task:'ocr',privacy:'local-only',priority:'latency',cost:'zero-only'},{localOcr:true,localVoice:false,browserSpeechRecognition:true,webGpu:true,localVisionModel:false,advancedProvider:false});
+  expect(decision).toMatchObject({status:'ready',route:'local-browser',provider:'Tesseract.js / local WASM'});
+ });
+ it('refuses semantic and speech routes when their evidence boundary is missing',()=>{
+  const runtime={localOcr:true,localVoice:false,browserSpeechRecognition:true,webGpu:true,localVisionModel:false,advancedProvider:false};
+  expect(planAIRoute({task:'scene-understanding',privacy:'local-only',priority:'quality',cost:'zero-only'},runtime).status).toBe('unavailable');
+  expect(planAIRoute({task:'captioning',privacy:'local-only',priority:'latency',cost:'zero-only'},runtime)).toMatchObject({status:'unavailable',route:'none'});
+  expect(planAIRoute({task:'captioning',privacy:'provider-allowed',priority:'latency',cost:'zero-only'},runtime)).toMatchObject({status:'limited',route:'browser-mediated'});
  });
 });
 

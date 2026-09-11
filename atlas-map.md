@@ -1,4 +1,4 @@
-# atlas: OpenLens (4689 LOC, 88 files) | budget 3600 | rendered 3393 tok | public API only, parameter names omitted to fit budget — raise --budget
+# atlas: OpenLens (4829 LOC, 91 files) | budget 3600 | rendered 3471 tok | public API only, parameter names omitted to fit budget — raise --budget
 
 ## src/core/types.ts (#1 — imported by 15 file(s))
     export interface EvidenceSource { id:string; title:string; url:string; publisher:string; accessed:string; confidence:Confidence; note:string }
@@ -55,15 +55,16 @@ src/core/adapter-starter.ts: AdapterStarterInput, AdapterStarterFile
 src/core/resilience.ts: ResilienceScenarioId, ResilienceScenarioResult, ResilienceMatrixResult, TraceDiffRow
 src/core/adapter-conformance.ts: ConformanceProbe, ConformanceCheck, ConformanceReport
 src/app/router.ts: Route, RouteState
-src/core/scenario.ts: ScenarioCapsule, ImportedScenarioCapsule
-src/core/benchmark-facets.ts: BenchmarkFamily, BenchmarkFacet
 public/ocr/core/tesseract-core-relaxedsimd-lstm.wasm.js: Aa, La, k
 public/ocr/core/tesseract-core-relaxedsimd.wasm.js: Aa, La, k
 public/ocr/core/tesseract-core-simd.wasm.js: Aa, La, k
 public/ocr/core/tesseract-core.wasm.js: Aa, La, k
 public/ocr/core/tesseract-core-lstm.wasm.js: Aa, La, k
 public/ocr/core/tesseract-core-simd-lstm.wasm.js: Aa, La, k
+src/core/scenario.ts: ScenarioCapsule, ImportedScenarioCapsule
+src/core/benchmark-facets.ts: BenchmarkFamily, BenchmarkFacet
 src/core/environment.ts: EnvironmentAssessment
+src/ai/vision-signals.ts: VisualSignalProfile
 src/ai/types.ts: OcrResult, OcrMessage, OcrRequest
 src/ai/phrasebook.ts: PhrasebookLanguage, Entry, PhrasebookTranslation
 src/components/FeatureGuide.tsx: GuideStep
@@ -71,8 +72,9 @@ src/components/BrowserReadiness.tsx: Check
 src/components/CommandPalette.tsx: PaletteEntry
 src/components/VisitorPathfinder.tsx: PathId
 src/core/fit.ts: CapabilityPriority, DeveloperAccessRequirement, ExecutionRequirement, FitVerdict, FitRequirements, DeviceFitResult
-src/components/DeviceCapabilityMatrix.tsx: MatrixMode
+src/core/ai-router.ts: AITask, AIRuntimeCapabilities, AIRouteRequest, AIRouteDecision
 src/pages/Lab.tsx: Scenario
+src/components/DeviceCapabilityMatrix.tsx: MatrixMode
 src/components/VirtualWorldScene.tsx: VirtualWorldSceneProps
 src/core/types.ts: RELEASE_VERSION, ENGINE_VERSION
 src/core/simulation.ts: finish
@@ -82,24 +84,25 @@ src/core/adapter-starter.ts: validateAdapterStarter, buildAdapterStarter
 src/core/compiler.ts: hash, compileExperience
 src/components/HomeDeviceSwitchboard.tsx: show, simulate
 src/core/resilience.ts: runResilienceMatrix, diffTraces
-src/ai/images.ts: validateDimensions, canvasBlob
 src/App.tsx: update
+src/ai/images.ts: validateDimensions, text
 src/core/adapter-conformance.ts: requiredPaths, evaluateAdapterBundle
-src/components/LocalAI.tsx: LocalAI, stopWorker
+src/components/LocalAI.tsx: stopWorker, stopCamera
 src/app/router.ts: parseHash
-src/core/scenario.ts: createScenarioCapsule, importScenarioCapsule
-src/core/benchmark-facets.ts: clamp, benchmarkFacets
 public/ocr/core/tesseract-core-relaxedsimd-lstm.wasm.js: a, a
 public/ocr/core/tesseract-core-relaxedsimd.wasm.js: a, a
 public/ocr/core/tesseract-core-simd.wasm.js: a, a
 public/ocr/core/tesseract-core.wasm.js: a, a
 public/ocr/core/tesseract-core-lstm.wasm.js: a, a
 public/ocr/core/tesseract-core-simd-lstm.wasm.js: a, a
+src/core/scenario.ts: createScenarioCapsule, importScenarioCapsule
+src/core/benchmark-facets.ts: clamp, benchmarkFacets
 src/core/environment.ts: clamp, assessEnvironment
 src/core/benchmark.ts: statistics, benchmark
+src/ai/vision-signals.ts: clamp, analyzeImageBlob
 src/core/experience.ts: parseExperience, validateExperience
-src/ai/phrasebook.ts: entry, translateSignText
 scripts/audit-live.mjs: report, url
+src/ai/phrasebook.ts: entry, translateSignText
 src/adapters/registry.ts: getAdapter
 src/components/FeatureGuide.tsx: FeatureGuide
 src/components/BrowserReadiness.tsx: BrowserReadiness, add
@@ -107,23 +110,26 @@ src/components/CommandPalette.tsx: navigate, choose
 src/components/HomeSignalDemo.tsx: HomeSignalDemo, choose
 src/components/VisitorPathfinder.tsx: escape, trap
 src/core/fit.ts: evaluateDeviceFit, fitDevices
+src/core/ai-router.ts: planAIRoute, local
 src/components/ExperienceLayer.tsx: ExperienceLayer, setProgress
+src/mobile.ts: update, useMobile
+src/pages/Lab.tsx: update, chooseScenario
+src/components/AIRouterLab.tsx: AIRouterLab, update
 src/core/fixtures.ts: resolveFixture
 src/app/Shell.tsx: Mark, handleKey
-src/components/RunPlayback.tsx: RunPlayback, play
+src/pages/Compiler.tsx: Compiler, update
 src/core/exchange.ts: importRun, importArtifact
 src/components/TraceViewer.tsx: save, TraceViewer
 src/components/ResilienceMatrix.tsx: save, run
+src/components/RunPlayback.tsx: RunPlayback, play
 src/components/AdapterConformanceLab.tsx: AdapterConformanceLab, run
 src/components/ScenarioCapsulePanel.tsx: apply, load
 src/core/specifications.ts: formatSpecification, sourcesForClaim
-src/mobile.ts: update, useMobile
 src/components/BenchmarkScorecard.tsx: BenchmarkScorecard
 src/pages/Benchmarks.tsx: save, run
 src/components/DeviceCapabilityMatrix.tsx: state
 src/components/DeviceDoctor.tsx: DeviceDoctor
 src/components/DeviceFitEngine.tsx: DeviceFitEngine, setPriority
-src/pages/Lab.tsx: update, chooseScenario
 src/components/FixtureScene.tsx: FixtureScene
 src/components/SimulationControls.tsx: SimulationControls, change
 src/components/VirtualWorldScene.tsx: VirtualWorldScene
@@ -131,10 +137,9 @@ src/pages/Developers.tsx: save, toggle
 scripts/check-performance-budget.mjs: walk, size
 src/ai/ocr.worker.ts: report
 src/components/Glasses.tsx: Glasses
-src/pages/Compiler.tsx: Compiler, update
 src/pages/Devices.tsx: jumpTo, toggle
 src/pages/Methodology.tsx: jump
 src/pages/Research.tsx: requestedDevice, Research
 tests/integrity.test.ts: run
 
-[81 low-rank file(s) collapsed: ./* (3), public/ocr/core/* (6), scripts/* (4), src/* (4), src/adapters/* (1), src/ai/* (5), src/app/* (2), src/components/* (22), src/core/* (13), src/pages/* (8), tests/* (13)]
+[84 low-rank file(s) collapsed: ./* (3), public/ocr/core/* (6), scripts/* (4), src/* (4), src/adapters/* (1), src/ai/* (6), src/app/* (2), src/components/* (23), src/core/* (14), src/pages/* (8), tests/* (13)]

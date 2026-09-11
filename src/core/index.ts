@@ -10,6 +10,7 @@ export * from './resilience';
 export * from './scenario';
 export * from './adapter-starter';
 export * from './adapter-conformance';
+export * from './ai-router';
 export * from './environment';
 export * from './specifications';
 export * from '../data/devices';

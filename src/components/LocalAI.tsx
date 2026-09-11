@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { canvasBlob, createDemoImage, decodeImage, validateDimensions } from '../ai/images';
 import {phrasebookLanguages,signPhrasebook,translateSignText,type PhrasebookLanguage,type PhrasebookTranslation} from '../ai/phrasebook';
+import {analyzeImageBlob,type VisualSignalProfile} from '../ai/vision-signals';
 import type { OcrMessage, OcrResult } from '../ai/types';
+import AIRouterLab from './AIRouterLab';
+import '../local-ai-lab.css';
 
 const OCR_TIMEOUT_MS = 90_000;
 const voicePrefixes:Record<PhrasebookLanguage,string>={English:'en',Spanish:'es',French:'fr',German:'de',Italian:'it'};
@@ -23,6 +26,7 @@ export default function LocalAI() {
   const [translation,setTranslation]=useState<PhrasebookTranslation|null>(null);
   const [translationMs,setTranslationMs]=useState(0);
   const [translationStatus,setTranslationStatus]=useState('');
+  const [visionSignal,setVisionSignal]=useState<VisualSignalProfile|null>(null);
   const mounted = useRef(false);
   const previewRef = useRef('');
   const workerRef = useRef<Worker | null>(null);
@@ -74,7 +78,7 @@ export default function LocalAI() {
     };
   }, []);
 
-  function setPreparedImage(blob: Blob, label: string) {
+  function setPreparedImage(blob: Blob, label: string, signal:VisualSignalProfile|null) {
     URL.revokeObjectURL(previewRef.current);
     previewRef.current = URL.createObjectURL(blob);
     setPreview(previewRef.current);
@@ -83,6 +87,7 @@ export default function LocalAI() {
     setResult(null);
     setTranslation(null);
     setTranslationStatus('');
+    setVisionSignal(signal);
     setError('');
     setStatus('Image ready. Select Read text to start.');
     if ('speechSynthesis' in window) window.speechSynthesis.cancel();
@@ -97,9 +102,10 @@ export default function LocalAI() {
     setResult(null);
     try {
       const blob = source === 'demo' ? await createDemoImage() : await decodeImage(source);
+      const signal=await analyzeImageBlob(blob).catch(()=>null);
       if (!mounted.current || token !== preparationToken.current) return;
       stopCamera();
-      setPreparedImage(blob, source === 'demo' ? 'Generated library sign · demo image' : 'Your image · stored in memory only');
+      setPreparedImage(blob, source === 'demo' ? 'Generated library sign · demo image' : 'Your image · stored in memory only',signal);
     } catch (cause) {
       if (mounted.current && token === preparationToken.current) setError(cause instanceof Error ? cause.message : 'The image could not be opened.');
     } finally {
@@ -210,8 +216,9 @@ export default function LocalAI() {
       if (!ctx) throw new Error('Image capture is unavailable.');
       ctx.drawImage(video, 0, 0);
       const blob = await canvasBlob(canvas);
+      const signal=await analyzeImageBlob(blob).catch(()=>null);
       if (!mounted.current || token !== preparationToken.current) return;
-      setPreparedImage(blob, 'Camera capture · stored in memory only');
+      setPreparedImage(blob, 'Camera capture · stored in memory only',signal);
       stopCamera();
     } catch {
       if (mounted.current && token === preparationToken.current) setError('Camera capture failed. Try again or choose an image.');
@@ -239,7 +246,7 @@ export default function LocalAI() {
 
   function exportOutput(){
     if(!result)return;
-    const artifact={version:1,createdAt:new Date().toISOString(),mode:'local-browser',ocr:result,translation:translation??null,translationMs:translation?translationMs:null,disclosure:'OCR ran in this browser. Translation, when present, used the bounded OpenLens sign phrasebook and preserved unknown segments.'};
+    const artifact={version:2,createdAt:new Date().toISOString(),mode:'local-browser',visionSignal,ocr:result,translation:translation??null,translationMs:translation?translationMs:null,disclosure:'Pixel signal analysis and OCR ran in this browser. Translation, when present, used the bounded OpenLens sign phrasebook and preserved unknown segments.'};
     const url=URL.createObjectURL(new Blob([JSON.stringify(artifact,null,2)],{type:'application/json'}));const link=document.createElement('a');link.href=url;link.download='openlens-local-ai-result.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),0);setTranslationStatus('Local pipeline artifact downloaded.');
   }
 
@@ -259,6 +266,7 @@ export default function LocalAI() {
   return <section className="panel local-ai" aria-labelledby="local-ai-title">
     <div className="section-heading"><div><p className="eyebrow">ON YOUR DEVICE</p><h2 id="local-ai-title">Let the world speak.</h2></div><span className="status">Local OCR</span></div>
     <p className="muted">Read English text from a sign, label, or page. Try the sample, choose an image, or take a photo.</p>
+    <AIRouterLab localVoice={Boolean(localVoice)}/>
     <div className="button-row">
       <button className="button" disabled={busy || preparing} onClick={() => void prepare('demo')}>Try demo image</button>
       <label className="field">Choose image<input type="file" accept="image/png,image/jpeg,image/webp" disabled={busy || preparing} onChange={event => { const file = event.target.files?.[0]; event.target.value = ''; if (file) void prepare(file); }} /></label>
@@ -271,10 +279,12 @@ export default function LocalAI() {
       {camera === 'on' && <button className="button" disabled={preparing || busy} onClick={() => void capture()}>Capture image</button>}
     </div>
     {preview ? <figure className="ai-image"><img className="ai-preview" src={preview} alt={imageLabel} /><figcaption className="muted">{imageLabel}</figcaption></figure> : <div className="ai-empty"><span aria-hidden="true">Aa</span><p>Your image stays yours.</p><p className="muted">Choose a source above to get started.</p></div>}
+    {visionSignal&&<section className="visual-signal" aria-labelledby="visual-signal-title"><header><h3 id="visual-signal-title">Optical signal preflight</h3><span>{visionSignal.width} × {visionSignal.height} SOURCE</span></header><div className="signal-grid">{[{label:'LUMINANCE',value:visionSignal.luminance,note:visionSignal.exposure},{label:'CONTRAST',value:visionSignal.contrast,note:'tonal spread'},{label:'EDGE DENSITY',value:visionSignal.edgeDensity,note:'local detail'},{label:'OCR READINESS',value:visionSignal.ocrReadiness,note:'heuristic'}].map(metric=><div key={metric.label}><small>{metric.label}</small><strong>{metric.value}</strong><span>{metric.note}</span><div className="signal-meter" aria-hidden="true"><i style={{width:`${metric.value}%`}}/></div></div>)}</div><p className="signal-notes">{visionSignal.notes.join(' ')}</p><p className="signal-disclosure"><b>REAL PIXEL ANALYSIS</b> · Samples luminance, contrast, and edges locally. The readiness number is a documented OCR preflight heuristic; it does not identify objects or claim semantic scene understanding.</p></section>}
+    {image&&<div className="ai-model-route"><span>ROUTE 01</span><strong>IMAGE → LOCAL PIXEL PREFLIGHT → TESSERACT OCR → BOUNDED PHRASEBOOK → BROWSER VOICE</strong><small>ZERO API COST</small></div>}
     <div className="button-row">
       <button className="button primary" disabled={!image || busy || preparing} onClick={readImage}>{busy ? 'Reading…' : 'Read text locally'}</button>
       {busy && <button className="button" onClick={() => { stopWorker(); setBusy(false); setStatus('Reading cancelled'); }}>Cancel reading</button>}
-      {image && !busy && !preparing && <button className="button" onClick={() => { preparationToken.current += 1; URL.revokeObjectURL(previewRef.current); previewRef.current = ''; setPreview(''); setImage(null); setResult(null); setTranslation(null); setTranslationStatus(''); setError(''); setStatus('Image cleared'); if ('speechSynthesis' in window) window.speechSynthesis.cancel(); setSpeaking(false); }}>Clear image</button>}
+      {image && !busy && !preparing && <button className="button" onClick={() => { preparationToken.current += 1; URL.revokeObjectURL(previewRef.current); previewRef.current = ''; setPreview(''); setImage(null); setVisionSignal(null); setResult(null); setTranslation(null); setTranslationStatus(''); setError(''); setStatus('Image cleared'); if ('speechSynthesis' in window) window.speechSynthesis.cancel(); setSpeaking(false); }}>Clear image</button>}
     </div>
     <p className="status ai-status" role="status" aria-live="polite">{preparing ? 'Preparing image…' : status}</p>
     {error && <p className="notice error" role="alert">{error}</p>}

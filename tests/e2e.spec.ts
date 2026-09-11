@@ -195,7 +195,17 @@ test('local OCR recognizes the supplied image in a browser worker',async({page},
  test.setTimeout(150000);
  await page.goto('/#/lab');
  await page.getByRole('button',{name:/Try real local OCR/}).click();
+ const router=page.locator('.ai-router');
+ await expect(router).toContainText(/local-browser/i);
+ await router.getByLabel('Task').selectOption('scene-understanding');
+ await expect(router).toContainText(/No local vision model/i);
+ await expect(router.locator('header>span')).toHaveText('unavailable');
+ await router.getByLabel('Task').selectOption('translation');
+ await expect(router).toContainText(/OpenLens sign phrasebook/i);
+ await expect(router.locator('header>span')).toHaveText('limited');
  await page.getByRole('button',{name:'Try demo image'}).click();
+ await expect(page.locator('.visual-signal')).toContainText(/REAL PIXEL ANALYSIS/i);
+ await expect(page.locator('.visual-signal')).toContainText(/OCR READINESS/i);
  await expect(page.getByRole('button',{name:'Read text locally'})).toBeEnabled();
  await page.getByRole('button',{name:'Read text locally'}).click();
  await expect(page.locator('.ocr-result, .local-ai [role="alert"]')).toBeVisible({timeout:120000});
@@ -211,7 +221,7 @@ test('local OCR recognizes the supplied image in a browser worker',async({page},
  const downloaded=await resultDownload;
  expect(downloaded.suggestedFilename()).toBe('openlens-local-ai-result.json');
  const saved=JSON.parse(readFileSync((await downloaded.path())!,'utf8'));
- expect(saved).toMatchObject({mode:'local-browser',translation:{sourceLanguage:'English',targetLanguage:'Spanish',provider:'openlens-sign-phrasebook-v1'}});
+ expect(saved).toMatchObject({version:2,mode:'local-browser',visionSignal:{width:1200,height:650,exposure:'balanced'},translation:{sourceLanguage:'English',targetLanguage:'Spanish',provider:'openlens-sign-phrasebook-v1'}});
  expect(saved.translation.output).toMatch(/SALIDA IZQUIERDA/);
  expect(saved.translationMs).toBeGreaterThan(0);
  const accessibility=await new AxeBuilder({page}).include('.ai-drawer').analyze();
@@ -226,6 +236,19 @@ test('local OCR recognizes the supplied image in a browser worker',async({page},
  await expect(page.locator('.translation-result')).toHaveCount(0);
  await page.getByRole('button',{name:'Clear image',exact:true}).click();
  await expect(page.locator('.ocr-result')).toHaveCount(0);
+});
+
+test('compiler exposes all seven task families and hands off new tasks',async({page})=>{
+ await page.goto('/#/compiler');
+ const task=page.getByRole('combobox',{name:'Task',exact:true});
+ await expect(task.locator('option')).toHaveCount(7);
+ await page.getByRole('button',{name:/Debug an adapter/}).click();
+ await expect(task).toHaveValue('debug');
+ await page.getByRole('button',{name:'Use this in Lens Lab'}).click();
+ await page.getByRole('link',{name:'Open Lens Lab'}).click();
+ await expect(page.getByLabel('Virtual environment')).toHaveValue('debug-console');
+ await page.getByRole('button',{name:/Run this scenario/i}).click();
+ await expect(page.locator('.outcome-card')).toContainText(/First fault/i);
 });
 
 test('hardware capability models produce different routes',async({page})=>{

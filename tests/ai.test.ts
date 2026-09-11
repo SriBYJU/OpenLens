@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { MAX_IMAGE_BYTES, inspectImageHeader, validateDimensions, validateImageFile } from '../src/ai/images';
 import {translateSignText} from '../src/ai/phrasebook';
+import {analyzeVisualSignal} from '../src/ai/vision-signals';
 
 describe('local image resource limits', () => {
   it('rejects empty, oversized, and unapproved formats', () => {
@@ -56,4 +57,20 @@ describe('local sign phrasebook',()=>{
     expect(()=>translateSignText('X'.repeat(20001),'French')).toThrow('20,000');
     expect(()=>translateSignText('EXIT','invalid' as 'French')).toThrow('language');
   });
+});
+
+describe('local optical signal preflight',()=>{
+  it('measures real pixel luminance, contrast, edges, and a bounded readiness score',()=>{
+    const data=new Uint8ClampedArray([
+      0,0,0,255,255,255,255,255,
+      255,255,255,255,0,0,0,255,
+    ]);
+    const profile=analyzeVisualSignal(data,2,2);
+    expect(profile).toMatchObject({width:2,height:2,luminance:50,exposure:'balanced',dominantTone:'neutral'});
+    expect(profile.contrast).toBeGreaterThan(90);
+    expect(profile.edgeDensity).toBe(100);
+    expect(profile.ocrReadiness).toBeGreaterThanOrEqual(0);
+    expect(profile.ocrReadiness).toBeLessThanOrEqual(100);
+  });
+  it('rejects mismatched pixel buffers',()=>expect(()=>analyzeVisualSignal(new Uint8ClampedArray(4),2,2)).toThrow('dimensions'));
 });

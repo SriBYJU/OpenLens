@@ -10,6 +10,7 @@ An optical instrument for builders inspecting smart-glasses behavior. The workin
 - Compiler uses a warm paper authoring surface beside a dark editable contract. Benchmarks is an evidence bench: trial controls, metrics and plotted outcomes precede its deeper methods and fault tools.
 - Research is a dark index opening into warm source dossiers. Developers pairs a paper transport form with a dark code stage. Methodology is a warm field manual; About keeps the studio palette and treats the portrait as the primary visual.
 - Scenario Studio groups the seven field programs and failure injections as one cinematic test sequence. Benchmark families use an inspectable cyan instrument with a single finite dial sweep. Adapter conformance uses a dark validation console with green pass and coral caught-fault states.
+- Local AI uses a dark routing instrument inside the warm privacy surface. Pixel-signal meters show measured browser data; unavailable semantic routes use explicit status text and never animate like active inference.
 
 ## Type and geometry
 - UI/body: locally available Segoe UI, Helvetica Neue, Arial; readable body copy at 15–16 px or larger.
@@ -24,7 +25,7 @@ An optical instrument for builders inspecting smart-glasses behavior. The workin
 - Decorative telemetry may loop slowly when it is clearly ambient. It must never imply that a measurement, camera feed or hardware connection is running.
 - Fixture diagrams react to authored environment inputs. Brightness and blur communicate the synthetic model; they are not calibrated optical or camera measurements.
 - Route transitions finish within 1,120 ms. Reduced-motion removes the curtain, parallax, scans, loops and staged reveals. Large working panels do not translate during reveal because automated and keyboard scrolling require stable targets.
-- Real OCR, fixture simulation, bounded phrase lookup and physical hardware claims remain visibly distinct.
+- Real pixel analysis and OCR, fixture simulation, bounded phrase lookup, capability routing and physical hardware claims remain visibly distinct.
 
 ## Responsive and verification
 The scene and run action remain in the first phone viewport. The full configuration follows. Desktop keeps controls beside the scene. Device records stack without horizontal page overflow. Test actual browser screenshots at 375, 768 and 1280 px, check keyboard focus and contrast, and retain all executable flows.

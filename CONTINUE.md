@@ -12,9 +12,9 @@
 - Large graphite smart-glasses opening with scroll approach, lens entry, optical atmosphere, reduced-motion behavior, and phone adaptations.
 - Eight source-backed profiles with typed specifications, explicit unknowns, conflict preservation, claim-level links, search, Device Fit, Device Doctor, and three-way comparison.
 - Deterministic Optical Twin and seven capability models with environment stress, configurable timing, battery, permissions, network, failure injection, trace playback, history, and portable scenario capsules.
-- Rules-based Experience Compiler with editable contracts, cross-device routing, fallbacks, persistence into Lens Lab, and invalid-input feedback.
+- Rules-based Experience Compiler with seven visible task families, editable contracts, cross-device routing, fallbacks, persistence into Lens Lab, and invalid-input feedback.
 - Benchmark Lab with raw trials, failure retention, sample statistics, resilience matrix, JSON/CSV export, and replay-verified imports.
-- Real in-browser English OCR from demo, upload, or camera. Includes five-language bounded sign translation, visible coverage, unchanged-token disclosure, local speech where available, and JSON result export.
+- Live AI capability routing plus real in-browser pixel-signal preflight and English OCR from demo, upload, or camera. Includes five-language bounded sign translation, visible coverage, unchanged-token disclosure, local speech where available, and versioned JSON result export.
 - Four-file adapter starter ZIP with typed transport boundary, lifecycle guards, contract tests, verification template, and integration guide.
 - Global command palette, route-specific guides, methodology, research ledger, About page with the original Capital Mastery portrait, and durable technical documentation.
 
@@ -25,7 +25,7 @@ The reference twin and seven capability models execute locally. Manufacturer har
 ## Verification
 
 - The current Pages checkpoint completed its lint, unit, browser, build, budget, release-stamping, and deployment workflow successfully.
-- Current release candidate: 80 unit tests pass. The 52-case Playwright matrix completes with 45 passes and 7 intentional capability skips across desktop and phone. It covers all seven Scenario Studio workflows, adapter conformance mutation probes, benchmark score layers, OCR overflow, route motion, responsive layout, and automated contrast.
+- Current release candidate: 84 unit tests pass. The 54-case Playwright matrix completes with 47 passes and 7 intentional capability skips across desktop and phone. It covers AI capability routing, real pixel preflight, local OCR, all seven compiler and Scenario Studio workflows, adapter conformance mutation probes, benchmark score layers, route motion, responsive layout, and automated contrast.
 
 ## Next priorities
 
@@ -61,7 +61,6 @@ No credential or authorization blocker is active. Real-hardware integration rema
 ## Performance checkpoint
 
 - CI enforces initial raw and compressed imports, total application JavaScript, largest lazy route, CSS, glasses hero, and OCR isolation budgets after every production build.
-- A reusable production profiler applies 4× CPU slowdown and a 1.6 Mbps, 150 ms RTT network model. The current local result is CLS 0, median 16.7 ms and p95 16.8 ms over 120 cinematic frames, with no interval above 50 ms.
 - After the optimized 110 KiB WebP hero replaced the 809 KiB transfer in supporting browsers, the local bundled-preview stress profile improved LCP from 5.64 to about 2.30 seconds. The 2026-09-11 Edge run at 4× CPU, 1.6 Mbps, and 150 ms RTT held CLS at 0, with a 33.1 ms median frame interval, 33.5 ms p95, and 1 of 120 sampled intervals above 50 ms.
 
 ## Virtual world and homepage atlas checkpoint
