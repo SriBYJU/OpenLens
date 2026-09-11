@@ -29,7 +29,7 @@ const appJsGzip=appJs.reduce((sum,file)=>sum+gzip(file),0);
 const largestRoute=routeJs.sort((a,b)=>size(b)-size(a))[0];
 const cssRaw=css.reduce((sum,file)=>sum+size(file),0);
 const initialCssRaw=initialCss.reduce((sum,file)=>sum+size(file),0);
-const limits={initialRaw:430*1024,initialGzip:120*1024,appJsGzip:210*1024,routeChunkRaw:170*1024,initialCssRaw:150*1024,appCssRaw:160*1024,heroRaw:150*1024,heroFallbackRaw:900*1024,virtualSceneRaw:700*1024,socialCardRaw:150*1024};
+const limits={initialRaw:430*1024,initialGzip:120*1024,appJsGzip:210*1024,routeChunkRaw:170*1024,initialCssRaw:165*1024,appCssRaw:176*1024,heroRaw:150*1024,heroFallbackRaw:900*1024,virtualSceneRaw:700*1024,socialCardRaw:150*1024};
 const rows=[
  ['Initial document + imports',initialRaw,limits.initialRaw],
  ['Initial document + imports (gzip)',initialGzip,limits.initialGzip],

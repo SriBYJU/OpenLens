@@ -1,6 +1,8 @@
 import {useEffect,useRef,useState,type ReactNode} from 'react';
 import {routeDescriptions,routeLabels,type Route} from './router';
 import CommandPalette from '../components/CommandPalette';
+import ExperienceLayer from '../components/ExperienceLayer';
+
 const help:Record<Route,{title:string;who:string;steps:string[]}>= {
  home:{title:'What is OpenLens?',who:'A browser-based workbench for people designing, researching, or developing smart-glasses experiences before every physical device is available.',steps:['Run the live Optical Twin proof on the homepage.','Start in the Compiler if you have an idea in words.','Use Device Fit and Device Doctor before choosing a hardware target.']},
  lab:{title:'What is Lens Lab?',who:'A deterministic Digital Twin for product designers, QA teams, and developers testing how an experience behaves under changing conditions.',steps:['Choose an experience and scenario card.','Change light, head motion, noise or a failure condition.','Inspect the modeled quality, output, playback and canonical trace.']},
@@ -12,16 +14,77 @@ const help:Record<Route,{title:string;who:string;steps:string[]}>= {
  methodology:{title:'What is Methodology?',who:'The public definition of simulation, measurement, truth labels, statistics, replay, and known limits.',steps:['Check which label applies to a number.','Review how failed trials affect results.','Use artifact versions to reproduce a run.']},
  about:{title:'What is this project?',who:'An independent open-source effort by Shriyan Avadhanula to make wearable computing easier to inspect and build across.',steps:['Explore the public tools without an account.','Read the source and methodology.','Contribute evidence or an adapter through GitHub.']},
 };
+
 function Mark(){return <span className="brand-symbol" aria-hidden="true"><i/><i/></span>}
+
 export function Shell({route,children}:{route:Route;children:ReactNode}){
- const [menu,setMenu]=useState(false);const [search,setSearch]=useState(false);const [helpOpen,setHelp]=useState(false);const searchRef=useRef<HTMLInputElement>(null);
- useEffect(()=>{const title=`${routeLabels[route]} — OpenLens`;const description=routeDescriptions[route];document.title=title;document.querySelector('meta[name="description"]')?.setAttribute('content',description);document.querySelector('meta[property="og:title"]')?.setAttribute('content',title);document.querySelector('meta[property="og:description"]')?.setAttribute('content',description);document.querySelector('meta[name="twitter:title"]')?.setAttribute('content',title);document.querySelector('meta[name="twitter:description"]')?.setAttribute('content',description);document.getElementById('main')?.focus();setHelp(false);const f=(e:KeyboardEvent)=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();setSearch(value=>!value)}if(e.key==='Escape'){setSearch(false);setMenu(false);setHelp(false)}};addEventListener('keydown',f);return()=>removeEventListener('keydown',f)},[route]);
+ const [menu,setMenu]=useState(false);
+ const [search,setSearch]=useState(false);
+ const [helpOpen,setHelp]=useState(false);
+ const searchRef=useRef<HTMLInputElement>(null);
+ useEffect(()=>{
+  const title=`${routeLabels[route]} — OpenLens`;
+  const description=routeDescriptions[route];
+  document.title=title;
+  document.querySelector('meta[name="description"]')?.setAttribute('content',description);
+  document.querySelector('meta[property="og:title"]')?.setAttribute('content',title);
+  document.querySelector('meta[property="og:description"]')?.setAttribute('content',description);
+  document.querySelector('meta[name="twitter:title"]')?.setAttribute('content',title);
+  document.querySelector('meta[name="twitter:description"]')?.setAttribute('content',description);
+  document.getElementById('main')?.focus();
+  setHelp(false);
+  const handleKey=(event:KeyboardEvent)=>{
+   if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();setSearch(value=>!value)}
+   if(event.key==='Escape'){setSearch(false);setMenu(false);setHelp(false)}
+  };
+  addEventListener('keydown',handleKey);
+  return()=>removeEventListener('keydown',handleKey);
+ },[route]);
  const nav=(keys:Route[])=>keys.map(key=><a className={route===key?'active':''} href={key==='home'?'#/':`#/${key}`} onClick={()=>setMenu(false)} key={key}>{routeLabels[key]}</a>);
- return <><a className="skip-link" href="#main">Skip cinematic</a><header className="site-header"><a className="brand" href="#/" aria-label="OpenLens home"><Mark/>OPENLENS</a><nav className="desktop-nav" aria-label="Primary">{nav(['lab','devices','compiler','benchmarks','research'])}</nav><div className="header-actions"><button className="help-button" onClick={()=>setHelp(true)}>What is this?</button><button className="search-button" onClick={()=>setSearch(true)}><span>Command</span><kbd>⌘ K</kbd></button><a className="header-cta" href="#/developers">Build with us</a><button className="menu-toggle" aria-expanded={menu} onClick={()=>setMenu(!menu)}>{menu?'Close':'Menu'}</button></div></header>{menu&&<nav className="mobile-nav" aria-label="Mobile navigation">{nav(['home','lab','devices','compiler','benchmarks','research','developers','methodology','about'])}<button className="mobile-help" onClick={()=>{setMenu(false);setHelp(true)}}>What is this?</button></nav>}{children}<Footer/>{search&&<CommandPalette close={()=>setSearch(false)} inputRef={searchRef}/>} {helpOpen&&<Help route={route} close={()=>setHelp(false)}/>}</>
+ return <>
+  <ExperienceLayer route={route}/>
+  <a className="skip-link" href="#main">Skip cinematic</a>
+  <header className="site-header">
+   <a className="brand" href="#/" aria-label="OpenLens home"><Mark/>OPENLENS</a>
+   <nav className="desktop-nav" aria-label="Primary">{nav(['lab','devices','compiler','benchmarks','research'])}</nav>
+   <div className="header-actions">
+    <button className="help-button" onClick={()=>setHelp(true)}>What is this?</button>
+    <button className="search-button" onClick={()=>setSearch(true)}><span>Command</span><kbd>⌘ K</kbd></button>
+    <a className="header-cta" href="#/developers">Build with us</a>
+    <button className="menu-toggle" aria-expanded={menu} onClick={()=>setMenu(!menu)}>{menu?'Close':'Menu'}</button>
+   </div>
+  </header>
+  {menu&&<nav className="mobile-nav" aria-label="Mobile navigation">{nav(['home','lab','devices','compiler','benchmarks','research','developers','methodology','about'])}<button className="mobile-help" onClick={()=>{setMenu(false);setHelp(true)}}>What is this?</button></nav>}
+  {children}
+  <Footer/>
+  {search&&<CommandPalette close={()=>setSearch(false)} inputRef={searchRef}/>}
+  {helpOpen&&<Help route={route} close={()=>setHelp(false)}/>}
+ </>
 }
+
 function Help({route,close}:{route:Route;close:()=>void}){
- const content=help[route];const drawer=useRef<HTMLElement>(null);
- useEffect(()=>{const previous=document.activeElement as HTMLElement|null;const overflow=document.body.style.overflow;document.body.style.overflow='hidden';drawer.current?.querySelector('button')?.focus();return()=>{document.body.style.overflow=overflow;if(previous?.isConnected)previous.focus()}},[]);
- return <aside ref={drawer} className="help-drawer" role="dialog" aria-modal="true" aria-labelledby="help-title" onKeyDown={event=>{if(event.key!=='Tab')return;const buttons=drawer.current?.querySelectorAll('button');if(!buttons?.length)return;const first=buttons[0],last=buttons[buttons.length-1];if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus()}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus()}}}><header><div><p className="eyebrow">PLAIN-LANGUAGE GUIDE</p><h2 id="help-title">{content.title}</h2></div><button className="icon-button" onClick={close} aria-label="Close guide">×</button></header><p>{content.who}</p><ol>{content.steps.map(step=><li key={step}>{step}</li>)}</ol><button className="button primary full" onClick={close}>Start using this feature</button></aside>
+ const content=help[route];
+ const drawer=useRef<HTMLElement>(null);
+ useEffect(()=>{
+  const previous=document.activeElement as HTMLElement|null;
+  const overflow=document.body.style.overflow;
+  document.body.style.overflow='hidden';
+  drawer.current?.querySelector('button')?.focus();
+  return()=>{document.body.style.overflow=overflow;if(previous?.isConnected)previous.focus()}
+ },[]);
+ return <aside ref={drawer} className="help-drawer" role="dialog" aria-modal="true" aria-labelledby="help-title" onKeyDown={event=>{
+  if(event.key!=='Tab')return;
+  const buttons=drawer.current?.querySelectorAll('button');
+  if(!buttons?.length)return;
+  const first=buttons[0],last=buttons[buttons.length-1];
+  if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus()}
+  else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus()}
+ }}>
+  <header><div><p className="eyebrow">PLAIN-LANGUAGE GUIDE</p><h2 id="help-title">{content.title}</h2></div><button className="icon-button" onClick={close} aria-label="Close guide">×</button></header>
+  <p>{content.who}</p>
+  <ol>{content.steps.map(step=><li key={step}>{step}</li>)}</ol>
+  <button className="button primary full" onClick={close}>Start using this feature</button>
+ </aside>
 }
+
 function Footer(){return <footer className="site-footer"><div><a className="brand" href="#/"><Mark/>OPENLENS</a><p>One open optical layer for hardware, experiences, traces, evidence, and measurement.</p></div><div className="footer-nav"><a href="#/lab">Lens Lab</a><a href="#/devices">Devices</a><a href="#/research">Evidence</a><a href="#/methodology">Methodology</a><a href="#/about">About</a></div><div className="footer-meta"><span>v0.2.0 / PUBLIC PREVIEW</span><span>SIMULATION IS NEVER PRESENTED AS HARDWARE MEASUREMENT.</span></div></footer>}

@@ -456,3 +456,24 @@ test('methodology index and about story remain readable at every width',async({p
  const audit=await new AxeBuilder({page}).include('main').analyze();
  expect(audit.violations.filter(item=>['serious','critical'].includes(item.impact??''))).toEqual([]);
 });
+
+test('route motion communicates place without blocking content or reduced-motion users',async({page},testInfo)=>{
+ test.skip(testInfo.project.name!=='desktop','The motion contract only needs one browser pass.');
+ await page.goto('/#/');
+ await page.getByRole('link',{name:'Lens Lab',exact:true}).first().click();
+ await expect(page.locator('.route-curtain')).toBeVisible();
+ await expect(page.locator('body')).toHaveAttribute('data-route','lab');
+ await expect(page.locator('.page-hero-scene')).toHaveAttribute('aria-hidden','true');
+ await expect(page.getByRole('heading',{name:/The optical workbench/i})).toBeVisible();
+ await expect(page.locator('.route-curtain')).toHaveCount(0,{timeout:1500});
+ await page.setViewportSize({width:390,height:844});
+ await expect(page.locator('.workbench-grid')).toHaveClass(/ol-seen/);
+ await expect(page.locator('.optical-console')).toBeInViewport();
+ await page.emulateMedia({reducedMotion:'reduce'});
+ await page.goto('/#/compiler');
+ await page.goto('/#/benchmarks');
+ await expect(page.locator('.route-curtain')).toHaveCount(0);
+ await expect(page.locator('.page-hero')).toBeVisible();
+ await expect(page.getByRole('button',{name:'Run 24 trials',exact:true})).toBeVisible();
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
+});

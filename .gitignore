@@ -2,6 +2,7 @@ node_modules/
 dist/
 test-results/
 playwright-report/
+audit-images/
 .env
 .env.*
 !.env.example

@@ -15,7 +15,8 @@
     "test": "vitest run --exclude tests/e2e.spec.ts",
     "lint": "eslint src tests",
     "preview": "vite preview --host 127.0.0.1",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:e2e:live": "node scripts/audit-live.mjs"
   },
   "dependencies": {
     "fflate": "^0.8.3",

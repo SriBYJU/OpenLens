@@ -18,8 +18,11 @@ An optical instrument for builders inspecting smart-glasses behavior. The workin
 
 ## Motion and truth
 - Home: approach → lens entry → perception. Opacity stays continuous through the entire transition; phase changes control focus eligibility, not premature visual cuts.
+- Internal routes use a short optical aperture transition, route-specific lens fields and staged content reveals. The visual object carries the visitor from navigation into the working surface instead of ending at the homepage.
+- Pointer light and portrait depth are decorative and stay subtle. They never alter controls, data, outputs or measured-looking values.
+- Decorative telemetry may loop slowly when it is clearly ambient. It must never imply that a measurement, camera feed or hardware connection is running.
 - Fixture diagrams react to authored environment inputs. Brightness and blur communicate the synthetic model; they are not calibrated optical or camera measurements.
-- No autonomous shaking or waveform playback. Reduced-motion removes transitional effects.
+- Route transitions finish within 760 ms. Reduced-motion removes the curtain, parallax, scans, loops and staged reveals.
 - Real OCR, fixture simulation, bounded phrase lookup and physical hardware claims remain visibly distinct.
 
 ## Responsive and verification

@@ -1,2 +1,17 @@
 import type {ReactNode} from 'react';
-export default function Page({index,eyebrow,title,lead,actions,children,className=''}:{index:string;eyebrow:string;title:ReactNode;lead:string;actions?:ReactNode;children:ReactNode;className?:string}){return <main id="main" tabIndex={-1} className={`page ${className}`}><header className="page-hero"><div className="page-index">{index}</div><div><p className="eyebrow">{eyebrow}</p><h1>{title}</h1><p className="page-lead">{lead}</p></div>{actions&&<div className="page-actions">{actions}</div>}</header>{children}</main>}
+
+export default function Page({index,eyebrow,title,lead,actions,children,className=''}:{index:string;eyebrow:string;title:ReactNode;lead:string;actions?:ReactNode;children:ReactNode;className?:string}){
+ return <main id="main" tabIndex={-1} className={`page ${className}`}>
+  <header className="page-hero">
+   <div className="page-index">{index}</div>
+   <div className="page-hero-copy"><p className="eyebrow">{eyebrow}</p><h1>{title}</h1><p className="page-lead">{lead}</p></div>
+   {actions&&<div className="page-actions">{actions}</div>}
+   <div className="page-hero-scene" aria-hidden="true">
+    <span className="page-optic"><i/><i/><i/><b>{index}</b></span>
+    <span className="page-wave"><i/><i/><i/><i/><i/><i/><i/><i/></span>
+    <small>LIVE OPTICAL SURFACE / {index}</small>
+   </div>
+  </header>
+  {children}
+ </main>
+}

@@ -1,0 +1,27 @@
+/* Audit corrections: keep working tools in view and never animate text contrast. */
+.motion-ready .ol-reveal{opacity:1}
+.workbench-grid.ol-reveal,.compiler-workspace.ol-reveal{translate:0;filter:none}
+.lab-page .page-hero,.compiler-page .page-hero{min-height:195px;padding:18px 34px}
+.lab-page .page-hero h1,.compiler-page .page-hero h1{font-size:clamp(42px,4.25vw,62px);line-height:.94;margin:10px 0 13px}
+.lab-page .page-hero-scene,.compiler-page .page-hero-scene{inset:0 0 0 54%}
+.lab-page .page-hero-scene>small{display:none}
+.research-page article.open .evidence-body{animation-name:dossier-open-safe}
+@keyframes dossier-open-safe{from{scale:1 .96;translate:0 -10px}to{scale:1;translate:0 0}}
+
+@media(max-width:1100px){
+ .lab-page .page-hero,.compiler-page .page-hero{min-height:184px;padding:18px 26px}
+ .lab-page .page-actions{position:absolute;right:26px;bottom:18px}
+ .lab-page .page-hero-scene,.compiler-page .page-hero-scene{inset:0 0 0 48%}
+}
+
+@media(max-width:760px){
+ .lab-page .page-hero,.compiler-page .page-hero{min-height:200px;padding:14px 24px;align-content:center}
+ .lab-page .page-index,.compiler-page .page-index{display:none}
+ .lab-page .page-hero h1,.compiler-page .page-hero h1{font-size:40px;line-height:.94;margin:8px 0 10px}
+ .lab-page .page-lead,.compiler-page .page-lead{font-size:14px;line-height:1.5;max-width:76%}
+ .lab-page .page-actions{display:none}
+ .lab-page .page-hero-scene,.compiler-page .page-hero-scene{inset:20% -24% -10% 28%;mask-image:linear-gradient(90deg,transparent,#000 35%)}
+ .lab-page .page-wave,.compiler-page .page-wave{bottom:15%}
+}
+
+@media(prefers-reduced-motion:reduce){.motion-ready .ol-reveal{opacity:1}}
