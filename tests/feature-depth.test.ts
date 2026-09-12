@@ -1,5 +1,5 @@
 import {describe,expect,it} from 'vitest';
-import {benchmark,benchmarkFacets,buildAdapterStarter,compileExperience,defaultSimulationConfig,evaluateAdapterBundle,experiencePresets,getDevice,planAIRoute,simulate} from '../src/core';
+import {benchmark,benchmarkFacets,buildAdapterStarter,compileExperience,createEvidenceDraft,defaultSimulationConfig,evaluateAdapterBundle,experiencePresets,getDevice,planAIRoute,simulate} from '../src/core';
 
 describe('expanded scenario engine',()=>{
  it.each([
@@ -51,5 +51,13 @@ describe('adapter conformance probes',()=>{
    const report=evaluateAdapterBundle(files,normalized,probe);
    expect(report.passed,probe).toBeLessThan(report.total);
   }
+ });
+});
+
+describe('research intake boundary',()=>{
+ it('keeps structured evidence in draft review',()=>{
+  const record=createEvidenceDraft({deviceId:'brilliant-frame',sourceClass:'developer-documentation',sourceTitle:'Frame documentation',sourceUrl:'https://docs.brilliant.xyz/frame/frame.html',publisher:'Brilliant Labs',publishedDate:null,accessedDate:'2026-09-11',claim:'The developer documentation describes a camera interface.',confidence:'high',notes:'Capability claim requires human review before catalog inclusion.'},undefined,'2026-09-11T20:00:00.000Z');
+  expect(record.status).toBe('draft-review');
+  expect(record.checks).toContain('human-review-required');
  });
 });

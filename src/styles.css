@@ -33,9 +33,6 @@
 .claim-conflict{margin-top:11px;padding:10px;border-left:2px solid #d59c4c;background:#211d16}
 .claim-conflict b{color:#f1c987!important}
 .claim-conflict p{margin-top:5px!important;color:#c8ad80!important}
-.source-list a span,.source-list a small{font-size:9px;color:#899598}
-.source-list a strong{font-size:14px}
-.source-list a p{font-size:12px;color:#98a2a4;line-height:1.5}
 @media(max-width:1100px){.evidence-body{grid-template-columns:1fr}.evidence-claims{grid-template-columns:1fr 1fr}}
 @media(max-width:760px){.evidence-claims{grid-template-columns:1fr}.device-meta span{font-size:9px}}
 

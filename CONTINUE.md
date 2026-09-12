@@ -16,6 +16,7 @@
 - Benchmark Lab with raw trials, failure retention, sample statistics, resilience matrix, JSON/CSV export, replay-verified imports, and an explicit opt-in in-memory Browser Field Recorder.
 - Live AI capability routing plus real in-browser pixel-signal preflight and English OCR from demo, upload, or camera. Includes five-language bounded sign translation, visible coverage, unchanged-token disclosure, local speech where available, and versioned JSON result export.
 - Source SDK with seven public surfaces, a live five-command runtime console, asynchronous adapter benchmarking, and a compiled reference-twin example.
+- Research Evidence Studio with a persistent local review queue, six explicit source classes, strict provenance validation, immutable correction revisions, fingerprinted JSON pack import/export, and no browser publishing path.
 - Five-file adapter starter ZIP with typed transport boundary, lifecycle guards, contract tests, runnable SDK example, verification template, and integration guide.
 - Global command palette, route-specific guides, methodology, research ledger, About page with the original Capital Mastery portrait, and durable technical documentation.
 
@@ -26,7 +27,7 @@ The reference twin and seven capability models execute locally. Manufacturer har
 ## Verification
 
 - The current Pages checkpoint completed its lint, unit, browser, build, budget, release-stamping, and deployment workflow successfully.
-- Current release candidate: 88 unit tests pass. The 58-case Playwright matrix completes with 50 passes and 8 intentional capability skips across desktop and phone. It covers the executable SDK and adapter benchmark, five-file ZIP, private field recording and export, AI capability routing, real pixel preflight, local OCR, all seven compiler and Scenario Studio workflows, conformance mutation probes, benchmark score layers, route motion, responsive layout, and automated contrast.
+- Current release candidate: 93 unit tests pass. The 58-case Playwright matrix completes with 50 passes and 8 intentional capability skips across desktop and phone. It covers evidence intake, immutable revision/export, the executable SDK and adapter benchmark, five-file ZIP, private field recording and export, AI capability routing, real pixel preflight, local OCR, all seven compiler and Scenario Studio workflows, conformance mutation probes, benchmark score layers, route motion, responsive layout, and automated contrast.
 
 ## Next priorities
 
@@ -53,7 +54,7 @@ No credential or authorization blocker is active. Real-hardware integration rema
 
 ## Evidence, adapter, and editorial checkpoint
 
-- Research is now a searchable evidence index with integration-state filtering, visible record counts, a clear empty result, and the source-backed claim body before the methodology explanation.
+- Research is now a searchable evidence index plus a working local evidence intake. Drafts validate device identity, HTTPS provenance, source class, publisher, dates, confidence and notes; corrections append revisions, and verified packs import/export without granting publish authority.
 - The adapter generator is presented as a working code workshop. Its validation state, generated-file count, capability boundary, file tabs, code, and three download paths remain live at desktop and phone widths.
 - Methodology has a route-safe section index. The previous `#stats`-style links conflicted with the hash router; controls now scroll and focus the selected section without leaving the page.
 - About uses a composed portrait and project statement while preserving the original founder image and direct repository and evidence actions.

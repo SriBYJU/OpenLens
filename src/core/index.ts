@@ -13,4 +13,5 @@ export * from './adapter-conformance';
 export * from './ai-router';
 export * from './environment';
 export * from './specifications';
+export * from './evidence';
 export * from '../data/devices';

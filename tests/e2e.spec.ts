@@ -109,6 +109,7 @@ test('device fit and doctor preserve the hardware access boundary',async({page})
 });
 
 test('device research, benchmark, and adapter generator are interactive',async({page})=>{
+  test.setTimeout(60000);
   await page.goto('/#/devices');
   await expect(page.getByText('8 OF 8 PROFILES')).toBeVisible();
   await page.locator('.catalog-tools .search-input').fill('Rokid');
@@ -123,6 +124,30 @@ test('device research, benchmark, and adapter generator are interactive',async({
   await expect(evidence.getByText('1500 nits',{exact:true})).toBeVisible();
   await expect(evidence.getByText(/CONFLICTING VALUE · 480×640 per eye/)).toBeVisible();
   await expect(evidence.getByRole('link',{name:/Rokid ↗/}).first()).toHaveAttribute('href','https://global.rokid.com/products/rokid-glasses');
+  await page.getByLabel('Technical claim').fill('The product page lists a display brightness of 1,500 nits.');
+  await page.getByLabel('Evidence device').selectOption('rokid-glasses');
+  await page.getByLabel('Publisher').fill('Rokid');
+  await page.getByLabel('Source title').fill('Rokid Glasses product page');
+  await page.getByLabel('Public HTTPS source').fill('https://global.rokid.com/products/rokid-glasses');
+  await page.getByLabel('Evidence notes').fill('Manufacturer specification; test conditions are not stated.');
+  await page.getByRole('button',{name:/Add to review queue/i}).click();
+  const localDrafts=page.getByLabel('Local evidence drafts');
+  await expect(localDrafts.getByText(/display brightness of 1,500 nits/i)).toBeVisible();
+  await localDrafts.getByRole('button',{name:'Create revision'}).click();
+  await page.getByLabel('Technical claim').fill('The product page lists brightness up to 1,500 nits.');
+  await page.getByLabel('Correction reason').fill('Preserve the manufacturer qualification “up to”.');
+  await page.getByRole('button',{name:/Create immutable revision/i}).click();
+  await expect(page.getByText(/Revision 2 added/)).toBeVisible();
+  await expect(localDrafts.getByRole('button',{name:'Create revision'})).toHaveCount(2);
+  const evidenceDownload=page.waitForEvent('download');
+  await page.getByRole('button',{name:'Export validated pack'}).click();
+  const downloadedEvidence=await evidenceDownload;
+  const downloadedEvidencePath=await downloadedEvidence.path();
+  expect(downloadedEvidencePath).not.toBeNull();
+  const evidencePack=JSON.parse(readFileSync(downloadedEvidencePath!,'utf8'));
+  expect(evidencePack).toMatchObject({kind:'openlens-research-evidence-pack',status:'draft-review'});
+  expect(evidencePack.records).toHaveLength(2);
+  expect(evidencePack.records[1].correction.supersedesId).toBe(evidencePack.records[0].id);
   await page.goto('/#/benchmarks');
   await page.getByLabel('Benchmark trial count').fill('12');
   await page.getByRole('button',{name:/Run 12 trials/i}).click();

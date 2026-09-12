@@ -1,4 +1,4 @@
-export const RELEASE_VERSION = '0.4.0';
+export const RELEASE_VERSION = '0.5.0';
 export const ENGINE_VERSION = '0.4.0';
 export const CATALOG_VERSION = '2026.09.10';
 export const METHODOLOGY_VERSION = '1.3.0';

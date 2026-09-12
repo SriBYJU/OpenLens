@@ -70,6 +70,14 @@ report(await page.getByLabel('Generated adapter files').getByRole('button').coun
 
 await page.goto(url('research'));
 report(await page.locator('.evidence-ledger article').count()===7,'research: evidence ledger does not contain seven sourced hardware records');
+await page.getByLabel('Technical claim').fill('The product page lists a display brightness of 1,500 nits.');
+await page.getByLabel('Evidence device').selectOption('rokid-glasses');
+await page.getByLabel('Publisher').fill('Rokid');
+await page.getByLabel('Source title').fill('Rokid Glasses product page');
+await page.getByLabel('Public HTTPS source').fill('https://global.rokid.com/products/rokid-glasses');
+await page.getByLabel('Evidence notes').fill('Manufacturer specification; test conditions are not stated.');
+await page.getByRole('button',{name:/Add to review queue/i}).click();
+report(await page.getByLabel('Local evidence drafts').getByText(/display brightness of 1,500 nits/i).count()===1,'research: structured evidence did not enter the local review queue');
 
 await page.setViewportSize({width:390,height:844});
 for(const route of routes){
