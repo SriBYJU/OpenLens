@@ -40,6 +40,13 @@ export default function Home(){
     <div className="cinematic-progress"><span>01 / APPROACH</span><i><motion.b style={{scaleX:scrollYProgress}}/></i><span>02 / ENTER THE LENS</span><i/><span>03 / EXPLORE</span></div>
    </div>
   </section>
+  <section className="ol-press" aria-labelledby="ol-press-title">
+   <header className="ol-press-head"><div><p className="eyebrow">INTERNATIONAL PRESS / EXTERNAL COVERAGE</p><h2 id="ol-press-title">As featured on:</h2></div><p>Coverage of the student-built technology portfolio behind OpenLens.</p></header>
+   <div className="ol-press-grid">
+    <a className="ol-press-card" href="https://ghananews.org/shriyan-avadhanula-16-year-old-technology-innovator/" target="_blank" rel="noopener noreferrer" aria-label="Read the Ghana News article about Shriyan Avadhanula"><span className="ol-press-logo"><img src={`${import.meta.env.BASE_URL}assets/press/ghana-news.jpeg`} width="2048" height="2048" alt="Ghana News" loading="lazy" decoding="async"/></span><span className="ol-press-copy"><strong>Ghana News</strong><span>Read the article <b aria-hidden="true">↗</b></span></span></a>
+    <a className="ol-press-card" href="https://ghanamedia.net/shriyan-avadhanula-16-year-old-innovator-platforms/" target="_blank" rel="noopener noreferrer" aria-label="Read the Ghana Media article about Shriyan Avadhanula"><span className="ol-press-logo"><img src={`${import.meta.env.BASE_URL}assets/press/ghana-media.jpeg`} width="2048" height="2048" alt="Ghana Media" loading="lazy" decoding="async"/></span><span className="ol-press-copy"><strong>Ghana Media</strong><span>Read the article <b aria-hidden="true">↗</b></span></span></a>
+   </div>
+  </section>
   <section className="manifesto"><p className="eyebrow">THE OPEN OPTICAL LAYER</p><div><h2>Glasses are becoming computers.<br/><em>Their differences should be visible.</em></h2><p>OpenLens turns a fragmented hardware landscape into an environment you can inspect, simulate, compile, trace, and benchmark. Every boundary stays attached to the work.</p></div></section>
   <VisitorPathfinder/>
   <div id="home-live-proof"><HomeSignalDemo/></div>
@@ -50,13 +57,6 @@ export default function Home(){
    <div className="chapter-field">{chapters.map((chapter,index)=><a href={`#/${chapter.route}`} aria-label={`${chapter.title} Open ${chapter.label.toLowerCase()} tool`} className={`chapter chapter-${index+1} chapter-${chapter.route}`} key={chapter.number}><div className="chapter-number">{chapter.number}</div><div className="chapter-copy"><p className="eyebrow">{chapter.label}</p><h3>{chapter.title}</h3><p>{chapter.body}</p><span>OPEN {chapter.route==='lab'?'LENS LAB':chapter.route.toUpperCase()} <b>↗</b></span></div><div className="chapter-instrument" aria-hidden="true"><header><span>{chapter.route.toUpperCase()} / LIVE SURFACE</span><i>OPENLENS</i></header><div className="instrument-figure"><i/><i/><i/><b/><b/><b/><b/><b/></div><footer><strong>{chapter.metric}</strong><span>{chapter.proof}</span></footer></div></a>)}</div>
   </section>
   <section className="proof-strip"><span>NO ACCOUNT</span><span>LOCAL-FIRST</span><span>ZERO-COST CORE</span><span>VERSIONED ARTIFACTS</span><span>SOURCED CLAIMS</span></section>
-  <section className="ol-press" aria-labelledby="ol-press-title">
-   <header className="ol-press-head"><div><p className="eyebrow">INTERNATIONAL PRESS / EXTERNAL COVERAGE</p><h2 id="ol-press-title">As featured on:</h2></div><p>Coverage of the student-built technology portfolio behind OpenLens.</p></header>
-   <div className="ol-press-grid">
-    <a className="ol-press-card" href="https://ghananews.org/shriyan-avadhanula-16-year-old-technology-innovator/" target="_blank" rel="noopener noreferrer" aria-label="Read the Ghana News article about Shriyan Avadhanula"><span className="ol-press-logo"><img src={`${import.meta.env.BASE_URL}assets/press/ghana-news.jpeg`} width="2048" height="2048" alt="Ghana News" loading="lazy" decoding="async"/></span><span className="ol-press-copy"><strong>Ghana News</strong><span>Read the article <b aria-hidden="true">↗</b></span></span></a>
-    <a className="ol-press-card" href="https://ghanamedia.net/shriyan-avadhanula-16-year-old-innovator-platforms/" target="_blank" rel="noopener noreferrer" aria-label="Read the Ghana Media article about Shriyan Avadhanula"><span className="ol-press-logo"><img src={`${import.meta.env.BASE_URL}assets/press/ghana-media.jpeg`} width="2048" height="2048" alt="Ghana Media" loading="lazy" decoding="async"/></span><span className="ol-press-copy"><strong>Ghana Media</strong><span>Read the article <b aria-hidden="true">↗</b></span></span></a>
-   </div>
-  </section>
   <section className="home-closing"><p className="eyebrow">OPENLENS / PUBLIC PREVIEW</p><h2>Don’t just imagine<br/>the next interface.<br/><em>Run it.</em></h2><div className="button-row"><a className="button primary" href="#/lab">Open the workbench</a><a className="text-link" href="#/compiler">Compile an idea</a></div><picture><source srcSet={`${import.meta.env.BASE_URL}assets/openlens-glasses-hero-v3.webp`} type="image/webp"/><img src={`${import.meta.env.BASE_URL}assets/openlens-glasses-hero-v2.png`} alt="" aria-hidden="true"/></picture></section>
  </main>
 }
