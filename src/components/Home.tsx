@@ -4,7 +4,7 @@ import HomeSignalDemo from './HomeSignalDemo';
 import VisitorPathfinder from './VisitorPathfinder';
 import HomeDeviceSwitchboard from './HomeDeviceSwitchboard';
 import '../home-explorer.css';
-import '../press-feature.css';
+import pressStyles from '../press-feature.css?inline';
 
 const chapters=[
  {number:'01',label:'SENSE',title:'See every input.',body:'Camera, microphone, motion and manual triggers enter one explicit capability model.',route:'lab',metric:'3-stage route',proof:'INPUT · PROCESS · OUTPUT'},
@@ -26,6 +26,7 @@ export default function Home(){
  const ringScale=useTransform(scrollYProgress,[0,.42,.72],[.72,1.1,2.8]);
  const ringOpacity=useTransform(scrollYProgress,[0,.25,.65],[.25,.6,0]);
  return <main id="main" tabIndex={-1}>
+  <style>{pressStyles}</style>
   <section ref={ref} className="cinematic" data-phase={reduce?0:phase}>
    <div className="cinematic-sticky">
     <div className="ambient ambient-a"/><div className="ambient ambient-b"/><div className="grain"/>
